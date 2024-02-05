@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:55:43 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/05 15:39:53 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:25:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "quote_split.h"
+#include "../../include/quote_split.h"
 
 static char	*ft_strndup(const char *str, int n, char ***table, int k)
 {
@@ -97,7 +97,7 @@ char	**quote_split(char const *s, char c)
 			qt.qt++;
 		if (s[i] == '\"')
 			qt.qts++;
-		if (((s[i + 1] == c && !(qt.qt % 2)) && !(qt.qts % 2) 
+		if (((s[i + 1] == c && !(qt.qt % 2) && !(qt.qts % 2))
 				|| s[i + 1] == 0) && j != -1)
 		{
 			table[k] = ft_strndup(&s[j], i - j + 1, &table, k);

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/05 16:01:34 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:26:49 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "quote_split.h"
+#include "../../include/quote_split.h"
 
 static void	count_quotes(char *str, int *i, int *qt, int *qts)
 {
-	*i = -1;	
+	*i = -1;
 	*qt = 0;
 	*qts = 0;
 	while (str[++*i])
@@ -22,8 +22,8 @@ static void	count_quotes(char *str, int *i, int *qt, int *qts)
 		if (str[*i] == '\'')
 			(*qt)++;
 		if (str[*i] == '\"')
-			(*qts)++;		
-	}	
+			(*qts)++;
+	}
 }
 
 static char	*allocate_for_clean_word(int i, int qt, int qts)
@@ -36,7 +36,7 @@ static char	*allocate_for_clean_word(int i, int qt, int qts)
 	return (word);
 }
 
-static void	transfer_word(char *str, char *word, int qt, int qts)
+static void	transfer_word(char *str, char *word)
 {
 	int		i;
 	int		j;
@@ -47,7 +47,17 @@ static void	transfer_word(char *str, char *word, int qt, int qts)
 	{
 		if (str[i] != '\'' && str[i] != '\"')
 			word[j++] = str[i];
-	}	
+	}
+}
+
+void    free_table(char **table)
+{
+	int     i;
+
+	i = 0;
+	while (table[i])
+		free(table[i++]);
+	free(table);
 }
 
 char	**clean_quotes(char **table)
@@ -69,7 +79,7 @@ char	**clean_quotes(char **table)
 			free_table(table);
 			return (0);
 		}
-		transfer_word(table[i], word, qt, qts);
+		transfer_word(table[i], word);
 		free(table[i]);
 		table[i] = word;
 	}

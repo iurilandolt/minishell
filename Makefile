@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/05 15:36:34 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/05 16:22:45 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = minishell
 SRC_PATH = ./sources
 
 SRC = $(SRC_PATH)/main.c \
+	$(SRC_PATH)/quote_split/clean_quotes.c \
+	$(SRC_PATH)/quote_split/quote_split.c \
 
 
 SANITIZER = -g -fsanitize=address
