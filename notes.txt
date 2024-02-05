@@ -1,0 +1,3 @@
+https://medium.com/swlh/lets-build-a-linux-shell-part-iii-a472c0102849
+
+https://dev.to/harshbanthiya/writing-my-own-minimal-shell-in-c-part-1-the-constraints-20cg
