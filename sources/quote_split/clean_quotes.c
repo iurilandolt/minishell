@@ -1,0 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_quotes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/02/05 16:01:34 by rcastelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "quote_split.h"
+
+static void	count_quotes(char *str, int *i, int *qt, int *qts)
+{
+	*i = -1;	
+	*qt = 0;
+	*qts = 0;
+	while (str[++*i])
+	{
+		if (str[*i] == '\'')
+			(*qt)++;
+		if (str[*i] == '\"')
+			(*qts)++;		
+	}	
+}
+
+static char	*allocate_for_clean_word(int i, int qt, int qts)
+{
+	char	*word;
+	word = malloc(i - qt - qts + 1);
+	if (!word)
+		return (0);
+	word[i - qt - qts] = 0;
+	return (word);
+}
+
+static void	transfer_word(char *str, char *word, int qt, int qts)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			word[j++] = str[i];
+	}	
+}
+
+char	**clean_quotes(char **table)
+{
+	int		i;
+	int		j;
+	int		qt;
+	int		qts;
+	char	*word;
+
+	i = -1;
+	while (table[++i])
+	{
+		count_quotes(table[i], &j, &qt, &qts);
+		word = allocate_for_clean_word(j, qt, qts);
+		if (!word)
+		{
+			perror("malloc = 0");
+			free_table(table);
+			return (0);
+		}
+		transfer_word(table[i], word, qt, qts);
+		free(table[i]);
+		table[i] = word;
+	}
+	return (table);
+}
