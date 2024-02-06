@@ -6,29 +6,29 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 11:59:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:05:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/read.h"
 #include "../include/quote_split.h"
+#include "../include/token.h"
 
 void	debug_input(char *line, char **split)
 {
-	int	i;
-	(void)line;
-	printf("in: %s\n", line);
+	int		size;
+	t_token	**tokens;
 	line = string_expander(line);
 	split = quote_split(line, ' ');
 	split = clean_quotes(split);
+	size = split_size(split);
+	printf("size: %d\n", size);
 	free(line);
-	i = 0;
-	while (split[i])
-	{
-		printf("out :%s\n", split[i]);
-		i++;
-	}
+	tokens = gen_tokens(split);
+	if (!tokens)
+		perror("**tokens alloc failed.\n");
 	free_table(split);
+	free_tokens(tokens, size);
 }
 
 void	repl(void)
@@ -50,7 +50,7 @@ void	repl(void)
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);
-		line = readline("$MiniShell> ");
+		line = readline("<MiniShell> ");
 	}
 }
 
