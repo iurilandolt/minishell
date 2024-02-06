@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 17:49:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:03:28 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,35 @@ int	split_size(char **split)
 	return (i);
 }
 
-void	free_tokens(t_token **tokens, int i)
+void	free_tokens(t_token *tokens, int i)
 {
 	while (--i >= 0)
 	{
-		free(tokens[i]->value);
-		free(tokens[i]);
+		free(tokens[i].value);
 	}
 	free(tokens);
 }
 
-t_token **gen_tokens(char **split)
+t_token *gen_tokens(char **split)
 {
-	t_token	**tokens;
+	t_token	*tokens;
 	int		i;
 
-	tokens = malloc(sizeof(t_token *) * (split_size(split)));
+	tokens = malloc(sizeof(t_token) * (split_size(split)));
 	if (!tokens)
 		return (NULL);
 	i = 0;
 	while (split[i])
 	{
-		tokens[i] = malloc(sizeof(t_token));
-		if (!tokens[i])
+		tokens[i].value = (char *)malloc(sizeof(char) * (ft_strlen(split[i]) + 1));
+		if (!tokens[i].value)
 		{
-			perror("token malloc error\n");
 			free_tokens(tokens, i);
 			return (NULL);
 		}
-		tokens[i]->value = (char *)malloc(sizeof(char) * (ft_strlen(split[i]) + 1));
-		ft_strlcpy(tokens[i]->value, split[i], ft_strlen(split[i]) + 1);
-		set_token_type(tokens[i]);
-		printf("token: %s, type: %d\n", tokens[i]->value, tokens[i]->type);
+		ft_strlcpy(tokens[i].value, split[i], ft_strlen(split[i]) + 1);
+		set_token_type(&tokens[i]);
+		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 		i++;
 	}
 	return (tokens);

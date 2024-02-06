@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 17:56:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:59:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	handle_quotes(char *line, char ***split)
 void	tokenize(char *line)
 {
 	char	**split;
-	t_token	**tokens;
+	t_token	*tokens;
 
 	if (check_analyzer(line))
 		return ;
