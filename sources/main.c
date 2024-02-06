@@ -19,6 +19,7 @@ void	debug_input(char *line, char **split)
 	int		size;
 	t_token	**tokens;
 	line = string_expander(line);
+	line = string_contracter(line);
 	split = quote_split(line, ' ');
 	split = clean_quotes(split);
 	size = split_size(split);

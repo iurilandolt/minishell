@@ -19,6 +19,7 @@
 # include <readline/history.h>
 
 char	*string_expander(char *string);
+char	*string_contracter(char *string);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 int		split_size(char **split);
