@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 17:32:31 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:56:28 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,55 @@
 #include "../include/quote_split.h"
 #include "../include/token.h"
 
-void	debug_input(char *line, char **split)
+int	expand_and_contract(char **line)
 {
-	int		size;
+	*line = string_expander(*line);
+	*line = string_contracter(*line);
+	if (!*line)
+	{
+		perror("**expand_and_contract failed.\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	handle_quotes(char *line, char ***split)
+{
+	*split = quote_split(line, ' ');
+	free(line);
+	*split = clean_quotes(*split);
+	if (!*split)
+	{
+		perror("**handle_quotes failed.\n");
+		return (1);
+	}
+	return (0);
+}
+
+void	tokenize(char *line)
+{
+	char	**split;
 	t_token	**tokens;
 
 	if (check_analyzer(line))
-	{
-		printf("Syntax error\n");
 		return ;
-	}
-	line = string_expander(line);
-	line = string_contracter(line);
-
-	split = quote_split(line, ' ');
-	split = clean_quotes(split);
-
-	size = split_size(split);
-
-	free(line);
-
+	if (expand_and_contract(&line))
+		return ;
+	if (handle_quotes(line, &split))
+		return ;
 	tokens = gen_tokens(split);
 	if (!tokens)
 		perror("**tokens alloc failed.\n");
+	free_tokens(tokens, split_size(split));
 	free_table(split);
-	free_tokens(tokens, size);
+
 }
 
 void	repl(void)
 {
 	char	*line;
-	char	**split;
 
 	line = readline("<MiniShell> ");
-	split = NULL;
 	while (line)
 	{
 		if (!ft_strncmp(line, "exit", 4))
@@ -56,7 +71,7 @@ void	repl(void)
 			rl_clear_history();
 			break ;
 		}
-		debug_input(line, split);
+		tokenize(line);
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);

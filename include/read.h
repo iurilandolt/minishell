@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 17:30:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:50:45 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
