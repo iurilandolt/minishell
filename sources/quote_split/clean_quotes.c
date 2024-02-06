@@ -12,28 +12,31 @@
 
 #include "../../include/quote_split.h"
 
-static void	count_quotes(char *str, int *i, int *qt, int *qts)
+static void	count_quotes(char *str, int *i, t_qt *qt, int *bar)
 {
 	*i = -1;
-	*qt = 0;
-	*qts = 0;
+	qt->qt = 0;
+	qt->qts = 0;
+	*bar = 0;
 	while (str[++(*i)])
 	{
 		if (str[*i] == '\'' && (*i == 0 || str[*i - 1] != '\\'))
-			(*qt)++;
+			(qt->qt)++;
 		if (str[*i] == '\"' && (*i == 0 || str[*i - 1] != '\\'))
-			(*qts)++;
+			(qt->qts)++;
+		if (str[*i] == '\\' && (*i == 0 || str[*i - 1] != '\\'))
+			(*bar)++;
 	}
 }
 
-static char	*allocate_for_clean_word(int i, int qt, int qts)
+static char	*allocate_for_clean_word(int i, int qt, int qts, int bar)
 {
 	char	*word;
 
-	word = malloc(i - qt - qts + 1);
+	word = malloc(i - qt - qts - bar + 1);
 	if (!word)
 		return (0);
-	word[i - qt - qts] = 0;
+	word[i - qt - qts -bar] = 0;
 	return (word);
 }
 
@@ -46,7 +49,8 @@ static void	transfer_word(char *str, char *word)
 	j = 0;
 	while (str[++i])
 	{
-		if ((str[i] != '\'' && str[i] != '\"') || (i != 0 && str[i - 1] == '\\'))
+		if ((str[i] != '\'' && str[i] != '\"' && str[i] != '\\') 
+			|| (i != 0 && str[i - 1] == '\\'))
 			word[j++] = str[i];
 	}
 }
@@ -65,15 +69,15 @@ char	**clean_quotes(char **table)
 {
 	int		i;
 	int		j;
-	int		qt;
-	int		qts;
+	int		bar;
+	t_qt		qt;
 	char	*word;
 
 	i = -1;
 	while (table[++i])
 	{
-		count_quotes(table[i], &j, &qt, &qts);
-		word = allocate_for_clean_word(j, qt, qts);
+		count_quotes(table[i], &j, &qt, &bar);
+		word = allocate_for_clean_word(j, qt.qt, qt.qts, bar);
 		if (!word)
 		{
 			perror("malloc = 0");
