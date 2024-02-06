@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 16:05:44 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:32:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@ void	debug_input(char *line, char **split)
 {
 	int		size;
 	t_token	**tokens;
+
+	if (check_analyzer(line))
+	{
+		printf("Syntax error\n");
+		return ;
+	}
 	line = string_expander(line);
 	line = string_contracter(line);
+
 	split = quote_split(line, ' ');
 	split = clean_quotes(split);
+
 	size = split_size(split);
-	printf("size: %d\n", size);
+
 	free(line);
+
 	tokens = gen_tokens(split);
 	if (!tokens)
 		perror("**tokens alloc failed.\n");

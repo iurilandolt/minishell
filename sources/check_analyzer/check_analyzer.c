@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_analyzer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:53:05 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 16:54:03 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:33:40 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	check_analyzer(char *string)
 	int	qts;
 
 	i = -1;
+	qt = 0;
+	qts = 0;
 	while (string[++i])
 	{
 		if (string[i] == '\'' && (i == 0 || string[i - 1] != '\\'))

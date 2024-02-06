@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 14:37:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:30:38 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
+int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 int		split_size(char **split);
