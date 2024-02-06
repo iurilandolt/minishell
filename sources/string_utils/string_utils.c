@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.h                                             :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 10:51:34 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/02/06 10:37:46 by rlandolt          #+#    #+#             */
+/*   Updated: 2024/02/06 10:38:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READ_H
-# define READ_H
+#include "../../include/read.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+size_t	ft_strlen(const char *s)
+{
+	size_t	pos;
 
-char	*string_expander(char *string);
-size_t	ft_strlen(const char *s);
-int		ft_strncmp(const char *str1, const char *str2, size_t n);
+	pos = 0;
+	while (*s++)
+		pos++;
+	return (pos);
+}
 
-#endif
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
+{
+	if (n == 0)
+		return (0);
+	while ((*str1 || *str2) && (n > 1) && (*str1 == *str2))
+	{
+		str1++;
+		str2++;
+		n--;
+	}
+	return (*(unsigned char *)str1 - *(unsigned char *)str2);
+}

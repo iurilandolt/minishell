@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/05 16:22:45 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/06 10:48:29 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ SRC_PATH = ./sources
 SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/quote_split/clean_quotes.c \
 	$(SRC_PATH)/quote_split/quote_split.c \
+	$(SRC_PATH)/string_expander/string_expander.c \
+	$(SRC_PATH)/string_utils/string_utils.c
+
 
 
 SANITIZER = -g -fsanitize=address

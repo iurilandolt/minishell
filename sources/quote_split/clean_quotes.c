@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/05 16:26:49 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:57:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	count_quotes(char *str, int *i, int *qt, int *qts)
 static char	*allocate_for_clean_word(int i, int qt, int qts)
 {
 	char	*word;
+
 	word = malloc(i - qt - qts + 1);
 	if (!word)
 		return (0);
@@ -50,9 +51,9 @@ static void	transfer_word(char *str, char *word)
 	}
 }
 
-void    free_table(char **table)
+void	free_table(char **table)
 {
-	int     i;
+	int	i;
 
 	i = 0;
 	while (table[i])
