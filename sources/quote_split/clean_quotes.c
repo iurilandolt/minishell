@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 10:57:51 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:02:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	count_quotes(char *str, int *i, int *qt, int *qts)
 	*i = -1;
 	*qt = 0;
 	*qts = 0;
-	while (str[++*i])
+	while (str[++(*i)])
 	{
-		if (str[*i] == '\'')
+		if (str[*i] == '\'' && (*i == 0 || str[*i - 1] != '\\'))
 			(*qt)++;
-		if (str[*i] == '\"')
+		if (str[*i] == '\"' && (*i == 0 || str[*i - 1] != '\\'))
 			(*qts)++;
 	}
 }
@@ -46,7 +46,7 @@ static void	transfer_word(char *str, char *word)
 	j = 0;
 	while (str[++i])
 	{
-		if (str[i] != '\'' && str[i] != '\"')
+		if ((str[i] != '\'' && str[i] != '\"') || (i != 0 && str[i - 1] == '\\'))
 			word[j++] = str[i];
 	}
 }

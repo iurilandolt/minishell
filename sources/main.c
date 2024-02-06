@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 10:57:02 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:59:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@
 void	debug_input(char *line, char **split)
 {
 	int	i;
-
+	(void)line;
 	printf("in: %s\n", line);
 	line = string_expander(line);
 	split = quote_split(line, ' ');
 	split = clean_quotes(split);
+	free(line);
 	i = 0;
 	while (split[i])
 	{
 		printf("out :%s\n", split[i]);
 		i++;
 	}
+	free_table(split);
 }
 
 void	repl(void)
