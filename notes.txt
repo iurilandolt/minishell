@@ -40,3 +40,25 @@ operators:
 
 enviroment variables?
 $
+
+
+int	valid_char(char c)
+{
+	if (c == '&' || c == '|' ||  c == '>' || c == '<' || c == '$')
+		return (1);
+	return (0);
+}
+
+int	is_space(char c)
+{
+	if (c == ' ')
+		return (1);
+	return (0);
+}
+
+int	is_backslash(char c)
+{
+	if (c == '\\')
+		return (1);
+	return (0);
+}
