@@ -6,23 +6,12 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/06 18:03:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:43:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/token.h"
 #include "../../include/read.h"
-
-typedef enum s_type
-{
-	RED_IN,
-	RED_OUT,
-	RED_APP,
-	HERE_DOC,
-	OPERATOR,
-	EVAR,
-	UNHANDLED, // command / arguments / fd
-}	e_type;
 
 void	set_token_type(t_token *token)
 {
@@ -36,7 +25,7 @@ void	set_token_type(t_token *token)
 		token->type = RED_OUT;
 	else if (ft_strncmp(token->value, "<", 1) == 0)
 		token->type = RED_IN;
-	else if (ft_strncmp(token->value, "|", 1) == 0)
+	else if (ft_strncmp(token->value, "|", 1) == 0 || ft_strncmp(token->value, "&", 1) == 0)
 		token->type = OPERATOR;
 	else if (ft_strncmp(token->value, "$", 1) == 0)
 		token->type = EVAR;
