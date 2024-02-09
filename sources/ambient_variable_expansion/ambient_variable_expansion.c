@@ -42,7 +42,7 @@ static int	delta_size(char *string, char **envp)
 		envp++;
 	}
 	if (*envp == 0)
-		return (-i - 1 + 2);
+		return (-i - 1);
 	while ((*envp)[i + 1 + j])
 		j++;
 	return (j - i + 2 - 1);
@@ -53,7 +53,6 @@ void	expand_variable(char *string, char **envp, char *new, int *j)
 	int	k;
 
 	k = 0;
-	new[(*j)++] = '\'';
 	while (ft_isalnum(string[k]))
 		k++;
 	while (*envp)
@@ -64,10 +63,11 @@ void	expand_variable(char *string, char **envp, char *new, int *j)
 	}
 	if (*envp)
 	{
+		new[(*j)++] = '\'';
 		while ((*envp)[k + 1])
 			new[(*j)++] = (*envp)[k++ + 1];
+		new[(*j)++] = '\'';
 	}
-	new[(*j)++] = '\'';
 }
 
 static char	*transfer_string(char *string, char **envp, char *new)
