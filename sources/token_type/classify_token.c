@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/08 14:43:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/10 01:46:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	set_token_type(t_token *token)
 		token->type = RED_OUT;
 	else if (ft_strncmp(token->value, "<", 1) == 0)
 		token->type = RED_IN;
-	else if (ft_strncmp(token->value, "|", 1) == 0 || ft_strncmp(token->value, "&", 1) == 0)
-		token->type = OPERATOR;
-	else if (ft_strncmp(token->value, "$", 1) == 0)
-		token->type = EVAR;
+	else if (ft_strncmp(token->value, "|", 1) == 0)
+		token->type = PIPE;
+	else if (ft_strncmp(token->value, "&", 1) == 0)
+		token->type = SAND;
 	else
-		token->type = UNHANDLED;
+		token->type = STD;
 }
 
 int	split_size(char **split)
@@ -43,7 +43,7 @@ int	split_size(char **split)
 	return (i);
 }
 
-void	free_tokens(t_token *tokens, int i)
+void	tok_free_array(t_token *tokens, int i)
 {
 	while (--i >= 0)
 	{
@@ -52,7 +52,7 @@ void	free_tokens(t_token *tokens, int i)
 	free(tokens);
 }
 
-t_token *gen_tokens(char **split)
+t_token *tok_create_array(char **split)
 {
 	t_token	*tokens;
 	int		i;
@@ -66,7 +66,7 @@ t_token *gen_tokens(char **split)
 		tokens[i].value = (char *)malloc(sizeof(char) * (ft_strlen(split[i]) + 1));
 		if (!tokens[i].value)
 		{
-			free_tokens(tokens, i);
+			tok_free_array(tokens, i);
 			return (NULL);
 		}
 		ft_strlcpy(tokens[i].value, split[i], ft_strlen(split[i]) + 1);

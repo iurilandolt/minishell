@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/08 14:43:44 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/10 01:46:13 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ typedef enum s_type
 	RED_OUT,
 	RED_APP,
 	HERE_DOC,
-	OPERATOR,
-	EVAR,
-	UNHANDLED,
+	PIPE,
+	SAND,
+	STD,
+	ARG
 }	e_type;
 
 typedef struct s_token
@@ -30,7 +31,7 @@ typedef struct s_token
 	int		type;
 }	t_token;
 
-t_token *gen_tokens(char **split);
-void	free_tokens(t_token *tokens, int i);
+t_token *tok_create_array(char **split);
+void	tok_free_array(t_token *tokens, int i);
 
 #endif
