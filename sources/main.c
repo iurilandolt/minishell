@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 01:46:17 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/10 02:46:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,28 @@ void	tokenize(char *line, char **envp)
 	free_table(split);
 }
 
+void	tokenize_list(char *line, char **envp)
+{
+	char	**split;
+	t_token	*tokens;
+
+	if (check_analyzer(line))
+		return ;
+	if (ambient_variable_expansion(&line, envp))
+		return ;
+	if (expand_and_contract(&line))
+		return ;
+	if (handle_quotes(line, &split))
+		return ;
+	tokens = tok_create_list(split);
+	tok_expand_cmd(tokens);
+	print_token_list(tokens);
+	if (!tokens)
+		write(1, "\0", 1);
+	tok_free_list(tokens);
+	free_table(split);
+}
+
 void	repl(char **envp)
 {
 	char	*line;
@@ -72,7 +94,8 @@ void	repl(char **envp)
 			rl_clear_history();
 			break ;
 		}
-		tokenize(line, envp);
+		//tokenize(line, envp);
+		tokenize_list(line, envp);
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);
