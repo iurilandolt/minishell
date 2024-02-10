@@ -39,12 +39,14 @@ int	handle_quotes(char *line, char ***split)
 	return (0);
 }
 
-void	tokenize(char *line)
+void	tokenize(char *line, char **envp)
 {
 	char	**split;
 	t_token	*tokens;
 
 	if (check_analyzer(line))
+		return ;
+	if (ambient_variable_expansion(&line, envp))
 		return ;
 	if (expand_and_contract(&line))
 		return ;
@@ -55,10 +57,9 @@ void	tokenize(char *line)
 		perror("**tokens alloc failed.\n");
 	tok_free_array(tokens, split_size(split));
 	free_table(split);
-
 }
 
-void	repl(void)
+void	repl(char **envp)
 {
 	char	*line;
 
@@ -71,7 +72,7 @@ void	repl(void)
 			rl_clear_history();
 			break ;
 		}
-		tokenize(line);
+		tokenize(line, envp);
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);
@@ -79,10 +80,10 @@ void	repl(void)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	repl();
+	repl(envp);
 	return (0);
 }

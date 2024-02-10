@@ -18,6 +18,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/quote_split/clean_quotes.c \
 	$(SRC_PATH)/quote_split/quote_split.c \
 	$(SRC_PATH)/check_analyzer/check_analyzer.c \
+	$(SRC_PATH)/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/string_expander/string_expander.c \
 	$(SRC_PATH)/string_contracter/string_contracter.c \
 	$(SRC_PATH)/string_utils/string_utils.c \
