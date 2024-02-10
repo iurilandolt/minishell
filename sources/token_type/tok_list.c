@@ -1,37 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   tok_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 02:43:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 02:50:08 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/02/10 19:21:22 by rlandolt          #+#    #+#             */
+/*   Updated: 2024/02/10 19:21:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/token.h"
 #include "../../include/read.h"
-
-void	tok_expand_cmd(t_token *head)
-{
-	t_token	*tmp;
-	int		cmd;
-
-	cmd = 0;
-	tmp = head;
-	while (tmp)
-	{
-		if (tmp->type == STD && cmd == 0)
-			cmd = 1;
-		else if (tmp->type == STD && cmd == 1)
-			tmp->type = ARG;
-		else if (tmp->type != STD)
-			cmd = 0;
-		tmp = tmp->next;
-	}
-
-}
 
 t_token	*tok_create(char *str)
 {

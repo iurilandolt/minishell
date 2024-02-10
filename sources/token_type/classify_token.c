@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 02:50:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:45:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,46 +33,36 @@ void	set_token_type(t_token *token)
 		token->type = STD;
 }
 
-int	split_size(char **split)
+void	tok_expand_cmd(t_token *head)
 {
-	int	i;
+	t_token	*tmp;
+	int		cmd;
 
-	i = 0;
-	while (split[i])
-		i++;
-	return (i);
+	cmd = 0;
+	tmp = head;
+	while (tmp)
+	{
+		if (tmp->type == STD && cmd == 0)
+			cmd = 1;
+		else if (tmp->type == STD && cmd == 1)
+			tmp->type = ARG;
+		else if (tmp->type != STD)
+			cmd = 0;
+		tmp = tmp->next;
+	}
+
 }
 
-void	tok_free_array(t_token *tokens, int i)
-{
-	while (--i >= 0)
-	{
-		free(tokens[i].value);
-	}
-	free(tokens);
-}
+//check if token is of type STD, if it is, and the next token is of type ARG;
+// strjoin the two tokens and free the next token, keep doing that while the next token is of type ARG
 
-t_token *tok_create_array(char **split)
+void	tok_contract_cmd(t_token *tok_ptr)
 {
-	t_token	*tokens;
-	int		i;
+	t_token	*tmp;
 
-	tokens = malloc(sizeof(t_token) * (split_size(split)));
-	if (!tokens)
-		return (NULL);
-	i = 0;
-	while (split[i])
+	tmp = tok_ptr;
+	while (tmp)
 	{
-		tokens[i].value = (char *)malloc(sizeof(char) * (ft_strlen(split[i]) + 1));
-		if (!tokens[i].value)
-		{
-			tok_free_array(tokens, i);
-			return (NULL);
-		}
-		ft_strlcpy(tokens[i].value, split[i], ft_strlen(split[i]) + 1);
-		set_token_type(&tokens[i]);
-		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
-		i++;
+		tmp = tmp->next;
 	}
-	return (tokens);
 }

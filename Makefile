@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/10 02:47:16 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/10 19:23:11 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/string_contracter/string_contracter.c \
 	$(SRC_PATH)/string_utils/string_utils.c \
 	$(SRC_PATH)/token_type/classify_token.c \
-	$(SRC_PATH)/token_type/token_utils.c \
+	$(SRC_PATH)/token_type/tok_array.c \
+	$(SRC_PATH)/token_type/tok_list.c \
 
 
 SANITIZER = -g -fsanitize=address
