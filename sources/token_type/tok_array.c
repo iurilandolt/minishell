@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:21:05 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 19:21:15 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:08:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	tok_free_array(t_token *tokens, int i)
 	free(tokens);
 }
 
-t_token *tok_create_array(char **split)
+t_token	*tok_create_array(char **split)
 {
 	t_token	*tokens;
 	int		i;
@@ -43,7 +43,8 @@ t_token *tok_create_array(char **split)
 	i = 0;
 	while (split[i])
 	{
-		tokens[i].value = (char *)malloc(sizeof(char) * (ft_strlen(split[i]) + 1));
+		tokens[i].value = (char *)malloc(sizeof(char)
+				* (ft_strlen(split[i]) + 1));
 		if (!tokens[i].value)
 		{
 			tok_free_array(tokens, i);

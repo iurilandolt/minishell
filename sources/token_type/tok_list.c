@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:21:22 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 01:41:03 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:06:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ t_token	*tok_create(char *str)
 	return (token);
 }
 
-void tok_remove(t_token *head, t_token *to_remove)
+void	tok_remove(t_token *head, t_token *to_remove)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!head || !to_remove)
-		return;
+		return ;
 	if (head == to_remove)
-		return;
+		return ;
 	else
 	{
 		tmp = head;
@@ -53,13 +53,12 @@ void tok_remove(t_token *head, t_token *to_remove)
 				if (to_remove->cmd)
 					free_table(to_remove->cmd);
 				free(to_remove);
-				return;
+				return ;
 			}
 			else
 				tmp = tmp->next;
 		}
 	}
-
 }
 
 t_token	*tok_free_list(t_token *token)
@@ -112,6 +111,7 @@ t_token	*tok_create_list(char **split)
 void	print_token_list(t_token *head)
 {
 	t_token	*token;
+	int		i;
 
 	token = head;
 	while (token)
@@ -121,7 +121,7 @@ void	print_token_list(t_token *head)
 		printf("token: %s ; type: %d\n", token->value, token->type);
 		if (token->cmd)
 		{
-			int i = 0;
+			i = 0;
 			while (token->cmd[i])
 			{
 				printf("cmd[%d]: %s\n", i, token->cmd[i]);

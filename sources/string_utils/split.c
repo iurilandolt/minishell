@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 13:15:58 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 01:50:37 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:02:53 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static char	*substr_cpy(const char *src, size_t len)
 	if (!dest)
 		return (NULL);
 	ft_strlcpy(dest, src, len);
-
 	return (dest);
 }
 

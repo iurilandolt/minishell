@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:43:13 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 11:00:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:01:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	expanded_size(char *str)
 			size++;
 		if ((str[i + 1] != ' ' && str[i + 1] != '&' && str[i + 1] != '|'
 				&& str[i + 1] != '<' && str[i + 1] != '>')
-			&& (str[i] == '&' || str[i] == '|' 
+			&& (str[i] == '&' || str[i] == '|'
 				|| str[i] == '<' || str[i] == '>')
 			&& (i == 0 || str[i - 1] != '\\'))
 			size++;
@@ -55,7 +55,7 @@ static char	*string_transfer(char *exp, char *str)
 				|| str[i + 1] == '<' || str[i + 1] == '>'))
 			exp[j++] = ' ';
 		if ((str[i + 1] != ' ' && str[i + 1] != '&' && str[i + 1] != '|'
-				&& str[i + 1] != '<' && str[i + 1] != '>') 
+				&& str[i + 1] != '<' && str[i + 1] != '>')
 			&& (str[i] == '&' || str[i] == '|'
 				|| str[i] == '<' || str[i] == '>')
 			&& (i == 0 || str[i - 1] != '\\'))

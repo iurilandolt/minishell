@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 01:57:24 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:07:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	tok_expand_cmd(t_token *head)
 			cmd = 0;
 		tmp = tmp->next;
 	}
-
 }
 
 void	tok_contract_cmd(t_token *head)

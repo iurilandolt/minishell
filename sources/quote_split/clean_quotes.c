@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 12:02:35 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:04:14 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*allocate_for_clean_word(int i, int qt, int qts, int bar)
 	word = malloc(i - qt - qts - bar + 1);
 	if (!word)
 		return (0);
-	word[i - qt - qts -bar] = 0;
+	word[i - qt - qts - bar] = 0;
 	return (word);
 }
 
@@ -49,7 +49,7 @@ static void	transfer_word(char *str, char *word)
 	j = 0;
 	while (str[++i])
 	{
-		if ((str[i] != '\'' && str[i] != '\"' && str[i] != '\\') 
+		if ((str[i] != '\'' && str[i] != '\"' && str[i] != '\\')
 			|| (i != 0 && str[i - 1] == '\\'))
 			word[j++] = str[i];
 	}
@@ -70,7 +70,7 @@ char	**clean_quotes(char **table)
 	int		i;
 	int		j;
 	int		bar;
-	t_qt		qt;
+	t_qt	qt;
 	char	*word;
 
 	i = -1;

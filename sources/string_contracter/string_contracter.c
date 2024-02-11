@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_contracter.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:43:00 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 13:44:18 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:03:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static int	contracted_size(char *str)
 			qt++;
 		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
 			qts++;
-		if ((str[i] == '<' || str[i] == '>') 
+		if ((str[i] == '<' || str[i] == '>')
 			&& str[i + 1] == ' ' && str[i - 1] != '\\')
 			size--;
-		if (str[i] == ' ' && (!i || str[i - 1] == ' ') 
+		if (str[i] == ' ' && (!i || str[i - 1] == ' ')
 			&& !(qt % 2) && !(qts % 2))
 			size--;
 	}
@@ -61,7 +61,7 @@ static char	*string_transfer(char *con, char *str)
 		if (i && str[i] == ' ' && (str[i - 1] == '<' || str[i - 1] == '>')
 			&& (i < 2 || str[i - 2] != '\\'))
 			continue ;
-		if (str[i] == ' ' && (!i || str[i - 1] == ' ') 
+		if (str[i] == ' ' && (!i || str[i - 1] == ' ')
 			&& !(qt % 2) && !(qts % 2))
 			continue ;
 		con[j++] = str[i];

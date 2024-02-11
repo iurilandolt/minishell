@@ -6,14 +6,14 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 21:15:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 02:09:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum s_type
+typedef enum e_type
 {
 	RED_IN,
 	RED_OUT,
@@ -23,7 +23,7 @@ typedef enum s_type
 	SAND,
 	STD,
 	ARG
-}	e_type;
+}	t_type;
 
 typedef struct s_token
 {
@@ -33,7 +33,7 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-t_token *tok_create_array(char **split);
+t_token	*tok_create_array(char **split);
 void	set_token_type(t_token *token);
 void	tok_free_array(t_token *tokens, int i);
 
