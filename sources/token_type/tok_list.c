@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:21:22 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 00:32:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 01:41:03 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,16 @@ void	print_token_list(t_token *head)
 	{
 		if (!token->value)
 			return ;
-		printf("token: %s, type: %d\n", token->value, token->type);
+		printf("token: %s ; type: %d\n", token->value, token->type);
+		if (token->cmd)
+		{
+			int i = 0;
+			while (token->cmd[i])
+			{
+				printf("cmd[%d]: %s\n", i, token->cmd[i]);
+				i++;
+			}
+		}
 		token = token->next;
 	}
 }

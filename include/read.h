@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 19:51:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 01:50:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ambient_variable_expansion(char **string, char **envp);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ambient_variable_expansion(char **string, char **envp);
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
 int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+char	*ft_strjoin(char const *str1, char const *str2);
+
+char	**ft_split(const char *str, char c);
+
 int		split_size(char **split);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 

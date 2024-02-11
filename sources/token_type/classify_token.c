@@ -6,13 +6,14 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 00:56:06 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 01:57:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/token.h"
 #include "../../include/read.h"
 
+//add strlen check for safety?
 void	set_token_type(t_token *token)
 {
 	if (!token->value)
@@ -53,30 +54,6 @@ void	tok_expand_cmd(t_token *head)
 
 }
 
-char	*ft_strjoin(char const *str1, char const *str2)
-{
-	char	*dest;
-	size_t	len;
-	int		i;
-	int		j;
-
-	if (!str1 || !str2)
-		return (NULL);
-	len = ft_strlen(str1) + ft_strlen(str2);
-	dest = (char *)malloc(sizeof(char) * (len + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (*(str1 + ++i))
-		*(dest + i) = *(str1 + i);
-	while (str2[j])
-		*(dest + i++) = *(str2 + j++);
-	*(dest + i) = '\0';
-	free((char *)str1);
-	return (dest);
-}
-
 void	tok_contract_cmd(t_token *head)
 {
 	t_token	*tmp;
@@ -93,13 +70,14 @@ void	tok_contract_cmd(t_token *head)
 			while (tmp && tmp->type == ARG)
 			{
 				target = tmp;
+				dest->value = ft_strjoin(dest->value, " ");
 				dest->value = ft_strjoin(dest->value, target->value);
 				tmp = target->next;
 				tok_remove(head, target);
 			}
+			dest->cmd = ft_split(dest->value, ' ');
 		}
 		else
 			tmp = tmp->next;
 	}
-	(void)dest;
 }
