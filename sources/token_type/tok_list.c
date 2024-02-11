@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:21:22 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 19:21:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 00:32:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_token	*tok_create(char *str)
 	if (!token)
 		return (NULL);
 	token->next = NULL;
+	token->cmd = NULL;
 	token->value = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!token->value)
 	{
@@ -32,6 +33,35 @@ t_token	*tok_create(char *str)
 	return (token);
 }
 
+void tok_remove(t_token *head, t_token *to_remove)
+{
+	t_token *tmp;
+
+	if (!head || !to_remove)
+		return;
+	if (head == to_remove)
+		return;
+	else
+	{
+		tmp = head;
+		while (tmp->next)
+		{
+			if (tmp->next == to_remove)
+			{
+				tmp->next = to_remove->next;
+				free(to_remove->value);
+				if (to_remove->cmd)
+					free_table(to_remove->cmd);
+				free(to_remove);
+				return;
+			}
+			else
+				tmp = tmp->next;
+		}
+	}
+
+}
+
 t_token	*tok_free_list(t_token *token)
 {
 	t_token	*next;
@@ -40,6 +70,8 @@ t_token	*tok_free_list(t_token *token)
 	{
 		next = token->next;
 		free(token->value);
+		if (token->cmd)
+			free_table(token->cmd);
 		free(token);
 		token = next;
 	}

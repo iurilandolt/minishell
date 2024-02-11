@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 19:45:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 00:56:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,53 @@ void	tok_expand_cmd(t_token *head)
 
 }
 
-//check if token is of type STD, if it is, and the next token is of type ARG;
-// strjoin the two tokens and free the next token, keep doing that while the next token is of type ARG
+char	*ft_strjoin(char const *str1, char const *str2)
+{
+	char	*dest;
+	size_t	len;
+	int		i;
+	int		j;
 
-void	tok_contract_cmd(t_token *tok_ptr)
+	if (!str1 || !str2)
+		return (NULL);
+	len = ft_strlen(str1) + ft_strlen(str2);
+	dest = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (*(str1 + ++i))
+		*(dest + i) = *(str1 + i);
+	while (str2[j])
+		*(dest + i++) = *(str2 + j++);
+	*(dest + i) = '\0';
+	free((char *)str1);
+	return (dest);
+}
+
+void	tok_contract_cmd(t_token *head)
 {
 	t_token	*tmp;
+	t_token	*dest;
+	t_token	*target;
 
-	tmp = tok_ptr;
+	tmp = head;
 	while (tmp)
 	{
-		tmp = tmp->next;
+		if (tmp->type == STD && tmp->next && tmp->next->type == ARG)
+		{
+			dest = tmp;
+			tmp = tmp->next;
+			while (tmp && tmp->type == ARG)
+			{
+				target = tmp;
+				dest->value = ft_strjoin(dest->value, target->value);
+				tmp = target->next;
+				tok_remove(head, target);
+			}
+		}
+		else
+			tmp = tmp->next;
 	}
+	(void)dest;
 }

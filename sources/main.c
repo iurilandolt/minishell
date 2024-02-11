@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 02:46:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/11 00:17:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	tokenize_list(char *line, char **envp)
 		return ;
 	tokens = tok_create_list(split);
 	tok_expand_cmd(tokens);
+	tok_contract_cmd(tokens);
 	print_token_list(tokens);
 	if (!tokens)
 		write(1, "\0", 1);

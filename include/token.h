@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/10 02:50:43 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/10 21:15:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum s_type
 typedef struct s_token
 {
 	char			*value;
+	char			**cmd;
 	int				type;
 	struct s_token	*next;
 }	t_token;
@@ -42,5 +43,8 @@ t_token	*tok_create_list(char **split);
 
 void	print_token_list(t_token *head);
 void	tok_expand_cmd(t_token *head);
+
+void	tok_remove(t_token *head, t_token *to_remove);
+void	tok_contract_cmd(t_token *head);
 
 #endif
