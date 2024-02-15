@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 19:21:22 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 02:06:46 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:12:20 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ t_token	*tok_create(char *str)
 	return (token);
 }
 
-void	tok_remove(t_token *head, t_token *to_remove)
+t_token	*tok_remove(t_token *head, t_token *to_remove)
 {
 	t_token	*tmp;
 
 	if (!head || !to_remove)
-		return ;
+		return (0);
 	if (head == to_remove)
-		return ;
+		return (0);
 	else
 	{
 		tmp = head;
@@ -53,12 +53,13 @@ void	tok_remove(t_token *head, t_token *to_remove)
 				if (to_remove->cmd)
 					free_table(to_remove->cmd);
 				free(to_remove);
-				return ;
+				return (tmp);
 			}
 			else
 				tmp = tmp->next;
 		}
 	}
+	return (0);
 }
 
 t_token	*tok_free_list(t_token *token)

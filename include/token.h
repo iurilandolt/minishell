@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 02:09:31 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:09:45 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ typedef enum e_type
 	RED_OUT,
 	RED_APP,
 	HERE_DOC,
-	PIPE,
-	SAND,
 	STD,
-	ARG
+	ARG,
+	PIPE,
+	SAND
 }	t_type;
 
 typedef struct s_token
@@ -44,7 +44,7 @@ t_token	*tok_create_list(char **split);
 void	print_token_list(t_token *head);
 void	tok_expand_cmd(t_token *head);
 
-void	tok_remove(t_token *head, t_token *to_remove);
+t_token	*tok_remove(t_token *head, t_token *to_remove);
 void	tok_contract_cmd(t_token *head);
 
 #endif

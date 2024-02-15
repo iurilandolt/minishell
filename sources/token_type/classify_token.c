@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   classify_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/11 02:07:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:08:28 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	tok_expand_cmd(t_token *head)
 			cmd = 1;
 		else if (tmp->type == STD && cmd == 1)
 			tmp->type = ARG;
-		else if (tmp->type != STD)
+		else if (tmp->type > STD)
 			cmd = 0;
 		tmp = tmp->next;
 	}
@@ -57,22 +57,23 @@ void	tok_contract_cmd(t_token *head)
 {
 	t_token	*tmp;
 	t_token	*dest;
-	t_token	*target;
 
 	tmp = head;
 	while (tmp)
 	{
-		if (tmp->type == STD && tmp->next && tmp->next->type == ARG)
+		if (tmp->type == STD)
 		{
 			dest = tmp;
 			tmp = tmp->next;
-			while (tmp && tmp->type == ARG)
+			while (tmp && tmp->type <= ARG)
 			{
-				target = tmp;
-				dest->value = ft_strjoin(dest->value, " ");
-				dest->value = ft_strjoin(dest->value, target->value);
-				tmp = target->next;
-				tok_remove(head, target);
+				if (tmp->type == ARG)
+				{
+					dest->value = ft_strjoin(dest->value, " ");
+					dest->value = ft_strjoin(dest->value, tmp->value);
+					tmp = tok_remove(head, tmp);
+				}
+				tmp = tmp->next;
 			}
 			dest->cmd = ft_split(dest->value, ' ');
 		}

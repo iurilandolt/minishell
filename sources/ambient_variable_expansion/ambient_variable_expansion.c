@@ -35,6 +35,8 @@ static int	delta_size(char *string, char **envp)
 	j = 0;
 	while (ft_isalnum(string[i]))
 		i++;
+	if (i == 0)
+		return (0);
 	while (*envp)
 	{
 		if (ft_strncmp(string, *envp, i) == 0 && (*envp)[i] == '=')
@@ -55,6 +57,11 @@ void	expand_variable(char *string, char **envp, char *new, int *j)
 	k = 0;
 	while (ft_isalnum(string[k]))
 		k++;
+	if (k == 0)
+	{
+		new[(*j)++] = '$';
+		return ;
+	}
 	while (*envp)
 	{
 		if (ft_strncmp(string, *envp, k) == 0 && (*envp)[k] == '=')
