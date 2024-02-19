@@ -16,9 +16,9 @@
 typedef enum e_type
 {
 	RED_IN,
+	HERE_DOC,
 	RED_OUT,
 	RED_APP,
-	HERE_DOC,
 	STD,
 	ARG,
 	PIPE,
@@ -28,10 +28,17 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*value;
-	char			**cmd;
 	int				type;
+	char	**cmd;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_cmdblock
+{
+	char	**cmd;
+	t_token	*redin;
+	t_token	*redout;
+}	t_cmdblock;
 
 t_token	*tok_create_array(char **split);
 void	set_token_type(t_token *token);
@@ -46,5 +53,7 @@ void	tok_expand_cmd(t_token *head);
 
 t_token	*tok_remove(t_token *head, t_token *to_remove);
 void	tok_contract_cmd(t_token *head);
+
+t_cmdblock  *create_cmdblocks(t_token *tokens);
 
 #endif

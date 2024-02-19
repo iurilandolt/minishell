@@ -32,14 +32,34 @@ void	tok_free_array(t_token *tokens, int i)
 	free(tokens);
 }
 
+void	distinguish_cmd_arg(t_token *tokens)
+{
+	int	i;
+	int		cmd;
+
+	i = 0;
+	cmd = 0;
+	while (tokens[i].value)
+	{
+		if (tokens[i].type == STD && cmd == 0)
+			cmd = 1;
+		else if (tokens[i].type == STD && cmd == 1)
+			tokens[i].type = ARG;
+		else if (tokens[i].type > ARG)
+			cmd = 0;
+		i++;
+	}
+}
+
 t_token	*tok_create_array(char **split)
 {
 	t_token	*tokens;
 	int		i;
 
-	tokens = malloc(sizeof(t_token) * (split_size(split)));
+	tokens = malloc(sizeof(t_token) * (split_size(split) + 1));
 	if (!tokens)
 		return (NULL);
+	tokens[split_size(split)].value = 0;
 	i = 0;
 	while (split[i])
 	{
@@ -52,8 +72,11 @@ t_token	*tok_create_array(char **split)
 		}
 		ft_strlcpy(tokens[i].value, split[i], ft_strlen(split[i]) + 1);
 		set_token_type(&tokens[i]);
-		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 		i++;
 	}
+	distinguish_cmd_arg(tokens);
+	i = -1;
+	while (split[++i])
+		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 	return (tokens);
 }

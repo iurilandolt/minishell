@@ -39,24 +39,25 @@ int	handle_quotes(char *line, char ***split)
 	return (0);
 }
 
-void	tokenize(char *line, char **envp)
+t_token	*tokenize(char *line, char **envp)
 {
 	char	**split;
 	t_token	*tokens;
 
 	if (check_analyzer(line))
-		return ;
+		return (0);
 	if (ambient_variable_expansion(&line, envp))
-		return ;
+		return (0);
 	if (expand_and_contract(&line))
-		return ;
+		return (0);
 	if (handle_quotes(line, &split))
-		return ;
+		return (0);
 	tokens = tok_create_array(split);
 	if (!tokens)
 		perror("**tokens alloc failed.\n");
-	tok_free_array(tokens, split_size(split));
+	//tok_free_array(tokens, split_size(split));
 	free_table(split);
+	return (tokens);
 }
 
 void	tokenize_list(char *line, char **envp)
@@ -73,7 +74,7 @@ void	tokenize_list(char *line, char **envp)
 	if (handle_quotes(line, &split))
 		return ;
 	tokens = tok_create_list(split);
-	tok_expand_cmd(tokens);
+	//tok_expand_cmd(tokens);
 	tok_contract_cmd(tokens);
 	print_token_list(tokens);
 	if (!tokens)
@@ -82,8 +83,28 @@ void	tokenize_list(char *line, char **envp)
 	free_table(split);
 }
 
+void	print_cmdblocks(t_cmdblock *cmdblocks)
+{
+	int	i;
+	
+	while (cmdblocks->cmd)
+	{
+		i = -1;
+		printf("\n");
+		while (cmdblocks->cmd[++i])
+			printf("cmd[%i]: %s\n", i, cmdblocks->cmd[i]);
+		if (cmdblocks->redin)
+			printf("redin: %s\n", cmdblocks->redin->value);
+		if (cmdblocks->redout)
+			printf("redout: %s\n", cmdblocks->redout->value);
+		cmdblocks++;
+	}
+}
+
 void	repl(char **envp)
 {
+	t_token	*tokens;
+	t_cmdblock	*cmdblocks;
 	char	*line;
 
 	line = readline("<MiniShell> ");
@@ -95,8 +116,9 @@ void	repl(char **envp)
 			rl_clear_history();
 			break ;
 		}
-		//tokenize(line, envp);
-		tokenize_list(line, envp);
+		tokens = tokenize(line, envp);
+		cmdblocks = create_cmdblocks(tokens);
+		print_cmdblocks(cmdblocks);
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);
