@@ -55,7 +55,6 @@ t_token	*tokenize(char *line, char **envp)
 	tokens = tok_create_array(split);
 	if (!tokens)
 		perror("**tokens alloc failed.\n");
-	//tok_free_array(tokens, split_size(split));
 	free_table(split);
 	return (tokens);
 }
@@ -74,31 +73,13 @@ void	tokenize_list(char *line, char **envp)
 	if (handle_quotes(line, &split))
 		return ;
 	tokens = tok_create_list(split);
-	//tok_expand_cmd(tokens);
+	tok_expand_cmd(tokens);
 	tok_contract_cmd(tokens);
 	print_token_list(tokens);
 	if (!tokens)
 		write(1, "\0", 1);
 	tok_free_list(tokens);
 	free_table(split);
-}
-
-void	print_cmdblocks(t_cmdblock *cmdblocks)
-{
-	int	i;
-	
-	while (cmdblocks->cmd)
-	{
-		i = -1;
-		printf("\n");
-		while (cmdblocks->cmd[++i])
-			printf("cmd[%i]: %s\n", i, cmdblocks->cmd[i]);
-		if (cmdblocks->redin)
-			printf("redin: %s\n", cmdblocks->redin->value);
-		if (cmdblocks->redout)
-			printf("redout: %s\n", cmdblocks->redout->value);
-		cmdblocks++;
-	}
 }
 
 void	repl(char **envp)
@@ -119,6 +100,8 @@ void	repl(char **envp)
 		tokens = tokenize(line, envp);
 		cmdblocks = create_cmdblocks(tokens);
 		print_cmdblocks(cmdblocks);
+		tok_free_array(tokens);
+		free_cmdblocks(cmdblocks);
 		if (line && ft_strlen(line) > 0)
 			add_history(line);
 		free(line);

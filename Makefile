@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/11 01:19:39 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/19 17:07:50 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/token_type/tok_array.c \
 	$(SRC_PATH)/token_type/tok_list.c \
 	$(SRC_PATH)/cmd_blocks/cmd_blocks.c \
+	$(SRC_PATH)/cmd_blocks/cmd_blocks_utils.c \
 
 
 SANITIZER = -g -fsanitize=address

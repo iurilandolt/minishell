@@ -102,9 +102,9 @@ t_cmdblock  *create_cmdblocks(t_token *tokens)
 	cmdblock = malloc(sizeof(t_cmdblock) * (block_count + 1));
 	if (!cmdblock)
 		return (NULL);
-	cmdblock[block_count].cmd = 0;
-	while (cmdblock[++i].cmd)
+	while (++i <= block_count)
 	{
+		cmdblock[i].cmd = 0;
 		cmdblock[i].redin = 0;
 		cmdblock[i].redout = 0;
 	}

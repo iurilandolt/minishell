@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/15 17:09:45 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:08:35 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_cmdblock
 
 t_token	*tok_create_array(char **split);
 void	set_token_type(t_token *token);
-void	tok_free_array(t_token *tokens, int i);
+void	tok_free_array(t_token *tokens);
 
 t_token	*tok_create(char *str);
 t_token	*tok_free_list(t_token *token);
@@ -55,5 +55,7 @@ t_token	*tok_remove(t_token *head, t_token *to_remove);
 void	tok_contract_cmd(t_token *head);
 
 t_cmdblock  *create_cmdblocks(t_token *tokens);
+void	print_cmdblocks(t_cmdblock *cmdblocks);
+void	free_cmdblocks(t_cmdblock *cmdblocks);
 
 #endif

@@ -23,12 +23,20 @@ int	split_size(char **split)
 	return (i);
 }
 
-void	tok_free_array(t_token *tokens, int i)
+void	tok_free_array(t_token *tokens)
 {
-	while (--i >= 0)
-	{
+	int	i;
+	
+	i = -1;
+	while (tokens[++i].value)
 		free(tokens[i].value);
-	}
+	free(tokens);
+}
+
+void	tok_free_array_i(t_token *tokens, int i)
+{
+	while (--i)
+		free(tokens[i].value);
 	free(tokens);
 }
 
@@ -67,7 +75,7 @@ t_token	*tok_create_array(char **split)
 				* (ft_strlen(split[i]) + 1));
 		if (!tokens[i].value)
 		{
-			tok_free_array(tokens, i);
+			tok_free_array_i(tokens, i);
 			return (NULL);
 		}
 		ft_strlcpy(tokens[i].value, split[i], ft_strlen(split[i]) + 1);
