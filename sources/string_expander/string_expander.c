@@ -26,12 +26,14 @@ static int	expanded_size(char *str)
 					&& str[i] != '\\' && str[i] != '<' && str[i] != '>')
 				|| (i != 0 && str[i - 1] == '\\'))
 			&& (str[i + 1] == '&' || str[i + 1] == '|'
-				|| str[i + 1] == '<' || str[i + 1] == '>'))
+				|| str[i + 1] == '<' || str[i + 1] == '>'
+				|| str[i + 1] == '(' || str[i + 1] == ')'))
 			size++;
 		if ((str[i + 1] != ' ' && str[i + 1] != '&' && str[i + 1] != '|'
 				&& str[i + 1] != '<' && str[i + 1] != '>')
-			&& (str[i] == '&' || str[i] == '|'
-				|| str[i] == '<' || str[i] == '>')
+			&& (str[i] == '&' || str[i] == '|' 
+				|| str[i] == '<' || str[i] == '>'
+				|| str[i] == '(' || str[i] == ')')
 			&& (i == 0 || str[i - 1] != '\\'))
 			size++;
 	}
@@ -52,12 +54,14 @@ static char	*string_transfer(char *exp, char *str)
 					&& str[i] != '\\' && str[i] != '<' && str[i] != '>')
 				|| (i != 0 && str[i - 1] == '\\'))
 			&& (str[i + 1] == '&' || str[i + 1] == '|'
-				|| str[i + 1] == '<' || str[i + 1] == '>'))
+				|| str[i + 1] == '<' || str[i + 1] == '>'
+				|| str[i + 1] == '(' || str[i + 1] == ')'))
 			exp[j++] = ' ';
 		if ((str[i + 1] != ' ' && str[i + 1] != '&' && str[i + 1] != '|'
 				&& str[i + 1] != '<' && str[i + 1] != '>')
 			&& (str[i] == '&' || str[i] == '|'
-				|| str[i] == '<' || str[i] == '>')
+				|| str[i] == '<' || str[i] == '>'
+				|| str[i] == '(' || str[i] == ')')
 			&& (i == 0 || str[i - 1] != '\\'))
 			exp[j++] = ' ';
 	}

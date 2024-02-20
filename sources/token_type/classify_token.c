@@ -26,10 +26,16 @@ void	set_token_type(t_token *token)
 		token->type = RED_OUT;
 	else if (ft_strncmp(token->value, "<", 1) == 0)
 		token->type = RED_IN;
+	else if (ft_strncmp(token->value, "||", 2) == 0)
+		token->type = OR;
 	else if (ft_strncmp(token->value, "|", 1) == 0)
 		token->type = PIPE;
 	else if (ft_strncmp(token->value, "&", 1) == 0)
 		token->type = SAND;
+	else if (ft_strncmp(token->value, "(", 1) == 0)
+		token->type = PRTS;
+	else if (ft_strncmp(token->value, ")", 1) == 0)
+		token->type = PRTS;
 	else
 		token->type = STD;
 }

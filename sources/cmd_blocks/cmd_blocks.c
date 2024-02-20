@@ -70,8 +70,10 @@ char	**concatenate_cmd(t_token *tokens)
 void	fill_cmdblocks(t_cmdblock *cmdblock, t_token *tokens)
 {
 	int	i;
+	int	j;
 	
 	i = -1;
+	j = 0;
 	while (tokens[++i].value)
 	{
 		if (tokens[i].type == STD)
@@ -95,19 +97,20 @@ t_cmdblock  *create_cmdblocks(t_token *tokens)
 {
 	int	i;
 	int	block_count;
-	t_cmdblock	*cmdblock;
+	t_cmdblock	*cmdblocks;
 	
 	i = -1;
 	block_count = count_subtasks(tokens);
-	cmdblock = malloc(sizeof(t_cmdblock) * (block_count + 1));
-	if (!cmdblock)
+	cmdblocks = malloc(sizeof(t_cmdblock) * (block_count + 1));
+	if (!cmdblocks)
 		return (NULL);
 	while (++i <= block_count)
 	{
-		cmdblock[i].cmd = 0;
-		cmdblock[i].redin = 0;
-		cmdblock[i].redout = 0;
+		cmdblocks[i].cmd = 0;
+		cmdblocks[i].redin = 0;
+		cmdblocks[i].redout = 0;
 	}
-	fill_cmdblocks(cmdblock, tokens);
-	return (cmdblock);
+	fill_cmdblocks(cmdblocks, tokens);
+	print_cmdblocks(cmdblocks);
+	return (cmdblocks);
 }

@@ -26,8 +26,12 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/token_type/classify_token.c \
 	$(SRC_PATH)/token_type/tok_array.c \
 	$(SRC_PATH)/token_type/tok_list.c \
+	$(SRC_PATH)/tokenize/tokenize.c \
+	$(SRC_PATH)/create_pipes/create_pipes.c \
 	$(SRC_PATH)/cmd_blocks/cmd_blocks.c \
 	$(SRC_PATH)/cmd_blocks/cmd_blocks_utils.c \
+	$(SRC_PATH)/operator_rules/operator_rules.c \
+	
 
 
 SANITIZER = -g -fsanitize=address

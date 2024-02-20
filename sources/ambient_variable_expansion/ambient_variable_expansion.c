@@ -47,7 +47,7 @@ static int	delta_size(char *string, char **envp)
 		return (-i - 1);
 	while ((*envp)[i + 1 + j])
 		j++;
-	return (j - i + 2 - 1);
+	return (j - i - 1);
 }
 
 void	expand_variable(char *string, char **envp, char *new, int *j)
@@ -70,10 +70,8 @@ void	expand_variable(char *string, char **envp, char *new, int *j)
 	}
 	if (*envp)
 	{
-		new[(*j)++] = '\'';
 		while ((*envp)[k + 1])
 			new[(*j)++] = (*envp)[k++ + 1];
-		new[(*j)++] = '\'';
 	}
 }
 

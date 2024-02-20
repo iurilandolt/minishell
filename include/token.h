@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/19 17:08:35 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:32:46 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ typedef enum e_type
 	RED_APP,
 	STD,
 	ARG,
+	PRTS,
 	PIPE,
-	SAND
+	SAND,
+	OR
 }	t_type;
 
 typedef struct s_token
@@ -39,6 +41,8 @@ typedef struct s_cmdblock
 	t_token	*redin;
 	t_token	*redout;
 }	t_cmdblock;
+
+t_token	*tokenize(char *line, char **envp);
 
 t_token	*tok_create_array(char **split);
 void	set_token_type(t_token *token);

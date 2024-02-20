@@ -20,9 +20,11 @@ static void	count_quotes(char *str, int *i, t_qt *qt, int *bar)
 	*bar = 0;
 	while (str[++(*i)])
 	{
-		if (str[*i] == '\'' && (*i == 0 || str[*i - 1] != '\\'))
+		if (str[*i] == '\'' && (*i == 0 || str[*i - 1] != '\\')
+			&& !(qt->qts % 2))
 			(qt->qt)++;
-		if (str[*i] == '\"' && (*i == 0 || str[*i - 1] != '\\'))
+		if (str[*i] == '\"' && (*i == 0 || str[*i - 1] != '\\')
+			&& !(qt->qt % 2))
 			(qt->qts)++;
 		if (str[*i] == '\\' && (*i == 0 || str[*i - 1] != '\\'))
 			(*bar)++;
@@ -42,15 +44,23 @@ static char	*allocate_for_clean_word(int i, int qt, int qts, int bar)
 
 static void	transfer_word(char *str, char *word)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	qt;
+	int	qts;	
 
 	i = -1;
 	j = 0;
+	qt = 0;
+	qts = 0;
 	while (str[++i])
 	{
-		if ((str[i] != '\'' && str[i] != '\"' && str[i] != '\\')
-			|| (i != 0 && str[i - 1] == '\\'))
+		if (str[i] == '\'' && (i == 0 || str[i - 1] != '\\'))
+			qt++;
+		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
+			qts++;
+		if ((!(str[i] == '\'' && !(qts % 2)) && !(str[i] == '\"' && !(qt % 2))
+			 && !(str[i] == '\\')) || (i != 0 && str[i - 1] == '\\'))
 			word[j++] = str[i];
 	}
 }
