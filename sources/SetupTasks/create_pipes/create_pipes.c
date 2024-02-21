@@ -10,12 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
-#include "../../include/quote_split.h"
-#include "../../include/token.h"
-#include "../../include/executer.h"
+#include "../../../include/read.h"
+#include "../../../include/executer.h"
 
-void	clean_pipefd(int (*pipefd)[2], int i)
+static void	*clean_pipefd(int (*pipefd)[2], int i)
 {
 	while (--i >= 0)
 	{
@@ -23,6 +21,7 @@ void	clean_pipefd(int (*pipefd)[2], int i)
 		close(pipefd[i][1]);
 	}
 	free(pipefd);
+	return (0);
 }
 
 int	(*create_pipes(t_operator *operators))[2]
@@ -45,10 +44,7 @@ int	(*create_pipes(t_operator *operators))[2]
 	while (++i < count)
 	{
 		if (pipe(pipefd[i]) == -1)
-		{
-			clean_pipefd(pipefd, i);
-			return (0);
-		}
+			return (clean_pipefd(pipefd, i));
 	}
 	return (pipefd);
 }

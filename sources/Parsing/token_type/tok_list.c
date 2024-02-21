@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/token.h"
-#include "../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/read.h"
 
 t_token	*tok_create(char *str)
 {

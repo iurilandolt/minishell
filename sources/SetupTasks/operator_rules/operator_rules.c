@@ -10,17 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
-#include "../../include/quote_split.h"
-#include "../../include/token.h"
-#include "../../include/executer.h"
+#include "../../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/executer.h"
 
 int	count_operators(t_token *tokens)
 {
 	int	i;
 	int	count;
 	
-	i = 0;
+	i = -1;
 	count = 0;
 	while (tokens[++i].value)
 	{

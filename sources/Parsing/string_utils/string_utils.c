@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
+#include "../../../include/read.h"
 
 size_t	ft_strlen(const char *s)
 {

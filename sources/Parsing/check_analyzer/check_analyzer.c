@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
+#include "../../../include/read.h"
 
 int	check_closure(char *string)
 {

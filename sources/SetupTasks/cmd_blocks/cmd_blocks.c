@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/token.h"
-#include "../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/read.h"
 
 int	count_subtasks(t_token *tokens)
 {
@@ -84,7 +84,7 @@ void	fill_cmdblocks(t_cmdblock *cmdblock, t_token *tokens)
 			cmdblock->redout = &tokens[i];
 		if (tokens[i].type >= PIPE)
 		{
-			if (tokens[i].type == PIPE)
+			if (tokens[i].type == PIPE && !cmdblock->redout)
 				cmdblock->redout = &tokens[i];
 			cmdblock++;
 			if (tokens[i].type == PIPE)

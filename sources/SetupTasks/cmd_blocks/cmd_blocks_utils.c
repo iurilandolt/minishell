@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/token.h"
-#include "../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/read.h"
 
 void	print_cmdblocks(t_cmdblock *cmdblocks)
 {

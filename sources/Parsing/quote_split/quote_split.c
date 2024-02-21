@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/quote_split.h"
+#include "../../../include/quote_split.h"
 
 static char	*ft_strndup(const char *str, int n, char ***table, int k)
 {

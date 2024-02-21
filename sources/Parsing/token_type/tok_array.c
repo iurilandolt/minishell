@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/token.h"
-#include "../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/read.h"
 
 int	split_size(char **split)
 {
@@ -83,8 +83,5 @@ t_token	*tok_create_array(char **split)
 		i++;
 	}
 	distinguish_cmd_arg(tokens);
-	i = -1;
-	while (split[++i])
-		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 	return (tokens);
 }

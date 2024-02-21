@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
+#include "../../../include/read.h"
 
 static int	ft_isdelimeter(char str, char c)
 {

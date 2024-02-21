@@ -62,4 +62,6 @@ t_cmdblock  *create_cmdblocks(t_token *tokens);
 void	print_cmdblocks(t_cmdblock *cmdblocks);
 void	free_cmdblocks(t_cmdblock *cmdblocks);
 
+int	tokens_check(t_token *tokens);
+
 #endif

@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/read.h"
-#include "../../include/quote_split.h"
-#include "../../include/token.h"
-#include "../../include/executer.h"
+#include "../../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/quote_split.h"
 
 int	expand_and_contract(char **line)
 {
@@ -40,6 +39,15 @@ int	handle_quotes(char *line, char ***split)
 	return (0);
 }
 
+void	print_tokens(t_token *tokens)
+{
+	int	i;
+	
+	i = -1;
+	while (tokens[++i].value)
+		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);	
+}
+
 t_token	*tokenize(char *line, char **envp)
 {
 	char	**split;
@@ -57,6 +65,9 @@ t_token	*tokenize(char *line, char **envp)
 	if (!tokens)
 		perror("**tokens alloc failed.\n");
 	free_table(split);
+	if (tokens_check(tokens))
+		return (0);
+	print_tokens(tokens);
 	return (tokens);
 }
 

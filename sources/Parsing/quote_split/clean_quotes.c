@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/quote_split.h"
+#include "../../../include/quote_split.h"
 
 static void	count_quotes(char *str, int *i, t_qt *qt, int *bar)
 {

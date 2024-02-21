@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/token.h"
-#include "../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/read.h"
 
 //add strlen check for safety?
 void	set_token_type(t_token *token)

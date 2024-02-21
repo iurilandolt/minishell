@@ -32,7 +32,7 @@ static int	contracted_size(char *str)
 		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
 			qts++;
 		if ((str[i] == '<' || str[i] == '>')
-			&& str[i + 1] == ' ' && str[i - 1] != '\\')
+			&& str[i + 1] == ' ' && (!i || str[i - 1] != '\\'))
 			size--;
 		if (str[i] == ' ' && (!i || str[i - 1] == ' ')
 			&& !(qt % 2) && !(qts % 2))
