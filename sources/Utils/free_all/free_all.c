@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_split.h                                      :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:37:11 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 10:54:17 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/02/22 18:45:03 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUOTE_SPLIT_H
-# define QUOTE_SPLIT_H
-
-# include <stdlib.h>
-# include <stdio.h>
-
-typedef struct s_qt
+void	free_readfrom(int **readfrom, int ntasks)
 {
-	int	qt;
-	int	qts;
-}	t_qt;
-
-char	**quote_split(char const *s, char c);
-char	**clean_quotes(char **table);
-
-#endif
+	int	i;
+	
+	i = -1;
+	while (++i < ntasks)
+		free(readfrom[i]);
+	free(readfrom);
+}

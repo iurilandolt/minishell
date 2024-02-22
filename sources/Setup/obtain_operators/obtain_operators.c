@@ -80,20 +80,6 @@ void	assign_operator_codes(t_token *tokens, t_operator *operators)
 	}
 }
 
-void	print_operators(t_operator *operators)
-{
-	int	i;
-	
-	i = -1;
-
-	while (operators[++i].token)
-	{
-		printf("\n");
-		printf("op: %s; type: %i\n", operators[i].token->value, operators[i].token->type);
-		printf("flag: %i\n", operators[i].flag);
-	}
-}
-
 t_operator	*operator_rules(t_token *tokens)
 {
 	int	count;
@@ -105,6 +91,5 @@ t_operator	*operator_rules(t_token *tokens)
 		return (0);
 	operators[count].token = 0;
 	assign_operator_codes(tokens, operators);
-	print_operators(operators);
 	return (operators);
 }

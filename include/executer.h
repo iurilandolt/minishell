@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/20 15:56:06 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:16:38 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,21 @@ typedef struct s_operator
 
 typedef struct s_all
 {
-	int	(*pipefd)[2];
-	t_token *tokens;
-	t_cmdblock  *cmdblocks;
-	t_operator  *operators;
+	int		ntasks;
+	int		(*pipes)[2];
+	t_token 	*tokens;
+	char		***commands;
+	int		**readfrom;
+	t_token		**writeto;
+	t_operator 	*operators;
+	
 }   t_all;
 
+t_token	**obtain_write_documents(t_token *tokens, int ntasks);
+void	print_all(t_all *all);
+char	*check_bin_path(char **envp, char *cmd);
+int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks);
+char	***obtain_commands(char **envp, t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int	(*create_pipes(t_operator *operators))[2];
 

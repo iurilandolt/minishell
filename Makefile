@@ -21,17 +21,21 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/Parsing/string_expander/string_expander.c \
 	$(SRC_PATH)/Parsing/string_contracter/string_contracter.c \
-	$(SRC_PATH)/Parsing/string_utils/string_utils.c \
 	$(SRC_PATH)/Parsing/string_utils/split.c \
 	$(SRC_PATH)/Parsing/token_type/classify_token.c \
 	$(SRC_PATH)/Parsing/token_type/tok_array.c \
 	$(SRC_PATH)/Parsing/token_type/tok_list.c \
 	$(SRC_PATH)/Parsing/tokenize/tokenize.c \
 	$(SRC_PATH)/Parsing/tokens_check/tokens_check.c \
-	$(SRC_PATH)/SetupTasks/create_pipes/create_pipes.c \
-	$(SRC_PATH)/SetupTasks/cmd_blocks/cmd_blocks.c \
-	$(SRC_PATH)/SetupTasks/cmd_blocks/cmd_blocks_utils.c \
-	$(SRC_PATH)/SetupTasks/operator_rules/operator_rules.c \
+	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
+	$(SRC_PATH)/Setup/obtain_commands/obtain_commands.c \
+	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
+	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
+	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
+	$(SRC_PATH)/Utils/string_utils/string_utils.c \
+	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
+	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
+	$(SRC_PATH)/Utils/prints/print_all.c \
 	
 SANITIZER = -g -fsanitize=address
 
@@ -43,12 +47,13 @@ OBJ =$(addprefix objects/, $(notdir $(SRC:.c=.o)))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
 
-objects/%.o: $(SRC) | objects
-	for file in $(SRC); do \
-		cc $(CFLAGS) -c $$file -o objects/$$(basename $$file .c).o; \
-	done
+objects/%.o: */%.c| objects
+	cc $(CFLAGS) -c $< -o $@
+
+objects/%.o: */*/*/%.c | objects
+	cc $(CFLAGS) -c $< -o $@
 		
 objects:
 	mkdir objects
