@@ -81,7 +81,6 @@ int	process_line(char *line, char **envp)
 	if (!session.writeto)
 		return (free_session(&session));
 	print_session(&session);
-
 	//perform_tasks(envp, &session);
 	return (free_session(&session));
 }

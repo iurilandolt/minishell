@@ -6,27 +6,22 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/23 13:58:40 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:38:45 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	prepare_writefds(t_session *session, int taskn)
-{
-	int	i;
-	int	write fd;
-	
-	i = -1;
-	while (session->writeto[taskn][++i].value 
-		&& session->writeto[taskn][i].type < PIPE)
-	if (session->writeto[taskn][0].type == PIPE)
-		writefd = session->pipes[session->operator[taskn].flag];
-}
+#include "../../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/executer.h"
 
 void	task(char **envp, t_session *session, int taskn)
 {
 	int	writefd;
 	
 	writefd = prepare_writefds(session, taskn);
+	perform_redirects(session, taskn, writefd);
+	close_opened_fds(session);
+	check_command(session->commands[taskn]);
 }
 
 void	perform_task(char **envp, t_session *session, int taskn)
@@ -51,14 +46,16 @@ void	perform_tasks(char **envp, t_session *session)
 	while (i < session->ntasks)
 	{
 		while (on == 0 || (i + on < session->ntasks
-			&& session->operator[i + on - 1].token->type == PIPE))
+			&& session->operators[i + on - 1].token->type == PIPE))
 			perform_task(envp, session, i + on++);
 		i += on;
 		while (on--)
 			wait(&status);
-		if (session->operator[i - 1].token->type == SAND && exit_status(status))
-			i += session->operator[i - 1].flag;
-		else if (session->operator[i - 1].token->type == OR && !exit_status(status))
-			i += session->operator[i - 1].flag;		
+		if (session->operators[i - 1].token->type == SAND 
+            		&& !((status & 0xff00) >> 8)))
+			i += session->operators[i - 1].flag;
+		else if (session->operators[i - 1].token->type == OR 
+            		&& ((status & 0xff00) >> 8)))
+			i += session->operators[i - 1].flag;		
 	}
 }
