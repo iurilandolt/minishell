@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/22 12:35:13 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:22:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	argument_count(t_token *tokens)
 {
 	int	i;
 	int	size;
-	
+
 	i = 0;
 	size = 0;
 	while (tokens[i].value && tokens[i].type <= ARG)
@@ -35,7 +35,7 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 	int	i;
 	int	size;
 	char	**cmd;
-	
+
 	i = 0;
 	size = argument_count(tokens);
 	cmd = malloc(sizeof(char *) * (size + 1));
@@ -61,7 +61,7 @@ char	***obtain_commands(char **envp, t_token *tokens, int ntasks)
 	int	i;
 	int	j;
 	char	***commands;
-	
+
 	commands = malloc(ntasks * sizeof(char **));
 	if (!commands)
 	{

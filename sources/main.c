@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/22 18:57:00 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:22:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static void	free_table_n(void **table, int ntasks)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < ntasks)
 		free(table[i]);
@@ -45,7 +45,7 @@ int	number_of_tasks(t_token *tokens)
 {
 	int	i;
 	int	number;
-	
+
 	i = -1;
 	number = 1;
 	while (tokens[++i].value)
@@ -70,7 +70,7 @@ int	process_line(char *line, char **envp)
 	session.pipes = create_pipes(session.operators);
 	if (!session.pipes)
 		return (free_session(&session));
-	session.readfrom = 
+	session.readfrom =
 		obtain_read_documents(session.tokens, session.pipes, session.ntasks);
 	if (!session.readfrom)
 		return (free_session(&session));
@@ -81,6 +81,7 @@ int	process_line(char *line, char **envp)
 	if (!session.writeto)
 		return (free_session(&session));
 	print_session(&session);
+
 	//perform_tasks(envp, &session);
 	return (free_session(&session));
 }

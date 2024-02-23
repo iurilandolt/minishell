@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   obtain_redirects_in.c                              :+:      :+:    :+:   */
+/*   obtain_read_documents.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/22 14:33:39 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:24:09 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	number_of_ins(t_token *tokens)
 {
 	int	i;
 	int	number;
-	
+
 	i = 0;
 	number = 0;
 	if (tokens[i].type == PIPE && tokens[i++].type)
@@ -35,7 +35,7 @@ int	number_of_ins(t_token *tokens)
 int	open_file_descriptor(char *filename)
 {
 	int	fd;
-	
+
 	fd = open(filename, O_RDONLY, 0644);
 	if (fd == -1)
 		perror(filename);
@@ -47,7 +47,7 @@ int	open_here_doc(char *delimiter)
 	int	i;
 	char	*line;
 	int	here_doc_pipe[2];
-	
+
 	if (pipe(here_doc_pipe) == -1)
 	{
 		perror(0);
@@ -61,9 +61,8 @@ int	open_here_doc(char *delimiter)
 		while (line && line[i])
 			i++;
 		write(here_doc_pipe[1], line, i);
-		printf("line: %s\ndelimiter: %s\ni: %i\n", line, delimiter, i);
-		if (!strncmp(line, delimiter, --i - 1) 
-			&& !strncmp(&line[i], "\n", 1))
+		if (!ft_strncmp(line, delimiter, --i - 1)
+			&& !ft_strncmp(&line[i], "\n", 1))
 			break;
 		free(line);
 	}
@@ -78,7 +77,7 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	int	j;
 	int	number;
 	int	*readfds;
-	
+
 	i = -1;
 	number = number_of_ins(tokens);
 	readfds = malloc((number + 1) * sizeof(int));
@@ -105,7 +104,7 @@ void	print_redirects_in(int	**redirects_in, int ntasks)
 {
 	int		i;
 	int		j;
-	
+
 	i = -1;
 	while (++i < ntasks)
 	{
@@ -121,7 +120,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 	int	i;
 	int	j;
 	int	**readfrom;
-	
+
 	readfrom = malloc(ntasks * sizeof(int *));
 	if (!readfrom)
 	{
@@ -139,5 +138,5 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 			readfrom[++j] = get_read_documents(
 				&tokens[i + (tokens[i].type > PIPE)], &pipefd);
 	}
-	return (readfrom);	
+	return (readfrom);
 }

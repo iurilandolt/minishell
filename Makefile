@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/19 17:07:50 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/02/23 15:31:16 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/tokens_check/tokens_check.c \
 	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
 	$(SRC_PATH)/Setup/obtain_commands/obtain_commands.c \
+	$(SRC_PATH)/Setup/obtain_commands/check_bin_path.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
@@ -36,7 +37,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
-	
+
 SANITIZER = -g -fsanitize=address
 
 CC = cc
@@ -54,12 +55,12 @@ objects/%.o: */%.c| objects
 
 objects/%.o: */*/*/%.c | objects
 	cc $(CFLAGS) -c $< -o $@
-		
+
 objects:
 	mkdir objects
-	
+
 print-%:
-	@echo $* = $($*)	
+	@echo $* = $($*)
 
 clean:
 		rm -rf $(OBJ) objects

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/22 18:16:38 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:30:09 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator 	*operators;
-	
+
 }   t_session;
 
 t_token	**obtain_write_documents(t_token *tokens, int ntasks);
@@ -40,5 +40,6 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks);
 char	***obtain_commands(char **envp, t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int	(*create_pipes(t_operator *operators))[2];
+char	*check_bin_path(char **envp, char *cmd);
 
 #endif

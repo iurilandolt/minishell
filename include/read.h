@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/22 18:56:36 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:38:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strjoin(char const *str1, char const *str2);
 
 char	**ft_split(const char *str, char c);
+void	*clear(char **array);
 
 int		split_size(char **split);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
