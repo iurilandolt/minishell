@@ -25,19 +25,19 @@ static void	free_table_n(void **table, int ntasks)
 	free(table);
 }
 
-int	free_all(t_all *all)
+int	free_session(t_session *session)
 {
-	tok_free_array(all->tokens);
-	if (all->operators)
-		free(all->operators);
-	if (all->pipes)
-		free(all->pipes);
-	if (all->readfrom)
-		free_table_n((void **)all->readfrom, all->ntasks);
-	if (all->commands)
-		free_table_n((void **)all->commands, all->ntasks);
-	if (all->writeto)
-		free_table_n((void **)all->writeto, all->ntasks);
+	tok_free_array(session->tokens);
+	if (session->operators)
+		free(session->operators);
+	if (session->pipes)
+		free(session->pipes);
+	if (session->readfrom)
+		free_table_n((void **)session->readfrom, session->ntasks);
+	if (session->commands)
+		free_table_n((void **)session->commands, session->ntasks);
+	if (session->writeto)
+		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);
 }
 
@@ -58,30 +58,31 @@ int	number_of_tasks(t_token *tokens)
 
 int	process_line(char *line, char **envp)
 {
-	t_all	all;
+	t_session	session;
 
-	all.tokens = tokenize(line, envp);
-	if (!all.tokens)
+	session.tokens = tokenize(line, envp);
+	if (!session.tokens)
 		return (0);
-	all.ntasks = number_of_tasks(all.tokens);
-	all.operators = operator_rules(all.tokens);
-	if (!all.operators)
-		return (free_all(&all));
-	all.pipes = create_pipes(all.operators);
-	if (!all.pipes)
-		return (free_all(&all));
-	all.readfrom = obtain_read_documents(all.tokens, all.pipes, all.ntasks);
-	if (!all.readfrom)
-		return (free_all(&all));
-	all.commands = obtain_commands(envp, all.tokens, all.ntasks);
-	if (!all.commands)
-		return (free_all(&all));
-	all.writeto = obtain_write_documents(all.tokens, all.ntasks);
-	if (!all.writeto)
-		return (free_all(&all));
-	print_all(&all);
-	//perform_tasks(all);
-	return (free_all(&all));
+	session.ntasks = number_of_tasks(session.tokens);
+	session.operators = operator_rules(session.tokens);
+	if (!session.operators)
+		return (free_session(&session));
+	session.pipes = create_pipes(session.operators);
+	if (!session.pipes)
+		return (free_session(&session));
+	session.readfrom = 
+		obtain_read_documents(session.tokens, session.pipes, session.ntasks);
+	if (!session.readfrom)
+		return (free_session(&session));
+	session.commands = obtain_commands(envp, session.tokens, session.ntasks);
+	if (!session.commands)
+		return (free_session(&session));
+	session.writeto = obtain_write_documents(session.tokens, session.ntasks);
+	if (!session.writeto)
+		return (free_session(&session));
+	print_session(&session);
+	//perform_tasks(envp, &session);
+	return (free_session(&session));
 }
 
 void	read_evaluate_print_loop(char **envp)

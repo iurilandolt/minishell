@@ -35,7 +35,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
-	$(SRC_PATH)/Utils/prints/print_all.c \
+	$(SRC_PATH)/Utils/prints/print_session.c \
 	
 SANITIZER = -g -fsanitize=address
 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_all.c                                        :+:      :+:    :+:   */
+/*   print_session.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,9 +20,9 @@ void	print_command(char **command)
 	int	i;
 	
 	i  = -1;
-	if (command[0])
+	if (command)
 		printf("command:\n");
-	while (command[++i])
+	while (command && command[++i])
 		printf("\tcmd[%i]: %s\n", i, command[i]);
 }
 
@@ -58,17 +58,17 @@ void	print_operator(t_operator operator)
 	}
 }
 
-void	print_all(t_all *all)
+void	print_session(t_session *session)
 {
 	int	i;
 	
 	i = -1;
-	while (++i < all->ntasks)
+	while (++i < session->ntasks)
 	{
 		printf("\nTask %i\n", i);
-		print_command(all->commands[i]);
-		print_readfrom(all->readfrom[i]);
-		print_writeto(all->writeto[i]);
-		print_operator(all->operators[i]);
+		print_command(session->commands[i]);
+		print_readfrom(session->readfrom[i]);
+		print_writeto(session->writeto[i]);
+		print_operator(session->operators[i]);
 	}
 }
