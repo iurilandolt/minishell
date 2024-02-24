@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 15:48:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:54:36 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXECUTER_H
 
 # include "token.h"
-# include <sys/stat.h>
+# include "builtins.h"
 
 typedef struct s_operator
 {

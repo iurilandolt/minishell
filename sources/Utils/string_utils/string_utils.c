@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:37:46 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/23 15:42:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:48:43 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,33 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	while (str2[j])
 		*(dest + i++) = *(str2 + j++);
 	*(dest + i) = '\0';
+	return (dest);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!dest && !src)
+		return (NULL);
+	while (i < n)
+	{
+		*((char *)dest + i) = *((const char *)src + i);
+		i++;
+	}
+	return (dest);
+}
+
+char	*ft_strdup(const char *str)
+{
+	char	*dest;
+	size_t	size;
+
+	size = ft_strlen(str) + 1;
+	dest = (char *)malloc(sizeof(char) * size);
+	if (!dest)
+		return (NULL);
+	ft_memcpy(dest, str, size);
 	return (dest);
 }

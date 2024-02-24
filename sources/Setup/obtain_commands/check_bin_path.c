@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 15:38:56 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:52:58 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	return_dir_code(char *cmd)
 	}
 	else
 	{
-		printf("%s Is not a directory.\n", cmd);
+		printf("%s : No such file or directory.\n", cmd);
 		return (127);
 	}
 }

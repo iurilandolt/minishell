@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/23 15:31:16 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/24 17:32:16 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
+	$(SRC_PATH)/Builtins/chgdir/chgdir.c \
 
 SANITIZER = -g -fsanitize=address
 

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 16:08:03 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:48:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	*clear(char **array);
 
 int		split_size(char **split);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
+char	*ft_strdup(const char *str);
 
 void	free_table(char **table);
 
