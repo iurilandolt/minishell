@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:47:46 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/20 11:47:57 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:59:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
 #include "../../../include/token.h"
-#include "../../../include/quote_split.h"
 
 int	expand_and_contract(char **line)
 {
@@ -42,10 +41,10 @@ int	handle_quotes(char *line, char ***split)
 void	print_tokens(t_token *tokens)
 {
 	int	i;
-	
+
 	i = -1;
 	while (tokens[++i].value)
-		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);	
+		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 }
 
 t_token	*tokenize(char *line, char **envp)

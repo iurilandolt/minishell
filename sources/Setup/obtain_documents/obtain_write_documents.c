@@ -6,12 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:05:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 15:43:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:00:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
-#include "../../../include/quote_split.h"
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 
