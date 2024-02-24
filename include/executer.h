@@ -6,21 +6,21 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 14:56:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:48:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTER_H
-#define EXECUTER_H
+# define EXECUTER_H
 
-#include "token.h"
-#include <sys/stat.h>
+# include "token.h"
+# include <sys/stat.h>
 
 typedef struct s_operator
 {
-    int     flag;
-    t_token *token;
-}   t_operator;
+	int		flag;
+	t_token	*token;
+}	t_operator;
 
 typedef struct s_path_tools
 {
@@ -33,13 +33,12 @@ typedef struct s_session
 {
 	int			ntasks;
 	int			(*pipes)[2];
-	t_token 	*tokens;
+	t_token		*tokens;
 	char		***commands;
 	int			**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
-
-}   t_session;
+}	t_session;
 
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 void		print_session(t_session *all);
@@ -49,7 +48,7 @@ char		***obtain_commands(char **envp, t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
-char	*validate_bin_path(char **envp, char *cmd);
-int link_cmd_codes(char *cmd);
+char		*validate_bin_path(char **envp, char *cmd);
+int			link_cmd_codes(char *cmd);
 
 #endif

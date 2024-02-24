@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 14:49:40 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:42:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ static int	argument_count(t_token *tokens)
 	return (size);
 }
 
-
 static char	**concatenate_cmd(char **envp, t_token *tokens)
 {
-	int	i;
-	int	size;
+	int		i;
+	int		size;
 	char	**cmd;
 
 	i = 0;
@@ -52,7 +51,6 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 			cmd[i++] = tokens->value;
 		tokens++;
 	}
-
 	cmd[0] = validate_bin_path(envp, cmd[0]);
 	link_cmd_codes(cmd[0]);
 	return (cmd);
@@ -60,8 +58,8 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 
 char	***obtain_commands(char **envp, t_token *tokens, int ntasks)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	***commands;
 
 	commands = malloc(ntasks * sizeof(char **));

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 14:35:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:40:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	free_session(t_session *session)
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
 	if (session->commands)
-	{
-
 		free_table_n((void **)session->commands, session->ntasks);
-	}
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);
@@ -73,8 +70,8 @@ int	process_line(char *line, char **envp)
 	session.pipes = create_pipes(session.operators);
 	if (!session.pipes)
 		return (free_session(&session));
-	session.readfrom =
-		obtain_read_documents(session.tokens, session.pipes, session.ntasks);
+	session.readfrom = obtain_read_documents(session.tokens,
+			session.pipes, session.ntasks);
 	if (!session.readfrom)
 		return (free_session(&session));
 	session.commands = obtain_commands(envp, session.tokens, session.ntasks);

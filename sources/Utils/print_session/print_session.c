@@ -18,8 +18,8 @@
 void	print_command(char **command)
 {
 	int	i;
-	
-	i  = -1;
+
+	i = -1;
 	if (command)
 		printf("command:\n");
 	while (command && command[++i])
@@ -29,8 +29,8 @@ void	print_command(char **command)
 void	print_readfrom(int *readfd)
 {
 	int	i;
-	
-	i  = -1;
+
+	i = -1;
 	if (readfd[0])
 		printf("readfrom:\n");
 	while (readfd[++i])
@@ -40,8 +40,8 @@ void	print_readfrom(int *readfd)
 void	print_writeto(t_token *tokens)
 {
 	int	i;
-	
-	i  = -1;
+
+	i = -1;
 	if (tokens[0].value)
 		printf("writeto:\n");
 	while (tokens[++i].value)
@@ -53,7 +53,7 @@ void	print_operator(t_operator operator)
 	if (operator.token)
 	{
 		printf("operator:\n");
-		printf("\tvalue: %s; type: %i\n",operator.token->value, operator.token->type);
+		printf("\tvalue: %s; type: %i\n", operator.token->value, operator.token->type);
 		printf("\tflag: %i\n", operator.flag);
 	}
 }
@@ -61,7 +61,7 @@ void	print_operator(t_operator operator)
 void	print_session(t_session *session)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < session->ntasks)
 	{

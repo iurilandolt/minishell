@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_write_documents.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:05:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/22 17:37:21 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:43:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	number_of_write_documents(t_token *tokens)
 {
 	int	i;
 	int	number;
-	
+
 	i = -1;
 	number = 0;
 	while (tokens[++i].value && tokens[i].type < PIPE)
@@ -34,11 +34,11 @@ int	number_of_write_documents(t_token *tokens)
 
 t_token	*get_write_documents(t_token *tokens)
 {
-	int	i;
-	int	j;
-	int	number;
+	int		i;
+	int		j;
+	int		number;
 	t_token	*redout;
-	
+
 	i = -1;
 	number = number_of_write_documents(tokens);
 	redout = malloc((number + 1) * sizeof(t_token));
@@ -61,10 +61,10 @@ t_token	*get_write_documents(t_token *tokens)
 
 t_token	**obtain_write_documents(t_token *tokens, int ntasks)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_token	**writeto;
-	
+
 	writeto = malloc(ntasks * sizeof(t_token *));
 	if (!writeto)
 	{
@@ -72,7 +72,7 @@ t_token	**obtain_write_documents(t_token *tokens, int ntasks)
 		return (0);
 	}
 	i = -1;
-	j = 0;	
+	j = 0;
 	while (tokens[++i].value)
 	{
 		if (i == 0 || tokens[i].type >= PIPE)

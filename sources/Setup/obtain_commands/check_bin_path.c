@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 15:29:18 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:38:56 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	path_to_program(t_path_tools *tool, char *cmd, int i)
 
 char	*validate_bin_path(char **envp, char *cmd)
 {
-	int i;
-	t_path_tools tool;
+	int				i;
+	t_path_tools	tool;
 
 	i = 0;
 	if (access(cmd, F_OK) == 0)
@@ -60,8 +60,8 @@ int	cmd_is_dir(char *cmd)
 
 int	return_dir_code(char *cmd)
 {
-	struct stat path_stat;
-	int ret;
+	struct stat	path_stat;
+	int			ret;
 
 	ret = stat(cmd, &path_stat);
 	if (ret == 0)
@@ -71,7 +71,7 @@ int	return_dir_code(char *cmd)
 			printf("%s Is a directory.\n", cmd);
 			return (126);
 		}
-		return (errno); // -1
+		return (-1);
 	}
 	else
 	{
@@ -80,7 +80,7 @@ int	return_dir_code(char *cmd)
 	}
 }
 
-int link_cmd_codes(char *cmd)
+int	link_cmd_codes(char *cmd)
 {
 	if (!cmd)
 		return (127);
@@ -100,4 +100,3 @@ int link_cmd_codes(char *cmd)
 		printf("execeve: %s\n", cmd);
 	return (1);
 }
-
