@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/23 15:38:24 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:08:03 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,16 @@ int		split_size(char **split);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 
 void	free_table(char **table);
+
+// quote_split.h
+typedef struct s_qt
+{
+	int	qt;
+	int	qts;
+}	t_qt;
+
+char	**quote_split(char const *s, char c);
+char	**clean_quotes(char **table);
+
 
 #endif

@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_variable_expansion.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/09 16:17:08 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:11:52 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+#include "../../../include/read.h"
 
 static int	ft_isalnum(char c)
 {

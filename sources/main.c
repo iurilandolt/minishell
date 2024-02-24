@@ -6,12 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 15:40:37 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:17:57 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/read.h"
-#include "../include/quote_split.h"
 #include "../include/token.h"
 #include "../include/executer.h"
 
@@ -98,9 +97,11 @@ void	read_evaluate_print_loop(char **envp)
 			rl_clear_history();
 			break ;
 		}
-		process_line(line, envp);
 		if (ft_strlen(line) > 0)
+		{
 			add_history(line);
+			process_line(line, envp);
+		}
 		free(line);
 		line = readline("<Minishell> ");
 	}

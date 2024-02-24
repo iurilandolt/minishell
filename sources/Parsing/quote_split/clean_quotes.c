@@ -6,11 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/11 02:04:14 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:08:34 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/quote_split.h"
+#include "../../../include/read.h"
 
 static void	count_quotes(char *str, int *i, t_qt *qt, int *bar)
 {
@@ -47,7 +47,7 @@ static void	transfer_word(char *str, char *word)
 	int	i;
 	int	j;
 	int	qt;
-	int	qts;	
+	int	qts;
 
 	i = -1;
 	j = 0;

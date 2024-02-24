@@ -6,11 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:55:43 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/05 16:25:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:08:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/quote_split.h"
+#include "../../../include/read.h"
 
 static char	*ft_strndup(const char *str, int n, char ***table, int k)
 {
