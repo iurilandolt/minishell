@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 14:42:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:29:18 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,39 @@
 #include "../../../include/read.h"
 #include "../../../include/executer.h"
 
-
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+void	path_to_program(t_path_tools *tool, char *cmd, int i)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (!haystack && len == 0)
-		return (NULL);
-	else if (!haystack[i] && !needle[i])
-		return ((char *)haystack);
-	while ((haystack[i]) && (i <= len))
-	{
-		j = 0;
-		while ((needle[j]) && (haystack[i + j] == needle[j]) && (i + j < len))
-			j++;
-		if (!needle[j])
-			return ((char *)haystack + i);
-		i++;
-	}
-	return (NULL);
+	tool->path = ft_strjoin(tool->paths[i], "/");
+	tool->program = ft_strjoin(tool->path, cmd);
+	free(tool->path);
 }
 
 char	*validate_bin_path(char **envp, char *cmd)
 {
-	int		i;
-	char	**paths; // could be storeed on instance struct?
-	char	*path;
-	char	*program;
+	int i;
+	t_path_tools tool;
 
 	i = 0;
 	if (access(cmd, F_OK) == 0)
-	{
-		printf("valid path: %s\n", cmd);
 		return (cmd);
-	}
-	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (!envp[i])
 		return (NULL);
-	paths = ft_split(envp[i] + 5, ':');
+	tool.paths = ft_split(envp[i] + 5, ':');
 	i = 0;
-	while (*(paths + i))
+	while (*(tool.paths + i))
 	{
-		path = ft_strjoin(paths[i], "/"); // 60 61 62; could be handle by an auxiliar function?
-		program = ft_strjoin(path, cmd);
-		free(path);
-		if (access(program, F_OK) == 0)
+		path_to_program(&tool, cmd, i);
+		if (access(tool.program, F_OK) == 0)
 		{
-			clear(paths);
-			printf("valid path: %s\n", program);
-			return (program);
+			clear(tool.paths);
+			return (tool.program);
 		}
-		free(program);
+		free(tool.program);
 		i++;
 	}
-	clear(paths);
+	clear(tool.paths);
 	return (cmd);
 }
 
@@ -95,7 +71,7 @@ int	return_dir_code(char *cmd)
 			printf("%s Is a directory.\n", cmd);
 			return (126);
 		}
-		return (errno);
+		return (errno); // -1
 	}
 	else
 	{
@@ -104,10 +80,10 @@ int	return_dir_code(char *cmd)
 	}
 }
 
-int link_command(char *cmd)
+int link_cmd_codes(char *cmd)
 {
 	if (!cmd)
-		return (127); // Command not found
+		return (127);
 	if (cmd_is_dir(cmd))
 		return (return_dir_code(cmd));
 	if (access(cmd, F_OK) != 0)
@@ -121,7 +97,7 @@ int link_command(char *cmd)
 		return (126);
 	}
 	else if (access(cmd, X_OK) == 0)
-		printf("valid bin: %s\n", cmd);
+		printf("execeve: %s\n", cmd);
 	return (1);
 }
 
