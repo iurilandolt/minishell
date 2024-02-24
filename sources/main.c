@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/23 16:22:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:35:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	free_session(t_session *session)
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
 	if (session->commands)
+	{
+
 		free_table_n((void **)session->commands, session->ntasks);
+	}
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);
@@ -89,10 +92,10 @@ void	read_evaluate_print_loop(char **envp)
 {
 	char	*line;
 
-	line = readline("<MiniShell> ");
+	line = readline("<Minishell> ");
 	while (line)
 	{
-		if (!ft_strncmp(line, "exit", 4))
+		if (!ft_strncmp(line, "exit", 4) && ft_strlen(line) == 4)
 		{
 			free(line);
 			rl_clear_history();
@@ -102,7 +105,7 @@ void	read_evaluate_print_loop(char **envp)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		free(line);
-		line = readline("<MiniShell> ");
+		line = readline("<Minishell> ");
 	}
 }
 

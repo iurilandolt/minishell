@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/23 16:22:24 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:03:29 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	argument_count(t_token *tokens)
 	return (size);
 }
 
+
 static char	**concatenate_cmd(char **envp, t_token *tokens)
 {
 	int	i;
@@ -52,7 +53,8 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 		tokens++;
 	}
 	(void) envp;
-	//cmd[0] = check_bin_path(envp, cmd[0]);
+	cmd[0] = validate_bin_path(envp, cmd[0]);
+	link_command(cmd[0]);
 	return (cmd);
 }
 

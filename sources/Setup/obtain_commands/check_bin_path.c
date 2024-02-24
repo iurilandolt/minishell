@@ -6,12 +6,13 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/23 16:18:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:42:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/token.h"
 #include "../../../include/read.h"
+#include "../../../include/executer.h"
 
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
@@ -36,7 +37,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	return (NULL);
 }
 
-char	*check_bin_path(char **envp, char *cmd)
+char	*validate_bin_path(char **envp, char *cmd)
 {
 	int		i;
 	char	**paths; // could be storeed on instance struct?
@@ -60,27 +61,67 @@ char	*check_bin_path(char **envp, char *cmd)
 		path = ft_strjoin(paths[i], "/"); // 60 61 62; could be handle by an auxiliar function?
 		program = ft_strjoin(path, cmd);
 		free(path);
-		if (access(program, F_OK | X_OK) == 0)
+		if (access(program, F_OK) == 0)
 		{
 			clear(paths);
-			printf("valid bin: %s\n", program);
+			printf("valid path: %s\n", program);
 			return (program);
 		}
 		free(program);
 		i++;
 	}
-	printf("command not found: %s\n", cmd);
-	return (clear(paths));
+	clear(paths);
+	return (cmd);
 }
 
+int	cmd_is_dir(char *cmd)
+{
+	if (cmd[0] == '/' && cmd[ft_strlen(cmd) - 1] == '/')
+		return (1);
+	else
+		return (0);
+}
 
-/*
-func() check command.
-	check bin path, returns string if directory is valid or bin exists,
-	returns null otherwise.
-	if null retur code = 127
+int	return_dir_code(char *cmd)
+{
+	struct stat path_stat;
+	int ret;
 
-	if not NULL
-	check if is directory or file,
-	if directory or bin without permissions -> 126
-*/
+	ret = stat(cmd, &path_stat);
+	if (ret == 0)
+	{
+		if (S_ISDIR(path_stat.st_mode))
+		{
+			printf("%s Is a directory.\n", cmd);
+			return (126);
+		}
+		return (errno);
+	}
+	else
+	{
+		printf("%s Is not a directory.\n", cmd);
+		return (127);
+	}
+}
+
+int link_command(char *cmd)
+{
+	if (!cmd)
+		return (127); // Command not found
+	if (cmd_is_dir(cmd))
+		return (return_dir_code(cmd));
+	if (access(cmd, F_OK) != 0)
+	{
+		printf("%s : command not found\n", cmd);
+		return (127);
+	}
+	if (access(cmd, X_OK) != 0)
+	{
+		printf("%s: Permission denied.\n", cmd);
+		return (126);
+	}
+	else if (access(cmd, X_OK) == 0)
+		printf("valid bin: %s\n", cmd);
+	return (1);
+}
+
