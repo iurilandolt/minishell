@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 15:49:37 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:13:28 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token		*tokenize(char *line, char **envp);
 
 t_token		*tok_create_array(char **split);
 void		set_token_type(t_token *token);
-void		tok_free_array(t_token *tokens);
+t_token	*tok_free_array(t_token *tokens);
 
 t_token		*tok_create(char *str);
 t_token		*tok_free_list(t_token *token);

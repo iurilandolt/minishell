@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 17:54:36 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:03:26 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ int			(*create_pipes(t_operator *operators))[2];
 
 char		*validate_bin_path(char **envp, char *cmd);
 int			link_cmd_codes(char *cmd);
+
+void	free_session_commands(t_session *session);
+int		free_session(t_session *session);
 
 #endif

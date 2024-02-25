@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:47:46 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 17:59:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:13:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token	*tokenize(char *line, char **envp)
 		perror("**tokens alloc failed.\n");
 	free_table(split);
 	if (tokens_check(tokens))
-		return (0);
+		return (tok_free_array(tokens));
 	print_tokens(tokens);
 	return (tokens);
 }
