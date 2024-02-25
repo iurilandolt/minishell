@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 17:52:58 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:39:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,31 @@ char	*validate_bin_path(char **envp, char *cmd)
 
 int	cmd_is_dir(char *cmd)
 {
-	if (cmd[0] == '/' && cmd[ft_strlen(cmd) - 1] == '/')
-		return (1);
-	else
-		return (0);
+	struct stat	cmd_stat;
+
+	if (lstat(cmd, &cmd_stat) == 0 || stat(cmd, &cmd_stat) == 0)
+		return (S_ISDIR(cmd_stat.st_mode));
+	return (-1);
 }
 
 int	return_dir_code(char *cmd)
 {
-	struct stat	path_stat;
-	int			ret;
+	struct stat	cmd_stat;
 
-	ret = stat(cmd, &path_stat);
-	if (ret == 0)
+	if (lstat(cmd, &cmd_stat) == 0 || stat(cmd, &cmd_stat) == 0)
 	{
-		if (S_ISDIR(path_stat.st_mode))
+		if (S_ISDIR(cmd_stat.st_mode))
 		{
 			printf("%s Is a directory.\n", cmd);
 			return (126);
 		}
-		return (-1);
 	}
 	else
 	{
 		printf("%s : No such file or directory.\n", cmd);
 		return (127);
 	}
+	return (-1);
 }
 
 int	link_cmd_codes(char *cmd)
@@ -94,7 +93,7 @@ int	link_cmd_codes(char *cmd)
 	if (access(cmd, X_OK) != 0)
 	{
 		printf("%s: Permission denied.\n", cmd);
-		return (126);
+		return (128);
 	}
 	else if (access(cmd, X_OK) == 0)
 		printf("execeve: %s\n", cmd);
