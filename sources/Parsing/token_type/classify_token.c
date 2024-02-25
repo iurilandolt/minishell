@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   classify_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/15 17:08:28 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:51:49 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/token.h"
 #include "../../../include/read.h"
 
-//add strlen check for safety?
 void	set_token_type(t_token *token)
 {
 	if (!token->value)
@@ -40,6 +39,7 @@ void	set_token_type(t_token *token)
 		token->type = STD;
 }
 
+/*
 void	tok_expand_cmd(t_token *head)
 {
 	t_token	*tmp;
@@ -87,3 +87,4 @@ void	tok_contract_cmd(t_token *head)
 			tmp = tmp->next;
 	}
 }
+*/
