@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 15:42:35 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:40:18 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 	while (tokens->value && tokens->type <= ARG)
 	{
 		if (tokens->type == STD || tokens->type == ARG)
+		{
+			tokens->value = expand_tilde(tokens->value);
 			cmd[i++] = tokens->value;
+		}
 		tokens++;
 	}
 	cmd[0] = validate_bin_path(envp, cmd[0]);

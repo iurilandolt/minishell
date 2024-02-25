@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/25 13:02:33 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/25 14:41:38 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
 	$(SRC_PATH)/Setup/obtain_commands/obtain_commands.c \
 	$(SRC_PATH)/Setup/obtain_commands/check_bin_path.c \
+	$(SRC_PATH)/Setup/obtain_commands/expand_tilde.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 13:03:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:40:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ambient_variable_expansion(char **string, char **envp);
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
+
+char *expand_tilde(char *cmd);
+
 int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
