@@ -63,6 +63,38 @@ int	is_backslash(char c)
 	return (0);
 }
 
+/*
+int	process_line(char *line, char **envp)
+{
+	t_session	session;
+
+	session.tokens = tokenize(line, envp);
+	if (!session.tokens)
+		return (0);
+	session.ntasks = number_of_tasks(session.tokens);
+	session.operators = operator_rules(session.tokens);
+	if (!session.operators)
+		return (free_session(&session));
+	session.pipes = create_pipes(session.operators);
+	if (!session.pipes)
+		return (free_session(&session));
+	session.readfrom = obtain_read_documents(session.tokens,
+			session.pipes, session.ntasks);
+	if (!session.readfrom)
+		return (free_session(&session));
+	session.commands = obtain_commands(envp, session.tokens, session.ntasks);
+	if (!session.commands)
+		return (free_session(&session));
+	session.writeto = obtain_write_documents(session.tokens, session.ntasks);
+	if (!session.writeto)
+		return (free_session(&session));
+	print_session(&session);
+	//perform_tasks(envp, &session);
+	return (free_session(&session));
+}
+*/
+
+
 < file cmd1 arg1 arg1_2 | cmd2 arg2_1 arg2_2 > file
 < file ls arg1 arg1_2 | grep arg2_1 arg2_2 > file
 < file /usr/bin/ls arg1 arg1_2 | /usr/bin/grep arg2_1 arg2_2 > file

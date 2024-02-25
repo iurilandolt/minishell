@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 12:39:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:42:57 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 
 	i = 0;
 	if (access(cmd, F_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (!envp[i])
@@ -47,7 +47,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 		i++;
 	}
 	clear(tool.paths);
-	return (cmd);
+	return (ft_strdup(cmd));
 }
 
 int	cmd_is_dir(char *cmd)

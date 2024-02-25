@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 17:54:44 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:48:41 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ static void	free_table_n(void **table, int ntasks)
 		free(table[i]);
 	free(table);
 }
+void	free_session_commands(t_session *session)
+{
+	int	i;
+
+	i = -1;
+	while (++i < session->ntasks)
+	{	free(session->commands[i][0]);
+		free(session->commands[i]);
+	}
+	free(session->commands);
+}
 
 int	free_session(t_session *session)
 {
@@ -35,7 +46,7 @@ int	free_session(t_session *session)
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
 	if (session->commands)
-		free_table_n((void **)session->commands, session->ntasks);
+		free_session_commands(session);
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);
@@ -55,36 +66,6 @@ int	number_of_tasks(t_token *tokens)
 	}
 	return (number);
 }
-/*
-int	process_line(char *line, char **envp)
-{
-	t_session	session;
-
-	session.tokens = tokenize(line, envp);
-	if (!session.tokens)
-		return (0);
-	session.ntasks = number_of_tasks(session.tokens);
-	session.operators = operator_rules(session.tokens);
-	if (!session.operators)
-		return (free_session(&session));
-	session.pipes = create_pipes(session.operators);
-	if (!session.pipes)
-		return (free_session(&session));
-	session.readfrom = obtain_read_documents(session.tokens,
-			session.pipes, session.ntasks);
-	if (!session.readfrom)
-		return (free_session(&session));
-	session.commands = obtain_commands(envp, session.tokens, session.ntasks);
-	if (!session.commands)
-		return (free_session(&session));
-	session.writeto = obtain_write_documents(session.tokens, session.ntasks);
-	if (!session.writeto)
-		return (free_session(&session));
-	print_session(&session);
-	//perform_tasks(envp, &session);
-	return (free_session(&session));
-}
-*/
 
 int	process_line(t_session *session, char *line, char **envp)
 {
