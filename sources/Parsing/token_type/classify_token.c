@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:42:13 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 13:51:49 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:18:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,52 +39,3 @@ void	set_token_type(t_token *token)
 		token->type = STD;
 }
 
-/*
-void	tok_expand_cmd(t_token *head)
-{
-	t_token	*tmp;
-	int		cmd;
-
-	cmd = 0;
-	tmp = head;
-	while (tmp)
-	{
-		if (tmp->type == STD && cmd == 0)
-			cmd = 1;
-		else if (tmp->type == STD && cmd == 1)
-			tmp->type = ARG;
-		else if (tmp->type > STD)
-			cmd = 0;
-		tmp = tmp->next;
-	}
-}
-
-void	tok_contract_cmd(t_token *head)
-{
-	t_token	*tmp;
-	t_token	*dest;
-
-	tmp = head;
-	while (tmp)
-	{
-		if (tmp->type == STD)
-		{
-			dest = tmp;
-			tmp = tmp->next;
-			while (tmp && tmp->type <= ARG)
-			{
-				if (tmp->type == ARG)
-				{
-					dest->value = ft_strjoin(dest->value, " ");
-					dest->value = ft_strjoin(dest->value, tmp->value);
-					tmp = tok_remove(head, tmp);
-				}
-				tmp = tmp->next;
-			}
-			dest->cmd = ft_split(dest->value, ' ');
-		}
-		else
-			tmp = tmp->next;
-	}
-}
-*/

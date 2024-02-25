@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/25 14:41:38 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/25 15:16:04 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/string_utils/split.c \
 	$(SRC_PATH)/Parsing/token_type/classify_token.c \
 	$(SRC_PATH)/Parsing/token_type/tok_array.c \
-	$(SRC_PATH)/Parsing/token_type/tok_list.c \
 	$(SRC_PATH)/Parsing/tokenize/tokenize.c \
 	$(SRC_PATH)/Parsing/tokens_check/tokens_check.c \
 	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
