@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   perform_redirects.c                                :+:      :+:    :+:   */
+/*   close_opened_fds.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 16:01:13 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/26 12:27:02 by rcastelo         ###   ########.fr       */
+/*   Created: 2024/02/26 12:27:51 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/02/26 12:28:00 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,29 @@
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 
-void	perform_redirects(t_session *session, int taskn, int writefd)
+void	close_opened_fds(t_session *session, int writefd)
 {
 	int	i;
+	int	j;
 	
-	i = 0;
-	while (session->readfrom[taskn][i])
-		i++;
-	i--;
-	if (i >= 0 && session->readfrom[taskn][i] > 0)
+	i = -1;
+	while (++i < session->ntasks)
 	{
-		if (dup2(session->readfrom[taskn][i], 0) == -1)
+		j = 0;
+		while (session->readfrom[i][j])
+			j++;
+		if (session->readfrom[i][j - 1] > 0 
+			&& close(session->readfrom[i][j]))
 			perror(0);
 	}
-	if (writefd > 0)
+	i = -1;
+	while (session->pipes[++i][0])
 	{
-		if (dup2(writefd, 1) == -1)
+		if (close(session->pipes[i][0]))
+			perror(0);
+		if (close(session->pipes[i][1]))
 			perror(0);
 	}
+	if (writefd > 0 && close(writefd))
+		perror(0);
 }

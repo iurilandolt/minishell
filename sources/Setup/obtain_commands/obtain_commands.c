@@ -54,8 +54,6 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 		}
 		tokens++;
 	}
-	cmd[0] = validate_bin_path(envp, cmd[0]);
-	link_cmd_codes(cmd[0]);
 	return (cmd);
 }
 

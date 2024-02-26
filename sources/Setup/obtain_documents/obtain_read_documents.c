@@ -78,41 +78,25 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	int	number;
 	int	*readfds;
 
-	i = -1;
 	number = number_of_ins(tokens);
 	readfds = malloc((number + 1) * sizeof(int));
 	if (!readfds)
-		perror(0);
-	if (!readfds)
-		return (0);
+		return (perror(0), 0);
 	readfds[number] = 0;
 	i = -1;
 	j = 0;
-	if (tokens[i + 1].type == PIPE && tokens[i++ + 1].type)
+	if (tokens[i + 1].type == PIPE && tokens[i++ + 1].value)
 		readfds[j++] = (*(*pipefd)++)[0];
 	while (tokens[++i].value && tokens[i].type < PIPE)
 	{
 		if (tokens[i].type == RED_IN)
 			readfds[j++] = open_file_descriptor(&tokens[i].value[1]);
-		if (tokens[i].type == HERE_DOC)
+		else if (tokens[i].type == HERE_DOC)
 			readfds[j++] = open_here_doc(&tokens[i].value[2]);
+		if (j > 1 && tokens[i].type <= HERE_DOC && close(readfds[j - 1]))
+			perror(0);
 	}
 	return (readfds);
-}
-
-void	print_redirects_in(int	**redirects_in, int ntasks)
-{
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < ntasks)
-	{
-		j = -1;
-		printf("\ntask[%i]\n", i);
-		while (redirects_in[i][++j])
-			printf("fdin: %i\n", redirects_in[i][j]);
-	}
 }
 
 int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
@@ -123,10 +107,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 
 	readfrom = malloc(ntasks * sizeof(int *));
 	if (!readfrom)
-	{
-		perror(0);
-		return (0);
-	}
+		return (perror(0), 0);
 	i = -1;
 	while (++i < ntasks)
 		readfrom[i] = 0;

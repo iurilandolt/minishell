@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/23 15:38:45 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:27:14 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	task(char **envp, t_session *session, int taskn)
 	
 	writefd = prepare_writefds(session, taskn);
 	perform_redirects(session, taskn, writefd);
-	close_opened_fds(session);
-	check_command(session->commands[taskn]);
+	close_opened_fds(session, writefd);
+	session->commands[taskn][0] = validate_bin_path(envp, cmd[0]);
+	link_cmd_codes(session->commands[taskn][0]);
+	
 }
 
 void	perform_task(char **envp, t_session *session, int taskn)
@@ -52,10 +54,10 @@ void	perform_tasks(char **envp, t_session *session)
 		while (on--)
 			wait(&status);
 		if (session->operators[i - 1].token->type == SAND 
-            		&& !((status & 0xff00) >> 8)))
+            		&& !((status & 0xff00) >> 8))
 			i += session->operators[i - 1].flag;
 		else if (session->operators[i - 1].token->type == OR 
-            		&& ((status & 0xff00) >> 8)))
+            		&& ((status & 0xff00) >> 8))
 			i += session->operators[i - 1].flag;		
 	}
 }

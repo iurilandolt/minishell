@@ -33,8 +33,9 @@ int	prepare_writefds(t_session *session, int taskn)
 		if (writefd == -1)
 			perror(&session->writeto[taskn][++i].value[1]);
 		if (session->writeto[taskn][i + 1].value 
-			&& session->writeto[taskn][i + 1].type < PIPE)
-			close(writefd);
+			&& session->writeto[taskn][i + 1].type < PIPE
+			&& close(writefd))
+			perror(0);
 	}
 	if (session->writeto[taskn][0].type == PIPE)
 		writefd = session->pipes[session->operators[taskn].flag];

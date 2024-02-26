@@ -13,7 +13,7 @@
 #include "../../../include/read.h"
 #include "../../../include/executer.h"
 
-static void	*clean_pipefd(int (*pipefd)[2], int i)
+static void	clean_pipefd(int (*pipefd)[2], int i)
 {
 	while (--i >= 0)
 	{
@@ -21,7 +21,6 @@ static void	*clean_pipefd(int (*pipefd)[2], int i)
 		close(pipefd[i][1]);
 	}
 	free(pipefd);
-	return (0);
 }
 
 int	(*create_pipes(t_operator *operators))[2]
@@ -37,14 +36,15 @@ int	(*create_pipes(t_operator *operators))[2]
 		if(operators[i].token->type == PIPE)
 			count++;
 	}
-	pipefd = malloc(count * sizeof(int[2]));
+	pipefd = malloc((count + 1) * sizeof(int[2]));
 	if (!pipefd)
-		return (0);
+		return (perror(0), 0);
+	pipefd[count][0] = 0;
 	i = -1;
 	while (++i < count)
 	{
 		if (pipe(pipefd[i]) == -1)
-			return (clean_pipefd(pipefd, i));
+			return (perror(0), clean_pipefd(pipefd, i), 0);
 	}
 	return (pipefd);
 }
