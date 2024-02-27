@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/25 14:40:18 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:12:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 	int		size;
 	char	**cmd;
 
+	(void)envp;
 	i = 0;
 	size = argument_count(tokens);
 	cmd = malloc(sizeof(char *) * (size + 1));

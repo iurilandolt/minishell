@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 13:00:52 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:19:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	process_line(t_session *session, char *line, char **envp)
 	if (!session->writeto)
 		return (free_session(session));
 	print_session(session);
-	//perform_tasks(envp, session);
+	perform_tasks(envp, session);
 	return (free_session(session));
 
 }

@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/25 15:16:04 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/26 16:07:32 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,11 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/tokens_check/tokens_check.c \
 	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
 	$(SRC_PATH)/Setup/obtain_commands/obtain_commands.c \
-	$(SRC_PATH)/Setup/obtain_commands/check_bin_path.c \
+	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
+	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
+	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
+	$(SRC_PATH)/Tasks/prepare_writefds/prepare_writefds.c \
+	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
 	$(SRC_PATH)/Setup/obtain_commands/expand_tilde.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \

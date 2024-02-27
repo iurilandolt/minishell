@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/25 13:11:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:17:34 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ void	free_session_commands(t_session *session)
 
 	i = -1;
 	while (++i < session->ntasks)
-	{	free(session->commands[i][0]);
-		free(session->commands[i]);
+	{
+		if (session->commands[i][0])
+			free(session->commands[i][0]);
+		if (session->commands[i])
+			free(session->commands[i]);
 	}
 	free(session->commands);
 }
@@ -56,7 +59,7 @@ int	free_session(t_session *session)
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
 	if (session->commands)
-		free_session_commands(session);
+		//free_session_commands(session);
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);

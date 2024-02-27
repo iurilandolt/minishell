@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_opened_fds.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:27:51 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/26 12:28:00 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:02:40 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ void	close_opened_fds(t_session *session, int writefd)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
+	(void)writefd;
 	while (++i < session->ntasks)
 	{
 		j = 0;
 		while (session->readfrom[i][j])
 			j++;
-		if (session->readfrom[i][j - 1] > 0 
+		if (j > 0 && session->readfrom[i][j - 1] > 0
 			&& close(session->readfrom[i][j]))
 			perror(0);
 	}
@@ -37,6 +38,11 @@ void	close_opened_fds(t_session *session, int writefd)
 		if (close(session->pipes[i][1]))
 			perror(0);
 	}
+	/*
 	if (writefd > 0 && close(writefd))
-		perror(0);
+	{
+		fprintf(stderr, "fd -> %d\n", writefd);
+		perror("3\n");
+	}
+	*/
 }

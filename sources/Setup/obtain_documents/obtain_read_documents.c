@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/23 16:24:09 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:14:45 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	number = number_of_ins(tokens);
 	readfds = malloc((number + 1) * sizeof(int));
 	if (!readfds)
-		return (perror(0), 0);
+		return (perror(0), (void *)0);
 	readfds[number] = 0;
 	i = -1;
 	j = 0;
@@ -107,7 +107,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 
 	readfrom = malloc(ntasks * sizeof(int *));
 	if (!readfrom)
-		return (perror(0), 0);
+		return (perror(0), (void *)0);
 	i = -1;
 	while (++i < ntasks)
 		readfrom[i] = 0;

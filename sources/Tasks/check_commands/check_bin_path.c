@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 12:42:57 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:24:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,22 @@ int	return_dir_code(char *cmd)
 	return (-1);
 }
 
-int	link_cmd_codes(char *cmd)
+void	link_cmd_codes(char *cmd)
 {
 	if (!cmd)
-		return (127);
+		exit(127);
 	if (cmd_is_dir(cmd))
-		return (return_dir_code(cmd));
+		exit(return_dir_code(cmd));
 	if (access(cmd, F_OK) != 0)
 	{
 		printf("%s : command not found\n", cmd);
-		return (127);
+		exit(127);
 	}
 	if (access(cmd, X_OK) != 0)
 	{
 		printf("%s: Permission denied.\n", cmd);
-		return (128);
+		exit(128);
 	}
 	else if (access(cmd, X_OK) == 0)
 		printf("execeve: %s\n", cmd);
-	return (1);
 }

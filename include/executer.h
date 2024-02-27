@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/25 13:03:26 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:24:43 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "token.h"
 # include "builtins.h"
+# include <sys/wait.h>
 
 typedef struct s_operator
 {
@@ -42,16 +43,21 @@ typedef struct s_session
 
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 void		print_session(t_session *all);
-char		*check_bin_path(char **envp, char *cmd);
+
+void		close_opened_fds(t_session *session, int writefd);
+void		perform_tasks(char **envp, t_session *session);
+int			prepare_writefds(t_session *session, int taskn);
+void		perform_redirects(t_session *session, int taskn, int writefd);
+
 int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks);
 char		***obtain_commands(char **envp, t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
 char		*validate_bin_path(char **envp, char *cmd);
-int			link_cmd_codes(char *cmd);
+void		link_cmd_codes(char *cmd);
 
-void	free_session_commands(t_session *session);
-int		free_session(t_session *session);
+void		free_session_commands(t_session *session);
+int			free_session(t_session *session);
 
 #endif

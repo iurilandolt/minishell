@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 17:55:29 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/20 17:57:26 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:12:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	(*create_pipes(t_operator *operators))[2]
 	int	i;
 	int	count;
 	int	(*pipefd)[2];
-	
+
 	i = -1;
 	count = 0;
 	while (operators[++i].token)
@@ -38,13 +38,13 @@ int	(*create_pipes(t_operator *operators))[2]
 	}
 	pipefd = malloc((count + 1) * sizeof(int[2]));
 	if (!pipefd)
-		return (perror(0), 0);
+		return (perror(0), (void *)0);
 	pipefd[count][0] = 0;
 	i = -1;
 	while (++i < count)
 	{
 		if (pipe(pipefd[i]) == -1)
-			return (perror(0), clean_pipefd(pipefd, i), 0);
+			return (perror(0), clean_pipefd(pipefd, i), (void *)0);
 	}
 	return (pipefd);
 }
