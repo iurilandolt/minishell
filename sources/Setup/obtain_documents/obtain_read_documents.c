@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 13:53:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:58:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	open_here_doc(char *delimiter)
 			&& !ft_strncmp(&line[i - 1], "\n", 1))
 			break;
 		write(here_doc_pipe[1], line, i);
+
 		free(line);
 	}
 	free(line);
