@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/26 16:24:31 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:36:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	cmd_is_dir(char *cmd)
 {
 	struct stat	cmd_stat;
 
-	if (lstat(cmd, &cmd_stat) == 0 || stat(cmd, &cmd_stat) == 0)
+	if (stat(cmd, &cmd_stat) == 0)
 		return (S_ISDIR(cmd_stat.st_mode));
+	else if (lstat(cmd, &cmd_stat) == 0)
+		return (S_ISLNK(cmd_stat.st_mode));
 	return (-1);
 }
 
@@ -65,7 +67,7 @@ int	return_dir_code(char *cmd)
 
 	if (lstat(cmd, &cmd_stat) == 0 || stat(cmd, &cmd_stat) == 0)
 	{
-		if (S_ISDIR(cmd_stat.st_mode))
+		if (S_ISDIR(cmd_stat.st_mode) || S_ISLNK(cmd_stat.st_mode))
 		{
 			printf("%s Is a directory.\n", cmd);
 			return (126);
