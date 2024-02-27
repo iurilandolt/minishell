@@ -1,3 +1,0 @@
-execeve: /usr/bin/cat
-oops
-notes.txt

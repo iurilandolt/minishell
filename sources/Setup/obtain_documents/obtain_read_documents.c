@@ -85,7 +85,7 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	readfds[number] = 0;
 	i = -1;
 	j = 0;
-	if (tokens[i + 1].type == PIPE && tokens[i++ + 1].value)
+	if (tokens[i + 1].type == PIPE && tokens[++i].value)
 		readfds[j++] = (*(*pipefd)++)[0];
 	while (tokens[++i].value && tokens[i].type < PIPE)
 	{
@@ -93,7 +93,7 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 			readfds[j++] = open_file_descriptor(&tokens[i].value[1]);
 		else if (tokens[i].type == HERE_DOC)
 			readfds[j++] = open_here_doc(&tokens[i].value[2]);
-		if (j > 1 && tokens[i].type <= HERE_DOC && close(readfds[j - 1]))
+		if (j > 1 && tokens[i].type <= HERE_DOC && close(readfds[j - 2]))
 			perror(0);
 	}
 	return (readfds);

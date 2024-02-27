@@ -21,8 +21,7 @@ void	perform_redirects(t_session *session, int taskn, int writefd)
 	i = 0;
 	while (session->readfrom[taskn][i])
 		i++;
-	i--;
-	if (i >= 0 && session->readfrom[taskn][i] > 0)
+	if (--i >= 0 && session->readfrom[taskn][i] > 0)
 	{
 		if (dup2(session->readfrom[taskn][i], 0) == -1)
 			perror(0);

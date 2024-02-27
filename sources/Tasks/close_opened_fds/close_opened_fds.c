@@ -24,10 +24,10 @@ void	close_opened_fds(t_session *session, int writefd, int taskn)
 	{
 		j = 0;
 		while (session->readfrom[i][j])
-			j++;
+			j++;	
 		if (j > 0 && session->readfrom[i][j - 1] > 0
 			&& (j != 1 || (i < taskn && session->operators[i].token->type != PIPE))
-			&& close(session->readfrom[i][j]))
+			&& close(session->readfrom[i][j - 1]))
 			perror(0);
 	}
 	i = -1;

@@ -54,7 +54,8 @@ void	close_current_pipe(t_session *session, int taskn)
 
 	i = 0;
 	pipen = 0;
-	if (taskn >= session->ntasks - 1 || session->operators[taskn].token->type != PIPE)
+	if (taskn >= session->ntasks - 1 
+		|| session->operators[taskn].token->type != PIPE)
 		return ;
 	while(session->tokens[i].value && taskn)
 	{

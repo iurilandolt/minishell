@@ -28,7 +28,7 @@ int	prepare_writefds(t_session *session, int taskn)
 			writefd = open(&session->writeto[taskn][i].value[1],
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (session->writeto[taskn][i].type == RED_APP)
-			writefd = open(&session->writeto[taskn][i].value[1],
+			writefd = open(&session->writeto[taskn][i].value[2],
 				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (writefd == -1)
 			perror(&session->writeto[taskn][++i].value[1]);
