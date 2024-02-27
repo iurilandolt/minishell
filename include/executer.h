@@ -58,6 +58,6 @@ char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(char *cmd);
 
 void		free_session_commands(t_session *session);
-int			free_session(t_session *session);
+int			free_session(t_session *session, char flag);
 
 #endif

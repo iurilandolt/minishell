@@ -98,3 +98,6 @@ int	process_line(char *line, char **envp)
 < file cmd1 arg1 arg1_2 | cmd2 arg2_1 arg2_2 > file
 < file ls arg1 arg1_2 | grep arg2_1 arg2_2 > file
 < file /usr/bin/ls arg1 arg1_2 | /usr/bin/grep arg2_1 arg2_2 > file
+
+echo hello && notacmd | wc
+

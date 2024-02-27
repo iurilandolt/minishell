@@ -49,7 +49,7 @@ void	free_session_commands(t_session *session)
 	free(session->commands);
 }
 
-int	free_session(t_session *session)
+int	free_session(t_session *session, char flag)
 {
 	tok_free_array(session->tokens);
 	if (session->operators)
@@ -58,8 +58,10 @@ int	free_session(t_session *session)
 		free(session->pipes);
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
-	if (session->commands)
-		//free_session_commands(session);
+	if (flag && session->commands)
+		free_session_commands(session);
+	if (!flag && session->commands)
+		free_table_n((void **)session->commands, session->ntasks);
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
 	return (0);

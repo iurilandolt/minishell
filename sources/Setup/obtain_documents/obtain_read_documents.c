@@ -60,8 +60,8 @@ int	open_here_doc(char *delimiter)
 		i = 0;
 		while (line && line[i])
 			i++;
-		if (!ft_strncmp(line, delimiter, --i - 1)
-			&& !ft_strncmp(&line[i], "\n", 1))
+		if ((i == 1 || !ft_strncmp(line, delimiter, i - 2))
+			&& !ft_strncmp(&line[i - 1], "\n", 1))
 			break;
 		write(here_doc_pipe[1], line, i);
 		free(line);

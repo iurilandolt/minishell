@@ -28,6 +28,11 @@ int	number_of_write_documents(t_token *tokens)
 	}
 	if (tokens[i].value && tokens[i].type == PIPE)
 		number++;
+	while (tokens[i].value && tokens[i].type != 6 && tokens[i].value[0] != ')')
+		i++;
+	if (tokens[i].value && tokens[i].type == PRTS && tokens[i + 1].value
+		&& tokens[i + 1].type == PIPE)
+		number++;	
 	return (number);
 }
 
@@ -39,22 +44,24 @@ t_token	*get_write_documents(t_token *tokens)
 	t_token	*redout;
 
 	i = -1;
+	j = 0;
 	number = number_of_write_documents(tokens);
 	redout = malloc((number + 1) * sizeof(t_token));
 	if (!redout)
-	{
-		perror(0);
-		return (0);
-	}
+		return (perror(0), (void *)0);
 	redout[number].value = 0;
-	j = 0;
 	while (tokens[++i].value && tokens[i].type < PIPE)
 	{
 		if (tokens[i].type == RED_OUT || tokens[i].type == RED_APP)
 			redout[j++] = tokens[i];
 	}
 	if (tokens[i].value && tokens[i].type == PIPE)
-		redout[j] = tokens[i];
+		redout[j++] = tokens[i];
+	while (tokens[i].value && tokens[i].type != 6 && tokens[i].value[0] != ')')
+		i++;
+	if (tokens[i].value && tokens[i].type == PRTS && tokens[i + 1].value 
+		&& tokens[i + 1].type == PIPE)
+		redout[j++] = tokens[i + 1];
 	return (redout);
 }
 
@@ -66,10 +73,7 @@ t_token	**obtain_write_documents(t_token *tokens, int ntasks)
 
 	writeto = malloc(ntasks * sizeof(t_token *));
 	if (!writeto)
-	{
-		perror(0);
-		return (0);
-	}
+		return (perror(0), (void *)0);
 	i = -1;
 	j = 0;
 	while (tokens[++i].value)

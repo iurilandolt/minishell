@@ -14,6 +14,13 @@
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 
+int	correct_pipe(t_session *session, int taskn)
+{
+	if (session->operators[taskn].token->type == PIPE)
+		return (session->operators[taskn].flag);
+	return (session->operators[taskn + session->operators[taskn].flag].flag);
+}
+
 int	prepare_writefds(t_session *session, int taskn)
 {
 	int	i;
@@ -39,6 +46,6 @@ int	prepare_writefds(t_session *session, int taskn)
 	}
 	if (session->writeto[taskn][0].value
 				&& session->writeto[taskn][0].type == PIPE)
-		writefd = session->pipes[session->operators[taskn].flag][1];
+		writefd = session->pipes[correct_pipe(session, taskn)][1];
 	return (writefd);
 }

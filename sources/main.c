@@ -38,23 +38,23 @@ int	process_line(t_session *session, char *line, char **envp)
 	session->ntasks = number_of_tasks(session->tokens);
 	session->operators = operator_rules(session->tokens);
 	if (!session->operators)
-		return (free_session(session));
+		return (free_session(session, 0));
 	session->pipes = create_pipes(session->operators);
 	if (!session->pipes)
-		return (free_session(session));
+		return (free_session(session, 0));
 	session->readfrom = obtain_read_documents(session->tokens,
 			session->pipes, session->ntasks);
 	if (!session->readfrom)
-		return (free_session(session));
+		return (free_session(session, 0));
 	session->commands = obtain_commands(envp, session->tokens, session->ntasks);
 	if (!session->commands)
-		return (free_session(session));
+		return (free_session(session, 0));
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
-		return (free_session(session));
+		return (free_session(session, 0));
 	print_session(session);
 	perform_tasks(envp, session);
-	return (free_session(session));
+	return (free_session(session, 0));
 
 }
 
