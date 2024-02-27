@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:15:31 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 13:40:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:28:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 	{
 		if (tokens->type == STD || tokens->type == ARG)
 		{
-			//tokens->value = expand_tilde(tokens->value);
+			tokens->value = expand_tilde(tokens->value);
 			cmd[i++] = tokens->value;
 		}
 		tokens++;
