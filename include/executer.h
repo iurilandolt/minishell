@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/26 16:24:43 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:53:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_session
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 void		print_session(t_session *all);
 
-void		close_opened_fds(t_session *session, int writefd);
+void		close_opened_fds(t_session *session, int writefd, int taskn);
 void		perform_tasks(char **envp, t_session *session);
 int			prepare_writefds(t_session *session, int taskn);
 void		perform_redirects(t_session *session, int taskn, int writefd);

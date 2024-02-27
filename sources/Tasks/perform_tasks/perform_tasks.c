@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/26 17:19:34 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:41:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	task(char **envp, t_session *session, int taskn)
 
 	writefd = prepare_writefds(session, taskn);
 	perform_redirects(session, taskn, writefd);
-	close_opened_fds(session, writefd);
+	close_opened_fds(session, writefd, taskn);
 	session->commands[taskn][0] = validate_bin_path(envp, session->commands[taskn][0]);
 	link_cmd_codes(session->commands[taskn][0]);
 	execute_task(session->commands[taskn], envp, session);
@@ -47,6 +47,26 @@ void	perform_task(char **envp, t_session *session, int taskn)
 		task(envp, session, taskn);
 }
 
+void	close_current_pipe(t_session *session, int taskn)
+{
+	int	i;
+	int	pipen;
+
+	i = 0;
+	pipen = 0;
+	if (!session->writeto[taskn]->value || session->writeto[taskn]->type != PIPE)
+		return ;
+	while(session->tokens[i].value && taskn)
+	{
+		if (session->tokens[i].type >= PIPE)
+			taskn--;
+		if (session->tokens[i].type == PIPE)
+			pipen++;
+		i++;
+	}
+	close(session->pipes[pipen][1]);
+}
+
 void	perform_tasks(char **envp, t_session *session)
 {
 	int	i;
@@ -60,14 +80,17 @@ void	perform_tasks(char **envp, t_session *session)
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
 			perform_task(envp, session, i + on++);
-		i += on;
+
 		while (on--)
+		{
 			wait(&status);
+			close_current_pipe(session, i++);
+		}
 		if (i > 1 && session->operators[i - 2].token->type == SAND
             		&& !((status & 0xff00) >> 8))
 			i += session->operators[i - 2].flag;
 		else if (i > 1 && session->operators[i - 2].token->type == OR
-            		&& ((status & 0xff00) >> 8))
+			&& ((status & 0xff00) >> 8))
 			i += session->operators[i - 2].flag;
 	}
 }

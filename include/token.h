@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 15:15:58 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:31:10 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_token
 	char			*value;
 	int				type;
 	char			**cmd;
-	struct s_token	*next;
 }	t_token;
 
 typedef struct s_cmdblock
