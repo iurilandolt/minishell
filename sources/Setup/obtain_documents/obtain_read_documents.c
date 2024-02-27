@@ -93,7 +93,8 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 			readfds[j++] = open_file_descriptor(&tokens[i].value[1]);
 		else if (tokens[i].type == HERE_DOC)
 			readfds[j++] = open_here_doc(&tokens[i].value[2]);
-		if (j > 1 && tokens[i].type <= HERE_DOC && close(readfds[j - 2]))
+		if (j > 1 && tokens[i].type <= HERE_DOC
+			&& readfds[j - 2] != (*(*pipefd - 1))[0] && close(readfds[j - 2]))
 			perror(0);
 	}
 	return (readfds);
