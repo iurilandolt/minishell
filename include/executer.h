@@ -44,7 +44,7 @@ typedef struct s_session
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 void		print_session(t_session *all);
 
-void		close_opened_fds(t_session *session, int writefd, int taskn);
+void		close_opened_fds(t_session *session, int writefd);
 void		perform_tasks(char **envp, t_session *session);
 int			prepare_writefds(t_session *session, int taskn);
 void		perform_redirects(t_session *session, int taskn, int writefd);

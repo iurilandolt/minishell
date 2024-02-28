@@ -30,7 +30,7 @@ void	task(char **envp, t_session *session, int taskn)
 
 	writefd = prepare_writefds(session, taskn);
 	perform_redirects(session, taskn, writefd);
-	close_opened_fds(session, writefd, taskn);
+	close_opened_fds(session, writefd);
 	session->commands[taskn][0] 
 		= validate_bin_path(envp, session->commands[taskn][0]);
 	link_cmd_codes(session->commands[taskn][0]);
@@ -58,7 +58,7 @@ void	close_current_pipe(t_session *session, int taskn)
 	if (taskn >= session->ntasks - 1 
 		|| session->operators[taskn].token->type != PIPE)
 		return ;
-	while(session->tokens[i].value && taskn)
+	while (session->tokens[i].value && taskn)
 	{
 		if (session->tokens[i].type >= PIPE)
 			taskn--;
@@ -89,9 +89,11 @@ void	perform_tasks(char **envp, t_session *session)
 		}
 		if (i < session->ntasks && session->operators[i - 1].token->type == SAND
             		&& ((status & 0xff00) >> 8))
-			i += session->operators[i - 1].flag;
+			on += session->operators[i - 1].flag;
 		if (i < session->ntasks && session->operators[i - 1].token->type == OR
 			&& !((status & 0xff00) >> 8))
-			i += session->operators[i - 1].flag;
+			on += session->operators[i - 1].flag;
+		while (on && on--)
+			close_current_pipe(session, i++);
 	}
 }
