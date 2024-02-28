@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/24 17:31:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:14:01 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ typedef struct s_cd
 }	t_cd;
 
 void	setup_cd(t_cd *cd, char **envp);
+void	change_dir(t_cd *cd, char *path);
+void	free_cd(t_cd *cd);
+
+void	mpwd(void);
 
 #endif

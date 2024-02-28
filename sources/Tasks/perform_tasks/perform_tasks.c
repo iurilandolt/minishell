@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 13:50:02 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:57:50 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	task(char **envp, t_session *session, int taskn)
 	writefd = prepare_writefds(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd, taskn);
-	session->commands[taskn][0] 
+	session->commands[taskn][0]
 		= validate_bin_path(envp, session->commands[taskn][0]);
 	link_cmd_codes(session->commands[taskn][0]);
 	execute_task(session->commands[taskn], envp, session);
@@ -40,12 +40,22 @@ void	task(char **envp, t_session *session, int taskn)
 void	perform_task(char **envp, t_session *session, int taskn)
 {
 	int	pid;
+	int	builtn;
 
-	pid = fork();
-	if (pid == -1)
-		return (perror(0));
-	else if (pid == 0)
-		task(envp, session, taskn);
+	builtn = check_builtin(session, taskn);
+	if (builtn > 0)
+	{
+		printf("call to builtin %d\n", builtn);
+		exec_builtin(session, taskn, builtn);
+	}
+		else
+		{
+		pid = fork();
+		if (pid == -1)
+			return (perror(0));
+		else if (pid == 0)
+			task(envp, session, taskn);
+	}
 }
 
 void	close_current_pipe(t_session *session, int taskn)
@@ -55,7 +65,7 @@ void	close_current_pipe(t_session *session, int taskn)
 
 	i = 0;
 	pipen = 0;
-	if (taskn >= session->ntasks - 1 
+	if (taskn >= session->ntasks - 1
 		|| session->operators[taskn].token->type != PIPE)
 		return ;
 	while(session->tokens[i].value && taskn)

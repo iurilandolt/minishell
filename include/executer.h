@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 11:53:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:03:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "token.h"
 # include "builtins.h"
 # include <sys/wait.h>
+# include <dirent.h>
 
 typedef struct s_operator
 {
@@ -39,6 +40,7 @@ typedef struct s_session
 	int			**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
+	t_cd		cd;
 }	t_session;
 
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
@@ -56,6 +58,8 @@ int			(*create_pipes(t_operator *operators))[2];
 
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(char *cmd);
+int			check_builtin(t_session *session, int taskn);
+void		exec_builtin(t_session *session, int taskn, int builtin);
 
 void		free_session_commands(t_session *session);
 int			free_session(t_session *session, char flag);
