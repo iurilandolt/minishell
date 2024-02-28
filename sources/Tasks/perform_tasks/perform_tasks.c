@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 13:50:02 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:29:43 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_task(char **cmd, char **envp, t_session *session)
 {
 	if (execve(cmd[0], cmd, envp) == -1)
 	{
-		perror("** execve failed.\n");
+		perror("** execve failed");
 		free_session(session, 1);
 		exit(EXIT_FAILURE);
 	}
@@ -28,7 +28,7 @@ void	task(char **envp, t_session *session, int taskn)
 {
 	int	writefd;
 
-	writefd = prepare_writefds(session, taskn);
+	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	session->commands[taskn][0] 

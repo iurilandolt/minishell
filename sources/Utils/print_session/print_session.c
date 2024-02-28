@@ -33,7 +33,11 @@ void	print_readfrom(int *readfd)
 	if (readfd[0])
 		printf("readfrom:\n");
 	while (readfd[++i])
-		printf("\tfd[%i]: %i\n", i, readfd[i]);
+	{
+		printf("\tfd[%i]: ", i);
+		if (readfd[i] > 0)
+			printf("%i\n", readfd[i]);
+	}
 }
 
 void	print_writeto(t_token *tokens)

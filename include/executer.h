@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 11:53:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:28:47 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ typedef struct s_session
 	int			(*pipes)[2];
 	t_token		*tokens;
 	char		***commands;
-	int			**readfrom;
+	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
 }	t_session;
 
-t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 void		print_session(t_session *all);
 
 void		close_opened_fds(t_session *session, int writefd);
@@ -59,5 +58,8 @@ void		link_cmd_codes(char *cmd);
 
 void		free_session_commands(t_session *session);
 int			free_session(t_session *session, char flag);
+
+int	open_taskfiles(t_session *session, int taskn);
+t_token	**obtain_write_documents(t_token *tokens, int ntasks);
 
 #endif

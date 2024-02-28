@@ -22,11 +22,12 @@ void	close_opened_fds(t_session *session, int writefd)
 	i = -1;
 	while (++i < session->ntasks)
 	{
-		j = 0;
-		while (session->readfrom[i][j])
-			j++;	
-		if (j > 0 && session->readfrom[i][j - 1] > 0)
-			close(session->readfrom[i][j - 1]);
+		j = -1;
+		while (session->readfrom[i][++j])
+		{
+			if (session->readfrom[i][j] > 0)
+				close(session->readfrom[i][j]);
+		}
 	}
 	i = -1;
 	while (session->pipes[++i][0])

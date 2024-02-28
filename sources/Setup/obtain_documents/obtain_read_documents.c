@@ -32,16 +32,6 @@ int	number_of_ins(t_token *tokens)
 	return (number);
 }
 
-int	open_file_descriptor(char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY, 0644);
-	if (fd == -1)
-		perror(filename);
-	return (fd);
-}
-
 int	open_here_doc(char *delimiter)
 {
 	int	i;
@@ -79,10 +69,13 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	int	number;
 	int	*readfds;
 
+	i = -1;
 	number = number_of_ins(tokens);
 	readfds = malloc((number + 1) * sizeof(int));
 	if (!readfds)
 		return (perror(0), (void *)0);
+	while (++i < number)
+		readfds[i] = -1;
 	readfds[number] = 0;
 	i = -1;
 	j = 0;
@@ -91,12 +84,9 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 	while (tokens[++i].value && tokens[i].type < PIPE)
 	{
 		if (tokens[i].type == RED_IN)
-			readfds[j++] = open_file_descriptor(&tokens[i].value[1]);
+			j++;
 		else if (tokens[i].type == HERE_DOC)
 			readfds[j++] = open_here_doc(&tokens[i].value[2]);
-		if (j > 1 && tokens[i].type <= HERE_DOC
-			&& readfds[j - 2] != (*(*pipefd - 1))[0] && close(readfds[j - 2]))
-			perror(0);
 	}
 	return (readfds);
 }
