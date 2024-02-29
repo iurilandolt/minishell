@@ -99,5 +99,16 @@ int	process_line(char *line, char **envp)
 < file ls arg1 arg1_2 | grep arg2_1 arg2_2 > file
 < file /usr/bin/ls arg1 arg1_2 | /usr/bin/grep arg2_1 arg2_2 > file
 
-echo hello && notacmd | wc
+env and export(without args) should print the samme array,
+however export will print the whole array, and env only prints the lines with =
+
+export (list declare)
+export += ABC should cocat new value to old value.
+		1ABC - > invalid
+		first char must be ALPHA
+		rest of string must be alphanum
+
+exit ABC -> invalid
+exit 123 -> valid
+exit 123 ABC ?
 
