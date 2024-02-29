@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/27 15:36:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:27:12 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	cmd_is_dir(char *cmd)
 		return (S_ISDIR(cmd_stat.st_mode));
 	else if (lstat(cmd, &cmd_stat) == 0)
 		return (S_ISLNK(cmd_stat.st_mode));
+	else if (cmd[0]	== '/')
+		return (1);
 	return (-1);
 }
 
@@ -85,7 +87,7 @@ void	link_cmd_codes(char *cmd)
 {
 	if (!cmd)
 		exit(127);
-	if (cmd_is_dir(cmd))
+	if (cmd_is_dir(cmd) > 0)
 		exit(return_dir_code(cmd));
 	if (access(cmd, F_OK) != 0)
 	{
