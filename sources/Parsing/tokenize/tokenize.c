@@ -47,14 +47,12 @@ void	print_tokens(t_token *tokens)
 		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 }
 
-t_token	*tokenize(char *line, char **envp)
+t_token	*tokenize(char *line)
 {
 	char	**split;
 	t_token	*tokens;
 
 	if (check_analyzer(line))
-		return (0);
-	if (ambient_variable_expansion(&line, envp))
 		return (0);
 	if (expand_and_contract(&line))
 		return (0);

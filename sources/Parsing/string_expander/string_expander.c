@@ -79,7 +79,6 @@ char	*string_expander(char *string)
 		return (0);
 	expanded[size] = 0;
 	expanded = string_transfer(expanded, string);
-	free(string);
 	string = expanded;
 	return (expanded);
 }

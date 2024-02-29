@@ -36,7 +36,8 @@ void	print_readfrom(int *readfd)
 	{
 		printf("\tfd[%i]: ", i);
 		if (readfd[i] > 0)
-			printf("%i\n", readfd[i]);
+			printf("%i", readfd[i]);
+		printf("\n");
 	}
 }
 
