@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 12:33:49 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:50:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	setup_cd(t_cd *cd, char **envp);
 void	change_dir(t_cd *cd, char *path);
 void	free_cd(t_cd *cd);
 
-char **setup_menvp(char **envp);
+char	**setup_menvp(char **envp);
+void	menvp(char **menvp);
 
 void	mpwd(void);
 

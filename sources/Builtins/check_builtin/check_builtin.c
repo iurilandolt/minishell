@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/28 17:09:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:11:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,7 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 		change_dir(&session->cd, session->commands[taskn][1]);
 	else if (builtin == 3)
 		mpwd();
+	else if (builtin == 6)
+		menvp(session->menvp);
+
 }

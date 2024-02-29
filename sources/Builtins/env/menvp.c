@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 12:33:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:11:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,17 @@ char **setup_menvp(char **envp)
 	menvp[size] = NULL;
 	return(menvp);
 }
+
+void	menvp(char **menvp)
+{
+	int	i;
+
+	i = 0;
+	while (menvp[i])
+		printf("%s\n", menvp[i++]);
+}
+/*
+void	export_to_menvp(char *add, char **menvp){}
+
+void	unset_from_menvp(char *del, char **menvp){}
+*/

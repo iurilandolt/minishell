@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 12:33:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:18:17 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,15 @@ void	read_evaluate_print_loop(t_session *session, char **envp)
 	}
 }
 
-
-
-
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_session	session;
 
 	(void)argc;
 	(void)argv;
-	setup_cd(&session.cd, envp);
+
 	session.menvp = setup_menvp(envp);
+	setup_cd(&session.cd, session.menvp);
 
 	read_evaluate_print_loop(&session, envp);
 
