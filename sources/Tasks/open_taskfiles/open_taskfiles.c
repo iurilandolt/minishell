@@ -36,7 +36,13 @@ static t_token	*startfrom(t_token *token, int taskn)
 
 static void	open_readfd(t_session *session, int *readfds, t_token *token, int j)
 {
-	readfds[j] = open(&token->value[1], O_RDONLY, 0644);
+	char	*filename;
+	
+	filename = &token->value[1];
+	ambient_variable_expansion(&filename, session->menvp);
+	readfds[j] = open(filename, O_RDONLY, 0644);
+	if (filename)
+		free(filename);
 	if (readfds[j] == -1)
 	{
 		perror(&token->value[1]);
@@ -45,26 +51,31 @@ static void	open_readfd(t_session *session, int *readfds, t_token *token, int j)
 	}
 }
 
-static int	open_writefd(t_token *token, int oldwritefd)
+static int	open_writefd(char **menvp, t_token *token, int oldwritefd)
 {
 	int	writefd;
+	char	*filename;
 	
+	filename = token->value;
+	ambient_variable_expansion(&filename, menvp);
 	if (oldwritefd)
 		close(oldwritefd);
 	if (token->type == RED_OUT)
 	{
-		writefd = open(&token->value[1],
+		writefd = open(&filename[1],
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (writefd == -1)
 			perror(&token->value[1]);
 	}
 	if (token->type == RED_APP)
 	{
-		writefd = open(&token->value[2],
+		writefd = open(&filename[2],
 			O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (writefd == -1)
 			perror(&token->value[2]);
 	}
+	if (filename)
+		free(filename);
 	return (writefd);
 }
 
@@ -88,7 +99,7 @@ int	open_taskfiles(t_session *session, int taskn)
 		if (token[i].type == RED_IN)
 			open_readfd(session, session->readfrom[taskn], &token[i], j);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
-			writefd = open_writefd(&token[i], writefd);
+			writefd = open_writefd(session->menvp, &token[i], writefd);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

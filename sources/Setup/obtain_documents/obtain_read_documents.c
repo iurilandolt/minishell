@@ -39,10 +39,7 @@ int	open_here_doc(char *delimiter)
 	int	here_doc_pipe[2];
 
 	if (pipe(here_doc_pipe) == -1)
-	{
-		perror(0);
-		return (-1);
-	}
+		return (perror(0), -1);
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
@@ -54,7 +51,6 @@ int	open_here_doc(char *delimiter)
 			&& !ft_strncmp(&line[i - 1], "\n", 1))
 			break;
 		write(here_doc_pipe[1], line, i);
-
 		free(line);
 	}
 	free(line);

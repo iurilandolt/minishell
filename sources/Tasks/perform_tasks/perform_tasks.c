@@ -24,17 +24,21 @@ void	execute_task(char **cmd, char **envp, t_session *session)
 	}
 }
 
-void	task(char **envp, t_session *session, int taskn)
+void	task(char **menvp, t_session *session, int taskn)
 {
+	int	i;
 	int	writefd;
 
+	i = -1;
+	while (session->commands[taskn][++i])
+		ambient_variable_expansion(&session->commands[taskn][i], menvp);
 	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	session->commands[taskn][0]
-		= validate_bin_path(envp, session->commands[taskn][0]);
+		= validate_bin_path(menvp, session->commands[taskn][0]);
 	link_cmd_codes(session->commands[taskn][0]);
-	execute_task(session->commands[taskn], envp, session);
+	execute_task(session->commands[taskn], menvp, session);
 }
 
 void	perform_task(char **envp, t_session *session, int taskn)
@@ -79,7 +83,7 @@ void	close_current_pipe(t_session *session, int taskn)
 	close(session->pipes[pipen][1]);
 }
 
-void	perform_tasks(char **envp, t_session *session)
+void	perform_tasks(char **menvp, t_session *session)
 {
 	int	i;
 	int	on;
@@ -91,7 +95,7 @@ void	perform_tasks(char **envp, t_session *session)
 	{
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
-			perform_task(envp, session, i + on++);
+			perform_task(menvp, session, i + on++);
 		while (on && on--)
 		{
 			wait(&status);

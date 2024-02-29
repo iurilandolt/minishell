@@ -41,7 +41,7 @@ typedef struct s_cmdblock
 	t_token	*redout;
 }	t_cmdblock;
 
-t_token		*tokenize(char *line, char **envp);
+t_token		*tokenize(char *line);
 
 t_token		*tok_create_array(char **split);
 void		set_token_type(t_token *token);

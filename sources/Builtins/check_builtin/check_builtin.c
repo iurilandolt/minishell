@@ -22,7 +22,7 @@ int	check_builtin(t_session *session, int taskn)
 	if (session->commands[taskn][0])
 	{
 		i = 0;
-		builtins[0] = "echo";
+		builtins[0] = "ourecho";
 		builtins[1] = "cd";
 		builtins[2] = "pwd";
 		builtins[3] = "export";

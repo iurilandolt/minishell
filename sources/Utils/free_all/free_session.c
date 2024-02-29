@@ -37,12 +37,14 @@ void	free_table_n(void **table, int ntasks)
 void	free_session_commands(t_session *session)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	while (++i < session->ntasks)
 	{
-		if (session->commands[i][0])
-			free(session->commands[i][0]);
+		j = -1;
+		while (session ->commands[i] && session->commands[i][++j])
+			free(session->commands[i][j]);
 		if (session->commands[i])
 			free(session->commands[i]);
 	}

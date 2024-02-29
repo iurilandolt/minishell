@@ -32,7 +32,7 @@ int	number_of_tasks(t_token *tokens)
 
 int	process_line(t_session *session, char *line, char **envp)
 {
-	session->tokens = tokenize(line, envp);
+	session->tokens = tokenize(line);
 	if (!session->tokens)
 		return (0);
 	session->ntasks = number_of_tasks(session->tokens);
@@ -53,7 +53,7 @@ int	process_line(t_session *session, char *line, char **envp)
 	if (!session->writeto)
 		return (free_session(session, 0));
 	print_session(session);
-	perform_tasks(envp, session);
+	perform_tasks(session->menvp, session);
 	return (free_session(session, 0));
 
 }
@@ -80,10 +80,6 @@ void	read_evaluate_print_loop(t_session *session, char **envp)
 		line = readline("<Minishell> ");
 	}
 }
-
-
-
-
 
 int	main(int argc, char **argv, char **envp)
 {
