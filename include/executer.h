@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 12:14:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:17:09 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
+	int			*environmentn;
 	char		**menvp;
 	t_cd		cd;
 }	t_session;
@@ -46,7 +47,7 @@ typedef struct s_session
 void		print_session(t_session *all);
 
 void		close_opened_fds(t_session *session, int writefd);
-void		perform_tasks(char **envp, t_session *session);
+void		perform_tasks(t_session *session);
 int			prepare_writefds(t_session *session, int taskn);
 void		perform_redirects(t_session *session, int taskn, int writefd);
 
@@ -56,7 +57,7 @@ t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
 int			check_builtin(t_session *session, int taskn);
-void		exec_builtin(t_session *session, int taskn, int builtin);
+void		exec_builtin(t_session *session, char **menvp, int taskn, int builtin);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(char *cmd);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 11:46:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:26:13 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,26 @@ void	task(char **menvp, t_session *session, int taskn)
 	execute_task(session->commands[taskn], menvp, session);
 }
 
-void	perform_task(char **envp, t_session *session, int taskn)
+void	perform_task(t_session *session, int taskn)
 {
 	int	pid;
 	int	builtn;
+	//char	**menvp;
 
+	//menvp = correct_environment(session, taskn);
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
 	{
 		printf("call to builtin %d\n", builtn);
-		exec_builtin(session, taskn, builtn);
+		exec_builtin(session, session->menvp, taskn, builtn);
 	}
-		else
-		{
+	else
+	{
 		pid = fork();
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-			task(envp, session, taskn);
+			task(session->menvp, session, taskn);
 	}
 }
 
@@ -83,7 +85,7 @@ void	close_current_pipe(t_session *session, int taskn)
 	close(session->pipes[pipen][1]);
 }
 
-void	perform_tasks(char **menvp, t_session *session)
+void	perform_tasks(t_session *session)
 {
 	int	i;
 	int	on;
@@ -95,7 +97,7 @@ void	perform_tasks(char **menvp, t_session *session)
 	{
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
-			perform_task(menvp, session, i + on++);
+			perform_task(session, i + on++);
 		while (on && on--)
 		{
 			wait(&status);

@@ -52,10 +52,14 @@ int	process_line(t_session *session, char *line, char **envp)
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session, 0));
+	/*
+	session->environmentn = environment_levels(session->tokens, session->ntasks);
+	if (!session->environmentn)
+		return (free_session(session), 0);
+	*/
 	print_session(session);
-	perform_tasks(session->menvp, session);
+	perform_tasks(session);
 	return (free_session(session, 0));
-
 }
 
 void	read_evaluate_print_loop(t_session *session, char **envp)
@@ -89,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	setup_cd(&session.cd, envp);
 	session.menvp = setup_menvp(envp);
-
+	//initialize session with 0's
 	read_evaluate_print_loop(&session, envp);
 
 	free_cd(&session.cd);
