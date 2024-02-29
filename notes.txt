@@ -101,3 +101,9 @@ int	process_line(char *line, char **envp)
 
 echo hello && notacmd | wc
 
+// for export and unset, make a single function that takes and enum as code,
+// and performs the same operation to our own envp list or the system envp list
+// if you feel fancy, make it a variendic function,
+// that can perform both operations with a single function call if you pass two
+// arguments, or a single operation if you pass one argument
+// one func for export other for unset, one for env that prints the list
