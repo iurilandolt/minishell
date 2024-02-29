@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/28 16:28:47 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:45:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
+	t_cd		cd;
 }	t_session;
 
 void		print_session(t_session *all);
@@ -53,6 +54,8 @@ char		***obtain_commands(char **envp, t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
+int			check_builtin(t_session *session, int taskn);
+void		exec_builtin(t_session *session, int taskn, int builtin);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(char *cmd);
 

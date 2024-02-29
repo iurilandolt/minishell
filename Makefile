@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/02/26 16:07:32 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/02/29 11:41:59 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
+	$(SRC_PATH)/Builtins/check_builtin/check_builtin.c \
 	$(SRC_PATH)/Builtins/chgdir/chgdir.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
