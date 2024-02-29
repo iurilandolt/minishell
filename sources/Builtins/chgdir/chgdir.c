@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/28 17:13:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:11:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ void	change_dir(t_cd *cd, char *path)
 	dir = opendir(path);
 	if (dir != 0)
 	{
+		free(cd->oldpwd);
+		cd->oldpwd = getcwd(NULL, 0);
 		chdir(path);
+		free(cd->pwd);
+		cd->pwd = getcwd(NULL, 0);
 		closedir(dir);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 11:45:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:14:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
+	char		**menvp;
 	t_cd		cd;
 }	t_session;
 
