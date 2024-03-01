@@ -66,5 +66,7 @@ int	free_session(t_session *session, char flag)
 		free_table_n((void **)session->commands, session->ntasks);
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
+	if (session->environmentn)
+		free(session->environmentn);
 	return (0);
 }

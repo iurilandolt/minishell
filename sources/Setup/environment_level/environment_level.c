@@ -14,26 +14,52 @@
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 
-int	*environment_level(t_token *tokens, int ntasks)
+void	allocate_environments(t_session *session, int *envlvl, char **menvp)
+{
+	int	i;
+	int	maxlvl;
+	
+	i = -1;
+	maxlvl = 0;
+	while (++i < envlvl)
+	{
+		if (envlvl[i] > maxlvl)
+			maxlvl = envlvl[i];
+	}
+	session->menvp = malloc((maxlvl + 1) * sizeof(char **));
+	if (!session->menvp)
+		return (perror(0), envlvl);
+	session->menvp[0] = menvp;
+	i = 0
+	while (++i <= maxlvl)
+		session->menvp[i] = 0;
+}
+
+int	*environment_level(t_session *session, t_token *tokens, char **menvp)
 {
 	int	i;
 	int	j;
 	int	k;
-	int	*environmentn;
+	int	*envlvl;
 	
 	i = -1;
 	j = 0;
 	k = 0;
-	environmentn = malloc(sizeof(int) * ntasks);
+	envlvl = malloc(sizeof(int) * session->ntasks);
+	if (!envlvl)
+		return (perror(0), (void *)0); 
 	while (tokens[++i].value)
 	{
 		if (tokens[i].type >= PIPE)
 			j++;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == '(')
 			k++;
-		environmentn[j] = k;
+		if (tokens[i].type == PRTS && tokens[i].value[0] == '(' 
+			&& tokens[i - 2].type == PRTS && tokens[i - 2].value[0] == ')')
+			k = -k;
+		envlvl[j] = k;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == ')')
-			k--;
+			k = -(k < 0) * k + k * (k > 0) - 1;
 	}
-	return (environmentn);
+	return (allocate_environments(session, envlvl, menvp), envlvl);
 }

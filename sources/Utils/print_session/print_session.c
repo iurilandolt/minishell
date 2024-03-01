@@ -62,6 +62,12 @@ void	print_operator(t_operator operator)
 	}
 }
 
+void	print_environmentn(int	environmentn)
+{
+	printf("environmentn:\n");
+	printf("\tlevel: %i\n", environmentn);
+}
+
 void	print_session(t_session *session)
 {
 	int	i;
@@ -74,5 +80,7 @@ void	print_session(t_session *session)
 		print_readfrom(session->readfrom[i]);
 		print_writeto(session->writeto[i]);
 		print_operator(session->operators[i]);
+		print_environment(session->environmentn[i]);
 	}
+	printf("\n");
 }

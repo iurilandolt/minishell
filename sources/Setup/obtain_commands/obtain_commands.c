@@ -30,13 +30,12 @@ static int	argument_count(t_token *tokens)
 	return (size);
 }
 
-static char	**concatenate_cmd(char **envp, t_token *tokens)
+static char	**concatenate_cmd(t_token *tokens)
 {
 	int		i;
 	int		size;
 	char	**cmd;
 
-	(void)envp;
 	i = 0;
 	size = argument_count(tokens);
 	cmd = malloc(sizeof(char *) * (size + 1));
@@ -58,7 +57,7 @@ static char	**concatenate_cmd(char **envp, t_token *tokens)
 	return (cmd);
 }
 
-char	***obtain_commands(char **envp, t_token *tokens, int ntasks)
+char	***obtain_commands(t_token *tokens, int ntasks)
 {
 	int		i;
 	int		j;
@@ -80,7 +79,7 @@ char	***obtain_commands(char **envp, t_token *tokens, int ntasks)
 		if (tokens[i].type >= PIPE)
 			j++;
 		if (tokens[i].type == STD)
-			commands[j] = concatenate_cmd(envp, &tokens[i]);
+			commands[j] = concatenate_cmd(&tokens[i]);
 	}
 	return (commands);
 }

@@ -30,7 +30,7 @@ int	number_of_tasks(t_token *tokens)
 	return (number);
 }
 
-int	process_line(t_session *session, char *line, char **envp)
+int	process_line(t_session *session, char *line, char **menvp)
 {
 	session->tokens = tokenize(line);
 	if (!session->tokens)
@@ -46,23 +46,21 @@ int	process_line(t_session *session, char *line, char **envp)
 			session->pipes, session->ntasks);
 	if (!session->readfrom)
 		return (free_session(session, 0));
-	session->commands = obtain_commands(envp, session->tokens, session->ntasks);
+	session->commands = obtain_commands(session->tokens, session->ntasks);
 	if (!session->commands)
 		return (free_session(session, 0));
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session, 0));
-	/*
-	session->environmentn = environment_levels(session->tokens, session->ntasks);
-	if (!session->environmentn)
+	session->envlvl = environment_levels(session, session->tokens, menvp);
+	if (!session->envlvl)
 		return (free_session(session), 0);
-	*/
 	print_session(session);
 	perform_tasks(session);
 	return (free_session(session, 0));
 }
 
-void	read_evaluate_print_loop(t_session *session, char **envp)
+void	read_evaluate_print_loop(t_session *session, char **menvp)
 {
 	char	*line;
 
@@ -78,7 +76,7 @@ void	read_evaluate_print_loop(t_session *session, char **envp)
 		if (ft_strlen(line) > 0)
 		{
 			add_history(line);
-			process_line(session, line, envp);
+			process_line(session, line, menvp);
 		}
 		free(line);
 		line = readline("<Minishell> ");
@@ -87,16 +85,17 @@ void	read_evaluate_print_loop(t_session *session, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	char	**menvp;
 	t_session	session;
 
 	(void)argc;
 	(void)argv;
 
-	session.menvp = setup_menvp(envp);
+	menvp = setup_menvp(envp);
 	//initialize session with 0's
 	setup_cd(&session.cd, session.menvp);
 
-	read_evaluate_print_loop(&session, envp);
+	read_evaluate_print_loop(&session, menvp);
 
 	free_cd(&session.cd);
 	clear(session.menvp);

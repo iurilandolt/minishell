@@ -52,7 +52,7 @@ int			prepare_writefds(t_session *session, int taskn);
 void		perform_redirects(t_session *session, int taskn, int writefd);
 
 int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks);
-char		***obtain_commands(char **envp, t_token *tokens, int ntasks);
+char		***obtain_commands(t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
