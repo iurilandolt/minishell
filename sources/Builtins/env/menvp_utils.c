@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 00:41:12 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:07:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char **setup_menvp(char **envp)
 
 char **export_to_menvp(char *add, char **menvp)
 {
-
 	char	**new;
 	int		size;
 	int		i;
@@ -71,16 +70,18 @@ char **unset_from_menvp(char *del, char **menvp)
 	int		j;
 
 	size = split_size(menvp);
-	new = (char **)malloc(sizeof(char *) * (size));
+	new = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
-	j = 0;
+	j =	0;
 	while (menvp[i])
 	{
-		if (ft_strncmp(menvp[i], del, ft_strlen(menvp[i])) != 0)
+		if (ft_strncmp(menvp[i], del, ft_strlen(del)))
 		{
 			new[j] = ft_strdup(menvp[i]);
+			if (!new[j])
+				return(clear(new));
 			j++;
 		}
 		i++;

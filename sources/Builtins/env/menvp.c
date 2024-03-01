@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 00:32:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:44:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	m_unset(char ***menvp, char *value)
 	{
 		if (ft_strncmp(target[i], value, ft_strlen(value)) == 0 && value[0] != '\0')
 		{
-			printf("found %s\n", value);
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)
 				perror("**Unset error\n");
