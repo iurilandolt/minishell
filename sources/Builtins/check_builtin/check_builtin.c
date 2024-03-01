@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 13:33:26 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:37:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 			m_export(&session->menvp, session->commands[taskn][i++]);
 	}
 	else if (builtin == 5)
-		m_unset(&session->menvp, session->commands[taskn][1]);
+		{
+		if (!session->commands[taskn][i])
+			m_unset(&session->menvp, 0);
+		while (session->commands[taskn][i])
+			m_unset(&session->menvp, session->commands[taskn][i++]);
+	}
 	else if (builtin == 6)
 		m_envp(session->menvp);
 }
