@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 11:42:26 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:15:57 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,14 @@ void	m_envp(char **menvp)
 void	m_export(char ***menvp, char *value)
 {
 	int		i;
-	char	**target;
 
-	target = *menvp;
-	if (!target)
+	if (!*menvp)
 		return ;
 	if (!value)
 	{
 		i = 0;
-		while (target[i])
-			printf("declare -x %s\n", target[i++]);
+		while (menvp[0][i])
+			printf("declare -x %s\n", menvp[0][i++]);
 	}
 	else
 	{
@@ -55,20 +53,18 @@ void	m_export(char ***menvp, char *value)
 void	m_unset(char ***menvp, char *value)
 {
 	int		i;
-	char	**target;
 
 	if (!value)
 	{
 		perror("unset: not enough arguments\n");
 		return ;
 	}
-	target = *menvp;
-	if (!target)
+	if (!*menvp)
 		return ;
 	i = 0;
-	while (target[i])
+	while (menvp[0][i])
 	{
-		if (ft_strncmp(target[i], value, ft_strlen(value)) == 0 && value[0] != '\0')
+		if (ft_strncmp(value, menvp[0][i], ft_strlen(value)) == 0 && value[0] != '\0')
 		{
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)

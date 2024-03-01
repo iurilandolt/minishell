@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 11:07:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:40:50 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,28 @@ char **setup_menvp(char **envp)
 	return(menvp);
 }
 
+int	menvp_has_value(char *add, char **menvp)
+{
+	int	i;
+
+	i = 0;
+	while(menvp[i])
+	{
+		if (ft_strncmp(menvp[i], add, ft_strlen(add) + 1) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char **export_to_menvp(char *add, char **menvp)
 {
 	char	**new;
 	int		size;
 	int		i;
 
+	if (menvp_has_value(add, menvp))
+		return (menvp);
 	size = split_size(menvp);
 	new = (char **)malloc(sizeof(char *) * (size + 2));
 	if (!new)
@@ -84,6 +100,8 @@ char **unset_from_menvp(char *del, char **menvp)
 				return(clear(new));
 			j++;
 		}
+		else
+			printf("found %s ->\n", menvp[i]);
 		i++;
 	}
 	new[j] = NULL;
