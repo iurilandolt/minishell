@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 10:44:44 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:42:26 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,32 @@ void	m_envp(char **menvp)
 		return ;
 	i = 0;
 	while (menvp[i])
-		printf("%s\n", menvp[i++]);
+	{
+		if (ft_strchr(menvp[i], '='))
+			printf("%s\n", menvp[i]);
+		i++;
+	}
 }
 
 void	m_export(char ***menvp, char *value)
 {
+	int		i;
+	char	**target;
+
+	target = *menvp;
+	if (!target)
+		return ;
 	if (!value)
-		m_envp(*menvp);
+	{
+		i = 0;
+		while (target[i])
+			printf("declare -x %s\n", target[i++]);
+	}
 	else
 	{
 		*menvp = export_to_menvp(value, *menvp);
 		if (!*menvp)
-			perror("**Export error\n");
+			perror("**export error\n");
 	}
 }
 
@@ -58,16 +72,9 @@ void	m_unset(char ***menvp, char *value)
 		{
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)
-				perror("**Unset error\n");
+				perror("**unset error\n");
 			return ;
 		}
 		i++;
 	}
 }
-
-
-/*
-void	export_to_menvp(char *add, char **menvp){}
-
-void	unset_from_menvp(char *del, char **menvp){}
-*/
