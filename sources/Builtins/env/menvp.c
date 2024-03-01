@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 22:41:57 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 00:32:41 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,6 @@
 #include "../../../include/executer.h"
 #include "../../../include/read.h"
 
-char **setup_menvp(char **envp)
-{
-	char	**menvp;
-	int		size;
-	int		i;
-
-	size = split_size(envp);
-	menvp = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!menvp)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		menvp[i] = ft_strdup(envp[i]);
-		if (!menvp[i])
-			return(clear(menvp));
-		i++;
-	}
-	menvp[size] = NULL;
-	return(menvp);
-}
 
 void	m_envp(char **menvp)
 {
@@ -45,58 +24,6 @@ void	m_envp(char **menvp)
 	i = 0;
 	while (menvp[i])
 		printf("%s\n", menvp[i++]);
-}
-
-
-char **export_to_menvp(char *add, char **menvp)
-{
-
-	char	**new;
-	int		size;
-	int		i;
-
-	size = split_size(menvp);
-	new = (char **)malloc(sizeof(char *) * (size + 2));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (menvp[i])
-	{
-		new[i] = ft_strdup(menvp[i]);
-		if (!new[i])
-			return(clear(new));
-		i++;
-	}
-	new[i] = ft_strdup(add);
-	if (!new[i])
-		return(clear(new));
-	new[i + 1] = NULL;
-	clear(menvp);
-	return(new);
-}
-
-char **unset_from_menvp(char *del, char **menvp)
-{
-	char	**new;
-	int		size;
-	int		i;
-
-	size = split_size(menvp);
-	new = (char **)malloc(sizeof(char *) * (size));
-	if (!new)
-		return (NULL);
-
-	i = 0;
-	while (menvp[i])
-	{
-		if (ft_strncmp(menvp[i], del, ft_strlen(del)) == 0)
-			break ;
-		new[i] = ft_strdup(menvp[i]);
-		i++;
-	}
-	new[i] = NULL;
-	clear(menvp);
-	return(new);
 }
 
 void	m_export(char ***menvp, char *value)
@@ -133,6 +60,7 @@ void	m_unset(char ***menvp, char *value)
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)
 				perror("**Unset error\n");
+			return ;
 		}
 		i++;
 	}
