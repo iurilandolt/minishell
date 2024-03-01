@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 12:33:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:54:30 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	setup_cd(&session.cd, envp);
+
 	session.menvp = setup_menvp(envp);
 	//initialize session with 0's
+	setup_cd(&session.cd, session.menvp);
+
 	read_evaluate_print_loop(&session, envp);
 
 	free_cd(&session.cd);

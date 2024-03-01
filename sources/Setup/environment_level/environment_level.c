@@ -6,9 +6,13 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:30:08 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 18:30:44 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:58:23 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../../include/read.h"
+#include "../../../include/token.h"
+#include "../../../include/executer.h"
 
 int	*environment_level(t_token *tokens, int ntasks)
 {
@@ -27,7 +31,7 @@ int	*environment_level(t_token *tokens, int ntasks)
 			j++;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == '(')
 			k++;
-		environment[j] = k;
+		environmentn[j] = k;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == ')')
 			k--;
 	}
