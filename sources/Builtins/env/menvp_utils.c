@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 13:01:43 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:52:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ char **setup_menvp(char **envp)
 	return(menvp);
 }
 
+
+int	ft_envncmp(const char *str1, const char *str2, size_t n)
+{
+	if (n == 0)
+		return (0);
+	while ((*str1 || *str2) && (n > 1) && (*str1 == *str2) && (*str1 != '=' && *str2 != '='))
+	{
+		str1++;
+		str2++;
+		n--;
+	}
+	return (*(unsigned char *)str1 - *(unsigned char *)str2);
+}
+
 int	menvp_has_value(char *add, char **menvp)
 {
 	int	i;
@@ -43,8 +57,11 @@ int	menvp_has_value(char *add, char **menvp)
 	i = 0;
 	while(menvp[i])
 	{
-		if (ft_strncmp(menvp[i], add, ft_strlen(add) + 1) == 0)
+		if (ft_envncmp(menvp[i], add, ft_strlen(add)) == 0)
+		{
+			printf("found %s\n", menvp[i]);
 			return (1);
+		}
 		i++;
 	}
 	return (0);
