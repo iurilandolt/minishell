@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 15:10:58 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:29:13 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,35 @@ void	m_envp(char **menvp)
 	}
 }
 
+char	*transform_for_unset(char *value)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while(value[i])
+	{
+		if (value[i] == '=' || (value[i] == '=' && value[i + 1] == '+'))
+			break;
+		i++;
+	}
+	tmp = (char *)malloc(sizeof(char) * i + 1);
+	j = 0;
+	while(j < i)
+	{
+		tmp[j] = value[j];
+		j++;
+	}
+	tmp[j] = '\0';
+	return(tmp);
+}
+
 void	m_export(char ***menvp, char *value) // int fd
 {
 	int		i;
+	char	*tmp;
+	//char	*extracted;
 
 	if (!*menvp)
 		return ;
@@ -43,6 +69,20 @@ void	m_export(char ***menvp, char *value) // int fd
 	}
 	else
 	{
+		if (export_is_replace(value))
+		{
+			tmp = transform_for_unset(value);
+			printf("value %s will be replaced.\n", value);
+			*menvp = unset_from_menvp(tmp, *menvp);
+			free(tmp);
+		}
+		else if(export_is_concat(value))
+		{
+			printf("value %s will be joined.\n", value);
+			return ;
+		}
+		else if (menvp_has_value(value, *menvp))
+			return ;
 		*menvp = export_to_menvp(value, *menvp);
 		if (!*menvp)
 			perror("**export error\n");

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:43:46 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:22:59 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char **setup_menvp(char **envp)
 	menvp[size] = NULL;
 	return(menvp);
 }
-
 
 int	ft_envncmp(const char *str1, const char *str2, size_t n)
 {
@@ -67,14 +66,40 @@ int	menvp_has_value(char *add, char **menvp)
 	return (0);
 }
 
+int	export_is_replace(char *add)
+{
+	int	i;
+
+	i = 0;
+	while(add[i])
+	{
+		if (add[i] == '=' && add[i - 1] != '+')
+			return(1);
+		i++;
+	}
+	return(0);
+}
+
+int	export_is_concat(char *add)
+{
+	int	i;
+
+	i = 0;
+	while(add[i])
+	{
+		if (add[i] == '+' && add[i + 1] == '=')
+			return(1);
+		i++;
+	}
+	return(0);
+}
+
 char **export_to_menvp(char *add, char **menvp)
 {
 	char	**new;
 	int		size;
 	int		i;
 
-	if (menvp_has_value(add, menvp))
-		return (menvp);
 	size = split_size(menvp);
 	new = (char **)malloc(sizeof(char *) * (size + 2));
 	if (!new)
@@ -113,7 +138,7 @@ char **unset_from_menvp(char *del, char **menvp)
 		if (!ft_strncmp(menvp[i], del, ft_strlen(del))
 			&& (menvp[i][ft_strlen(del)] == '=' || menvp[i][ft_strlen(del)] == '\0'))
 		{
-			printf("found %s ->\n", menvp[i]);
+			printf("unset found %s ->\n", menvp[i]);
 			i++;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/04 14:40:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:40:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ void	task(char **menvp, t_session *session, int taskn)
 	link_cmd_codes(session->commands[taskn][0]);
 	execute_task(session->commands[taskn], menvp, session);
 }
+
+/*
+int	forked_builtin(t_session *session, int taskn)
+{
+	if (session->operators[taskn - 1].token->type == PIPE || session->operators[taskn].token->type == PIPE)
+	{}
+
+}
+*/
 
 void	perform_task(t_session *session, int taskn)
 {
