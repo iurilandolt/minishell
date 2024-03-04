@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   correct_environment.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 12:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/01 12:35:51 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:41:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,26 @@ static int	ft_abs(int number)
 char	**correct_environment(t_session *session, int taskn)
 {
 	if (!taskn || session->envlvl[taskn] == session->envlvl[taskn - 1])
-		return (&session->menvp[session->envlvl[taskn]]);
+		return (session->menvp[session->envlvl[taskn]]);
 	else if (session->envlvl[taskn] < 0)
 	{
 		if (session->menvp[-session->envlvl[taskn]])
 			free_table(session->menvp[-session->envlvl[taskn]]);
 		session->menvp[-session->envlvl[taskn]] =
 			setup_menvp(session->menvp[-session->envlvl[taskn] - 1]);
-		return (&session->menvp[-session->envlvl[taskn]]);
+		return (session->menvp[-session->envlvl[taskn]]);
 	}
 	else if (session->envlvl[taskn] > session->envlvl[taskn - 1])
 	{
 		session->menvp[session->envlvl[taskn]] =
 			setup_menvp(session->menvp[session->envlvl[taskn - 1]]);
-		return (&session->menvp[session->envlvl[taskn]]);
+		return (session->menvp[session->envlvl[taskn]]);
 	}
 	else if (session->envlvl[taskn] < session->envlvl[taskn - 1])
 	{
 		if (session->menvp[session->envlvl[taskn - 1]])
-			free_table(session->menvp[ft_abs(session->envlvl[taskn - 1])]);	
-		return (&session->menvp[session->envlvl[taskn]]);
+			free_table(session->menvp[ft_abs(session->envlvl[taskn - 1])]);
+		return (session->menvp[session->envlvl[taskn]]);
 	}
 	return (0);
 }

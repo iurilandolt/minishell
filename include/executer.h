@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 18:49:19 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:59:08 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
 int			check_builtin(t_session *session, int taskn);
-void		exec_builtin(t_session *session, char **menvp, int taskn, int builtin);
+void	exec_builtin(t_session *session, int taskn, int builtin);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(char *cmd);
 

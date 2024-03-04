@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/25 14:40:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:48:03 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strjoin(char const *str1, char const *str2);
-
+char	*ft_strchr(const char *str, int c);
 char	**ft_split(const char *str, char c);
 void	*clear(char **array);
 

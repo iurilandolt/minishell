@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/01 11:54:30 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:59:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	number_of_tasks(t_token *tokens)
 	return (number);
 }
 
-int	process_line(t_session *session, char *line, char **menvp)
+int	process_line(t_session *session, char *line, char ***menvp)
 {
 	session->tokens = tokenize(line);
 	if (!session->tokens)
@@ -52,15 +52,16 @@ int	process_line(t_session *session, char *line, char **menvp)
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session, 0));
-	session->envlvl = environment_levels(session, session->tokens, menvp);
+	session->envlvl = environment_levels(session, session->tokens, *menvp);
 	if (!session->envlvl)
 		return (free_session(session, 0));
 	print_session(session);
 	perform_tasks(session);
+	*menvp = session->menvp[0];
 	return (free_session(session, 0));
 }
 
-void	read_evaluate_print_loop(t_session *session, char **menvp)
+void	read_evaluate_print_loop(t_session *session, char ***menvp)
 {
 	char	*line;
 
@@ -93,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	menvp = setup_menvp(envp);
 	//initialize session with 0's
 	setup_cd(&session.cd, menvp);
-	read_evaluate_print_loop(&session, menvp);
+	read_evaluate_print_loop(&session, &menvp);
 	free_cd(&session.cd);
 	clear(menvp);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 15:11:06 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:46:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,31 @@ int	check_builtin(t_session *session, int taskn)
 	return (0);
 }
 
-void	exec_builtin(t_session *session, char ***menvp, int taskn, int builtin)
+
+void	exec_builtin(t_session *session, int taskn, int builtin)
 {
-	(void)menvp;
+	int	i;
+
+	i = 1;
 	if (builtin == 2)
 		change_dir(&session->cd, session->commands[taskn][1]);
 	else if (builtin == 3)
 		mpwd();
+	else if (builtin == 4)
+	{
+		if (!session->commands[taskn][i])
+			m_export(session->menvp, 0);
+		while (session->commands[taskn][i])
+			m_export(session->menvp, session->commands[taskn][i++]);
+	}
+	else if (builtin == 5)
+		{
+		if (!session->commands[taskn][i])
+			m_unset(session->menvp, 0);
+		while (session->commands[taskn][i])
+			m_unset(session->menvp, session->commands[taskn][i++]);
+	}
+	else if (builtin == 6)
+		m_envp(*session->menvp);
 }
+

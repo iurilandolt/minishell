@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment_level.c                                :+:      :+:    :+:   */
+/*   environment_levels.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 18:30:08 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/01 11:58:23 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:58:56 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	allocate_environments(t_session *session, int *envlvl, char **menvp)
 {
 	int	i;
 	int	maxlvl;
-	
+
 	i = -1;
 	maxlvl = 0;
 	while (++i < session->ntasks)
@@ -41,20 +41,20 @@ int	*environment_levels(t_session *session, t_token *tokens, char **menvp)
 	int	j;
 	int	k;
 	int	*envlvl;
-	
+
 	i = -1;
 	j = 0;
 	k = 0;
 	envlvl = malloc(sizeof(int) * session->ntasks);
 	if (!envlvl)
-		return (perror(0), (void *)0); 
+		return (perror(0), (void *)0);
 	while (tokens[++i].value)
 	{
 		if (tokens[i].type >= PIPE)
 			j++;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == '(')
 			k++;
-		if (tokens[i].type == PRTS && tokens[i].value[0] == '(' 
+		if (tokens[i].type == PRTS && tokens[i].value[0] == '('
 			&& tokens[i - 2].type == PRTS && tokens[i - 2].value[0] == ')')
 			k = -k;
 		envlvl[j] = k;

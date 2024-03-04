@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 18:26:13 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:40:33 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	task(char **menvp, t_session *session, int taskn)
 	writefd = open_taskfiles(session, menvp, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
-	session->commands[taskn][0]
-		= validate_bin_path(menvp, session->commands[taskn][0]);
+	session->commands[taskn][0] = validate_bin_path(menvp, session->commands[taskn][0]);
 	link_cmd_codes(session->commands[taskn][0]);
 	execute_task(session->commands[taskn], menvp, session);
 }
@@ -45,14 +44,14 @@ void	perform_task(t_session *session, int taskn)
 {
 	int	pid;
 	int	builtn;
-	char	***menvp;
+	//char	***menvp;
 
-	menvp = correct_environment(session, taskn);
+	*session->menvp = correct_environment(session, taskn);
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
 	{
 		printf("call to builtin %d\n", builtn);
-		exec_builtin(session, menvp, taskn, builtn);
+		exec_builtin(session, taskn, builtn);
 	}
 	else
 	{
@@ -60,7 +59,7 @@ void	perform_task(t_session *session, int taskn)
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-			task(*menvp, session, taskn);
+			task(*session->menvp, session, taskn);
 	}
 }
 
