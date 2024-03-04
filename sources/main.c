@@ -54,7 +54,7 @@ int	process_line(t_session *session, char *line, char **menvp)
 		return (free_session(session, 0));
 	session->envlvl = environment_levels(session, session->tokens, menvp);
 	if (!session->envlvl)
-		return (free_session(session), 0);
+		return (free_session(session, 0));
 	print_session(session);
 	perform_tasks(session);
 	return (free_session(session, 0));
@@ -93,12 +93,9 @@ int	main(int argc, char **argv, char **envp)
 
 	menvp = setup_menvp(envp);
 	//initialize session with 0's
-	setup_cd(&session.cd, session.menvp);
-
+	setup_cd(&session.cd, menvp);
 	read_evaluate_print_loop(&session, menvp);
-
 	free_cd(&session.cd);
-	clear(session.menvp);
-
+	clear(menvp);
 	return (0);
 }

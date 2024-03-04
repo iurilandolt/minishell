@@ -21,21 +21,21 @@ void	allocate_environments(t_session *session, int *envlvl, char **menvp)
 	
 	i = -1;
 	maxlvl = 0;
-	while (++i < envlvl)
+	while (++i < session->ntasks)
 	{
 		if (envlvl[i] > maxlvl)
 			maxlvl = envlvl[i];
 	}
 	session->menvp = malloc((maxlvl + 1) * sizeof(char **));
 	if (!session->menvp)
-		return (perror(0), envlvl);
+		return (perror(0));
 	session->menvp[0] = menvp;
-	i = 0
+	i = 0;
 	while (++i <= maxlvl)
 		session->menvp[i] = 0;
 }
 
-int	*environment_level(t_session *session, t_token *tokens, char **menvp)
+int	*environment_levels(t_session *session, t_token *tokens, char **menvp)
 {
 	int	i;
 	int	j;

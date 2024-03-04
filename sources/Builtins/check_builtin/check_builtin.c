@@ -48,7 +48,4 @@ void	exec_builtin(t_session *session, char **menvp, int taskn, int builtin)
 		change_dir(&session->cd, session->commands[taskn][1]);
 	else if (builtin == 3)
 		mpwd();
-	else if (builtin == 6)
-		menvp(session->menvp);
-
 }

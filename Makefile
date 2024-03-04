@@ -32,6 +32,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
+	$(SRC_PATH)/Setup/environment_levels/environment_levels.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
@@ -46,6 +47,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
+	$(SRC_PATH)/Tasks/correct_environment/correct_environment.c \
 
 SANITIZER = -g -fsanitize=address
 

@@ -39,8 +39,8 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
-	int			*environmentn;
-	char		**menvp;
+	int			*envlvl;
+	char		***menvp;
 	t_cd		cd;
 }	t_session;
 
@@ -64,7 +64,10 @@ void		link_cmd_codes(char *cmd);
 void		free_session_commands(t_session *session);
 int			free_session(t_session *session, char flag);
 
-int	open_taskfiles(t_session *session, int taskn);
+int	open_taskfiles(t_session *session, char **menvp, int taskn);
 t_token	**obtain_write_documents(t_token *tokens, int ntasks);
+
+int	*environment_levels(t_session *session, t_token *tokens, char **menvp);
+char	**correct_environment(t_session *session, int taskn);
 
 #endif

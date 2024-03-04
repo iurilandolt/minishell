@@ -24,19 +24,19 @@ static int	ft_abs(int number)
 char	**correct_environment(t_session *session, int taskn)
 {
 	if (!taskn || session->envlvl[taskn] == session->envlvl[taskn - 1])
-		return (session->menvp[session->envlvl[taskn]];
+		return (session->menvp[session->envlvl[taskn]]);
 	else if (session->envlvl[taskn] < 0)
 	{
 		if (session->menvp[-session->envlvl[taskn]])
 			free_table(session->menvp[-session->envlvl[taskn]]);
 		session->menvp[-session->envlvl[taskn]] =
-			setup_menvp(session->menvp[-session->envlvl[taskn] - 1])
+			setup_menvp(session->menvp[-session->envlvl[taskn] - 1]);
 		return (session->menvp[-session->envlvl[taskn]]);
 	}
 	else if (session->envlvl[taskn] > session->envlvl[taskn - 1])
 	{
 		session->menvp[session->envlvl[taskn]] =
-			setup_menvp(session->menvp[session->envlvl[taskn - 1]])
+			setup_menvp(session->menvp[session->envlvl[taskn - 1]]);
 		return (session->menvp[session->envlvl[taskn]]);
 	}
 	else if (session->envlvl[taskn] < session->envlvl[taskn - 1])
@@ -45,4 +45,5 @@ char	**correct_environment(t_session *session, int taskn)
 			free_table(session->menvp[ft_abs(session->envlvl[taskn - 1])]);	
 		return (session->menvp[session->envlvl[taskn]]);
 	}
+	return (0);
 }

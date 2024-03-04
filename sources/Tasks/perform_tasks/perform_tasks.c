@@ -32,7 +32,7 @@ void	task(char **menvp, t_session *session, int taskn)
 	i = -1;
 	while (session->commands[taskn][++i])
 		ambient_variable_expansion(&session->commands[taskn][i], menvp);
-	writefd = open_taskfiles(session, taskn);
+	writefd = open_taskfiles(session, menvp, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	session->commands[taskn][0]
@@ -52,7 +52,7 @@ void	perform_task(t_session *session, int taskn)
 	if (builtn > 0)
 	{
 		printf("call to builtin %d\n", builtn);
-		exec_builtin(session, session->menvp, taskn, builtn);
+		exec_builtin(session, menvp, taskn, builtn);
 	}
 	else
 	{
@@ -60,7 +60,7 @@ void	perform_task(t_session *session, int taskn)
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-			task(session->menvp, session, taskn);
+			task(menvp, session, taskn);
 	}
 }
 
