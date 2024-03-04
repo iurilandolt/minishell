@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 18:29:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:09:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,51 @@ void	m_envp(char **menvp)
 	}
 }
 
-char	*transform_for_unset(char *value)
+int	is_validchar(char c)
 {
-	char	*tmp;
+	char	*valid = "*.:/_-=@+!"; // %&?{}[]()~^$#
 	int		i;
-	int		j;
 
 	i = 0;
-	while(value[i])
+	while (valid[i])
 	{
-		if (value[i] == '=' || (value[i] == '=' && value[i + 1] == '+'))
-			break;
+		if (c == valid[i])
+			return (1);
 		i++;
 	}
-	tmp = (char *)malloc(sizeof(char) * i + 1);
-	j = 0;
-	while(j < i)
-	{
-		tmp[j] = value[j];
-		j++;
-	}
-	tmp[j] = '\0';
-	return(tmp);
+	if (is_alphanum(c))
+		return (1);
+	return (0);
+}
+
+int is_valid_env_format(const char *str)
+{
+	int	i;
+
+	if (!str || *str == '\0' || !is_alpha(str[0])) // add _
+		return 0;
+	i = 0;
+	while(str[i] && is_alphanum(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	if(str[i] == '+')
+		i++;
+	if(str[i] != '=')
+		return (0);
+	i++;
+	if (!is_validchar(str[i]) && str[i] != '\0')
+		return (0);
+	while (is_validchar(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
 }
 
 void	m_export(char ***menvp, char *value) // int fd
 {
 	int		i;
-	char	*tmp;
-	//char	*extracted;
 
 	if (!*menvp)
 		return ;
@@ -69,23 +85,10 @@ void	m_export(char ***menvp, char *value) // int fd
 	}
 	else
 	{
-		if (export_is_replace(value))
-		{
-			tmp = transform_for_unset(value);
-			printf("value %s will be replaced.\n", value);
-			*menvp = unset_from_menvp(tmp, *menvp);
-			free(tmp);
-		}
-		else if(export_is_concat(value))
-		{
-			printf("value %s will be joined.\n", value);
-			return ;
-		}
-		else if (menvp_has_value(value, *menvp))
-			return ;
-		*menvp = export_to_menvp(value, *menvp);
-		if (!*menvp)
-			perror("**export error\n");
+		printf("-> %d\n", is_valid_env_format(value));
+		//parse for lookup, return char **
+		//define operation, return int?
+		// add, replace or concat?
 	}
 }
 
@@ -94,10 +97,7 @@ void	m_unset(char ***menvp, char *value) // int fd
 	int		i;
 
 	if (!value)
-	{
-		write(2, "unset: not enough arguments\n", 28); // debug -> delete
 		return ;
-	}
 	if (!*menvp)
 		return ;
 	i = 0;

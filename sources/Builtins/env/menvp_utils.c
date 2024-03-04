@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 18:22:59 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 21:46:15 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,6 @@ int	menvp_has_value(char *add, char **menvp)
 		i++;
 	}
 	return (0);
-}
-
-int	export_is_replace(char *add)
-{
-	int	i;
-
-	i = 0;
-	while(add[i])
-	{
-		if (add[i] == '=' && add[i - 1] != '+')
-			return(1);
-		i++;
-	}
-	return(0);
-}
-
-int	export_is_concat(char *add)
-{
-	int	i;
-
-	i = 0;
-	while(add[i])
-	{
-		if (add[i] == '+' && add[i + 1] == '=')
-			return(1);
-		i++;
-	}
-	return(0);
 }
 
 char **export_to_menvp(char *add, char **menvp)

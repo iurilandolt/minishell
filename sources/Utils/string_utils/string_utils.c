@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:37:46 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:47:50 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:02:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,18 @@ char	*ft_strchr(const char *str, int c)
 	if (*str == (char)c)
 		return ((char *)str);
 	return (NULL);
+}
+
+int	is_alpha(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
+int	is_alphanum(char c)
+{
+	if (is_alpha(c) || (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
 }
