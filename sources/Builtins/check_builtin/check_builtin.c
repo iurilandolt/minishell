@@ -41,7 +41,7 @@ int	check_builtin(t_session *session, int taskn)
 	return (0);
 }
 
-void	exec_builtin(t_session *session, char **menvp, int taskn, int builtin)
+void	exec_builtin(t_session *session, char ***menvp, int taskn, int builtin)
 {
 	(void)menvp;
 	if (builtin == 2)

@@ -45,7 +45,7 @@ void	perform_task(t_session *session, int taskn)
 {
 	int	pid;
 	int	builtn;
-	char	**menvp;
+	char	***menvp;
 
 	menvp = correct_environment(session, taskn);
 	builtn = check_builtin(session, taskn);
@@ -60,7 +60,7 @@ void	perform_task(t_session *session, int taskn)
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-			task(menvp, session, taskn);
+			task(*menvp, session, taskn);
 	}
 }
 

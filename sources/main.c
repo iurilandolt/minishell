@@ -90,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-
 	menvp = setup_menvp(envp);
 	//initialize session with 0's
 	setup_cd(&session.cd, menvp);
