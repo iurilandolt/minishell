@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 23:09:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 00:39:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,46 +29,71 @@ void	m_envp(char **menvp)
 	}
 }
 
-int	is_validchar(char c)
+static char *extract_var(char *value)
 {
-	char	*valid = "*.:/_-=@+!"; // %&?{}[]()~^$#
 	int		i;
+	int		size;
+	char	*var;
 
-	i = 0;
-	while (valid[i])
+	size = 0;
+	while (value[size])
 	{
-		if (c == valid[i])
-			return (1);
+		if (value[size] == '+' || value[size] == '=')
+			break ;
+		size++;
+	}
+	var = (char *)malloc(sizeof(char) * (size + 1));
+	if (!var)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		var[i] = value[i];
 		i++;
 	}
-	if (is_alphanum(c))
-		return (1);
-	return (0);
+	var[i] = '\0';
+	return (var);
 }
 
-int is_valid_env_format(const char *str)
+static char *extract_op(char *value)
 {
-	int	i;
+	char	*ptr;
 
-	if (!str || *str == '\0' || !is_alpha(str[0])) // add _
-		return 0;
-	i = 0;
-	while(str[i] && is_alphanum(str[i]))
-		i++;
-	if (str[i] == '\0')
-		return (1);
-	if(str[i] == '+')
-		i++;
-	if(str[i] != '=')
-		return (0);
-	i++;
-	if (!is_validchar(str[i]) && str[i] != '\0')
-		return (0);
-	while (is_validchar(str[i]))
-		i++;
-	if (str[i] == '\0')
-		return (1);
-	return (0);
+	ptr = value;
+	while(*ptr)
+	{
+		if (*ptr == '+' || *ptr == '=')
+			break ;
+		ptr++;
+	}
+	if (*ptr == '\0')
+		return (NULL);
+	if (*ptr == '=')
+		return (ft_strdup("="));
+	else if (*ptr == '+' && *++ptr == '=')
+		return (ft_strdup("+="));
+	return (NULL);
+}
+
+char **parse_for_export(char *value)
+{
+	char **new;
+
+	new = (char **)malloc(sizeof(char *) * 4);
+	if (!new)
+		return (NULL);
+
+	// new[0] = extract var -> always has one
+	new[0] = extract_var(value);
+	// new[1] = extract op -> set to NULL if not found
+	new[1] = extract_op(value);
+	new[2] = NULL;
+	new[3] = NULL;
+
+	// new[2] = extract value -> set to NULL if not found or if new[1] is NULL
+	// new[3] = NULL
+
+	return (new);
 }
 
 void	m_export(char ***menvp, char *value) // int fd
@@ -85,7 +110,14 @@ void	m_export(char ***menvp, char *value) // int fd
 	}
 	else
 	{
-		printf("-> %d\n", is_valid_env_format(value));
+		if (is_valid_env_format(value))
+		{
+			char **parsed = parse_for_export(value);
+			i = 0;
+			while (parsed[i])
+				printf("%s\n", parsed[i++]);
+			clear(parsed);
+		}
 		//parse for lookup, return char **
 		//define operation, return int?
 		// add, replace or concat?

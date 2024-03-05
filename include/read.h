@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 22:03:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:19:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ char	*ft_strdup(const char *str);
 char	**ft_split(const char *str, char c);
 void	*clear(char **array);
 int		split_size(char **split);
-
-int		is_alpha(char c);
-int		is_alphanum(char c);
-
 
 void	free_table(char **table);
 void	free_table_n(void **table, int ntasks);
