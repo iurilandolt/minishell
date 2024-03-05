@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/05 00:39:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:30:41 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,73 +27,6 @@ void	m_envp(char **menvp)
 			printf("%s\n", menvp[i]);
 		i++;
 	}
-}
-
-static char *extract_var(char *value)
-{
-	int		i;
-	int		size;
-	char	*var;
-
-	size = 0;
-	while (value[size])
-	{
-		if (value[size] == '+' || value[size] == '=')
-			break ;
-		size++;
-	}
-	var = (char *)malloc(sizeof(char) * (size + 1));
-	if (!var)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		var[i] = value[i];
-		i++;
-	}
-	var[i] = '\0';
-	return (var);
-}
-
-static char *extract_op(char *value)
-{
-	char	*ptr;
-
-	ptr = value;
-	while(*ptr)
-	{
-		if (*ptr == '+' || *ptr == '=')
-			break ;
-		ptr++;
-	}
-	if (*ptr == '\0')
-		return (NULL);
-	if (*ptr == '=')
-		return (ft_strdup("="));
-	else if (*ptr == '+' && *++ptr == '=')
-		return (ft_strdup("+="));
-	return (NULL);
-}
-
-char **parse_for_export(char *value)
-{
-	char **new;
-
-	new = (char **)malloc(sizeof(char *) * 4);
-	if (!new)
-		return (NULL);
-
-	// new[0] = extract var -> always has one
-	new[0] = extract_var(value);
-	// new[1] = extract op -> set to NULL if not found
-	new[1] = extract_op(value);
-	new[2] = NULL;
-	new[3] = NULL;
-
-	// new[2] = extract value -> set to NULL if not found or if new[1] is NULL
-	// new[3] = NULL
-
-	return (new);
 }
 
 void	m_export(char ***menvp, char *value) // int fd

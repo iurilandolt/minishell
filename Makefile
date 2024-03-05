@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/04 23:25:38 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/05 11:31:22 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Builtins/env/menvp.c \
 	$(SRC_PATH)/Builtins/env/menvp_input.c \
 	$(SRC_PATH)/Builtins/env/menvp_utils.c \
+	$(SRC_PATH)/Builtins/env/parse_export.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 23:25:08 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:30:38 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char 	**unset_from_menvp(char *del, char **menvp);
 void	mpwd(void);
 
 int		is_valid_env_format(const char *str);
+char	**parse_for_export(char *value);
 
 int		menvp_has_value(char *add, char **menvp);
-
 int		ft_envncmp(const char *str1, const char *str2, size_t n);
 
 #endif
