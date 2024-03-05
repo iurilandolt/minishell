@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/05 11:30:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:55:13 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	m_envp(char **menvp)
 void	m_export(char ***menvp, char *value) // int fd
 {
 	int		i;
+	char	**parsed;
 
 	if (!*menvp)
 		return ;
@@ -45,15 +46,36 @@ void	m_export(char ***menvp, char *value) // int fd
 	{
 		if (is_valid_env_format(value))
 		{
-			char **parsed = parse_for_export(value);
-			i = 0;
-			while (parsed[i])
-				printf("%s\n", parsed[i++]);
+			parsed = parse_for_export(value);
+			if (menvp_lookup(parsed[0], *menvp))
+			{
+				if (!parsed[1] || parsed[1][0] == '=')
+				{
+					*menvp = unset_from_menvp(parsed[0], *menvp);
+					*menvp = export_to_menvp(value, *menvp);
+				}
+				else if (parsed[1][0] == '+')
+				{
+					char **old_value;
+					char *new_value;
+					char *tmp;
+
+					old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
+					new_value = ft_strjoin(old_value[0], "=");
+					tmp = ft_strjoin(new_value, old_value[2]);
+					free(new_value);
+					new_value = ft_strjoin(tmp, parsed[2]);
+
+					*menvp = unset_from_menvp(parsed[0], *menvp);
+					*menvp = export_to_menvp(new_value, *menvp);
+
+					free(new_value);
+					free(tmp);
+					clear(old_value);
+				}
+			}
 			clear(parsed);
 		}
-		//parse for lookup, return char **
-		//define operation, return int?
-		// add, replace or concat?
 	}
 }
 
