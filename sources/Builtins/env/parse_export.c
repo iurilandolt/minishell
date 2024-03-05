@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:29:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/05 11:30:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:44:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char *extract_var(char *value)
 	int		size;
 	char	*var;
 
+	if (!value)
+		return (NULL);
 	size = 0;
 	while (value[size])
 	{
@@ -44,6 +46,8 @@ static char *extract_op(char *value)
 {
 	char	*ptr;
 
+	if (!value)
+		return (NULL);
 	ptr = value;
 	while(*ptr)
 	{
@@ -66,6 +70,8 @@ static char *extract_value(char *value)
 	int		size;
 	char	*new;
 
+	if (!value)
+		return (NULL);
 	ptr = value;
 	while (*ptr && *ptr != '=')
 		ptr++;
