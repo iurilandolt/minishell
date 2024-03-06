@@ -43,6 +43,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Builtins/chgdir/setup_cd.c \
 	$(SRC_PATH)/Builtins/env/menvp.c \
 	$(SRC_PATH)/Builtins/env/menvp_utils.c \
+	$(SRC_PATH)/Builtins/echo/echo.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \

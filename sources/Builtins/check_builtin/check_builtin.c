@@ -22,7 +22,7 @@ int	check_builtin(t_session *session, int taskn)
 	if (session->commands[taskn][0])
 	{
 		i = 0;
-		builtins[0] = "ourecho";
+		builtins[0] = "echo";
 		builtins[1] = "cd";
 		builtins[2] = "pwd";
 		builtins[3] = "export";
@@ -47,6 +47,8 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 	int	i;
 
 	i = 1;
+	if (builtin == 1)
+		echo(session->commands[taskn]);
 	if (builtin == 2)
 		change_dir(&session->cd, session->commands[taskn][1]);
 	else if (builtin == 3)

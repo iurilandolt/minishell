@@ -36,5 +36,6 @@ void	m_unset(char ***menvp, char *value);
 char 	**unset_from_menvp(char *del, char **menvp);
 
 void	mpwd(void);
+void	echo(char **cmd);
 
 #endif
