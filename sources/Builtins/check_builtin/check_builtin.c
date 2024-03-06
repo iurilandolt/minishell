@@ -54,18 +54,18 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 	else if (builtin == 4)
 	{
 		if (!session->commands[taskn][i])
-			m_export(session->menvp, 0);
+			m_export(&session->menvp, 0);
 		while (session->commands[taskn][i])
-			m_export(session->menvp, session->commands[taskn][i++]);
+			m_export(&session->menvp, session->commands[taskn][i++]);
 	}
 	else if (builtin == 5)
 		{
 		if (!session->commands[taskn][i])
-			m_unset(session->menvp, 0);
+			m_unset(&session->menvp, 0);
 		while (session->commands[taskn][i])
-			m_unset(session->menvp, session->commands[taskn][i++]);
+			m_unset(&session->menvp, session->commands[taskn][i++]);
 	}
 	else if (builtin == 6)
-		m_envp(*session->menvp);
+		m_envp(session->menvp);
 }
 

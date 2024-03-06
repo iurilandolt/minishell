@@ -52,7 +52,7 @@ typedef struct s_qt
 }	t_qt;
 
 char	**quote_split(char const *s, char c);
-char	**clean_quotes(char **table);
+void	clean_quotes(char **string);
 
 
 #endif

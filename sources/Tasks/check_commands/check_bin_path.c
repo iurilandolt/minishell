@@ -28,7 +28,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 
 	i = 0;
 	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
+		return (cmd);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (!envp[i])
@@ -41,13 +41,14 @@ char	*validate_bin_path(char **envp, char *cmd)
 		if (access(tool.program, F_OK) == 0)
 		{
 			clear(tool.paths);
+			free(cmd);
 			return (tool.program);
 		}
 		free(tool.program);
 		i++;
 	}
 	clear(tool.paths);
-	return (ft_strdup(cmd));
+	return (cmd);
 }
 
 int	cmd_is_dir(char *cmd)
@@ -83,20 +84,31 @@ int	return_dir_code(char *cmd)
 	return (-1);
 }
 
-void	link_cmd_codes(char *cmd)
+void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 {
 	if (!cmd)
+	{
+		free_session(session);
 		exit(127);
+	}
 	if (cmd_is_dir(cmd) > 0)
+	{
+		free_args(session->commands[taskn]);
+		free_session(session);
 		exit(return_dir_code(cmd));
+	}
 	if (access(cmd, F_OK) != 0)
 	{
 		printf("%s : command not found\n", cmd);
+		free_args(session->commands[taskn]);
+		free_session(session);
 		exit(127);
 	}
 	if (access(cmd, X_OK) != 0)
 	{
 		printf("%s: Permission denied.\n", cmd);
+		free_args(session->commands[taskn]);
+		free_session(session);
 		exit(128);
 	}
 	else if (access(cmd, X_OK) == 0)

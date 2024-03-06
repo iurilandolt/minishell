@@ -14,6 +14,15 @@
 #include "../../../include/read.h"
 #include "../../../include/executer.h"
 
+void	free_args(char **table)
+{
+	int	i;
+	
+	i = -1;
+	while (table[++i])
+		free(table[i]);
+}
+
 void	free_readfrom(int **readfrom, int ntasks)
 {
 	int	i;
@@ -30,28 +39,14 @@ void	free_table_n(void **table, int ntasks)
 
 	i = -1;
 	while (++i < ntasks)
-		free(table[i]);
+	{	
+		if (table[i]) 
+			free(table[i]);
+	}
 	free(table);
 }
 
-void	free_session_commands(t_session *session)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (++i < session->ntasks)
-	{
-		j = -1;
-		while (session ->commands[i] && session->commands[i][++j])
-			free(session->commands[i][j]);
-		if (session->commands[i])
-			free(session->commands[i]);
-	}
-	free(session->commands);
-}
-
-int	free_session(t_session *session, char flag)
+int	free_session(t_session *session)
 {
 	tok_free_array(session->tokens);
 	if (session->operators)
@@ -60,15 +55,9 @@ int	free_session(t_session *session, char flag)
 		free(session->pipes);
 	if (session->readfrom)
 		free_table_n((void **)session->readfrom, session->ntasks);
-	if (flag && session->commands)
-		free_session_commands(session);
-	if (!flag && session->commands)
+	if (session->commands)
 		free_table_n((void **)session->commands, session->ntasks);
 	if (session->writeto)
 		free_table_n((void **)session->writeto, session->ntasks);
-	if (session->envlvl)
-		free(session->envlvl);
-	if (session->menvp)
-		free(session->menvp);
 	return (0);
 }

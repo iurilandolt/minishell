@@ -30,7 +30,7 @@ int	number_of_tasks(t_token *tokens)
 	return (number);
 }
 
-int	process_line(t_session *session, char *line, char ***menvp)
+int	process_line(t_session *session, char *line)
 {
 	session->tokens = tokenize(line);
 	if (!session->tokens)
@@ -38,30 +38,26 @@ int	process_line(t_session *session, char *line, char ***menvp)
 	session->ntasks = number_of_tasks(session->tokens);
 	session->operators = operator_rules(session->tokens);
 	if (!session->operators)
-		return (free_session(session, 0));
+		return (free_session(session));
 	session->pipes = create_pipes(session->operators);
 	if (!session->pipes)
-		return (free_session(session, 0));
+		return (free_session(session));
 	session->readfrom = obtain_read_documents(session->tokens,
 			session->pipes, session->ntasks);
 	if (!session->readfrom)
-		return (free_session(session, 0));
+		return (free_session(session));
 	session->commands = obtain_commands(session->tokens, session->ntasks);
 	if (!session->commands)
-		return (free_session(session, 0));
+		return (free_session(session));
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
-		return (free_session(session, 0));
-	session->envlvl = environment_levels(session, session->tokens, *menvp);
-	if (!session->envlvl)
-		return (free_session(session, 0));
+		return (free_session(session));
 	print_session(session);
 	perform_tasks(session);
-	*menvp = session->menvp[0];
-	return (free_session(session, 0));
+	return (free_session(session));
 }
 
-void	read_evaluate_print_loop(t_session *session, char ***menvp)
+void	read_evaluate_print_loop(t_session *session)
 {
 	char	*line;
 
@@ -77,25 +73,35 @@ void	read_evaluate_print_loop(t_session *session, char ***menvp)
 		if (ft_strlen(line) > 0)
 		{
 			add_history(line);
-			process_line(session, line, menvp);
+			process_line(session, line);
+			
 		}
 		free(line);
 		line = readline("<Minishell> ");
 	}
 }
 
+void	initialize_session(t_session *session)
+{
+	session->tokens = 0;
+	session->operators = 0;
+	session->pipes = 0;
+	session->readfrom = 0;
+	session->commands = 0;
+	session->writeto = 0;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	**menvp;
 	t_session	session;
 
 	(void)argc;
 	(void)argv;
-	menvp = setup_menvp(envp);
-	//initialize session with 0's
-	setup_cd(&session.cd, menvp);
-	read_evaluate_print_loop(&session, &menvp);
+	session.menvp = setup_menvp(envp);
+	initialize_session(&session);
+	setup_cd(&session.cd, session.menvp);
+	read_evaluate_print_loop(&session);
 	free_cd(&session.cd);
-	clear(menvp);
+	clear(session.menvp);
 	return (0);
 }

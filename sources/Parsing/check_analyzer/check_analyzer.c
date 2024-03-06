@@ -103,11 +103,11 @@ int	check_analyzer(char *string)
 		return (write(2, "Syntax Error\n", 13));
 	while (string[++i])
 	{
-		if (string[i] == '\'' && (i == 0 || string[i - 1] != '\\'))
+		if (string[i] == '\'' && !(qts % 2))
 			qt++;
-		if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
+		if (string[i] == '\"' && !(qt % 2))
 			qts++;
-		if (string[i] == '\\' && string[i + 1] == 0)
+		if (string[i] == '\\')
 			return (write(2, "Syntax Error\n", 13));
 	}
 	if (qt % 2 || qts % 2)

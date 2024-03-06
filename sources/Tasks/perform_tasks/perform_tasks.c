@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/04 14:40:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:07:26 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,36 @@ void	execute_task(char **cmd, char **envp, t_session *session)
 	if (execve(cmd[0], cmd, envp) == -1)
 	{
 		perror("** execve failed");
-		free_session(session, 1);
+		free_session(session);
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	task(char **menvp, t_session *session, int taskn)
+void	task(t_session *session, int taskn)
 {
 	int	i;
 	int	writefd;
 
 	i = -1;
 	while (session->commands[taskn][++i])
-		ambient_variable_expansion(&session->commands[taskn][i], menvp);
-	writefd = open_taskfiles(session, menvp, taskn);
+	{
+		ambient_variable_expansion(&session->commands[taskn][i], session->menvp);
+		clean_quotes(&session->commands[taskn][i]);
+	}
+	writefd = open_taskfiles(session, session->menvp, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
-	session->commands[taskn][0] = validate_bin_path(menvp, session->commands[taskn][0]);
-	link_cmd_codes(session->commands[taskn][0]);
-	execute_task(session->commands[taskn], menvp, session);
+	session->commands[taskn][0] =
+		validate_bin_path(session->menvp, session->commands[taskn][0]);
+	link_cmd_codes(session, taskn, session->commands[taskn][0]);
+	execute_task(session->commands[taskn], session->menvp, session);
 }
 
 void	perform_task(t_session *session, int taskn)
 {
 	int	pid;
 	int	builtn;
-	//char	***menvp;
 
-	*session->menvp = correct_environment(session, taskn);
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
 	{
@@ -59,7 +61,7 @@ void	perform_task(t_session *session, int taskn)
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-			task(*session->menvp, session, taskn);
+			task(session, taskn);
 	}
 }
 
@@ -89,7 +91,7 @@ void	perform_tasks(t_session *session)
 	int	i;
 	int	on;
 	int	status;
-
+ 
 	i = 0;
 	on = 0;
 	while (i < session->ntasks)

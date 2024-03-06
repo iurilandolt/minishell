@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:35:50 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 16:08:34 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/03/05 12:05:43 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/03/06 11:41:14 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,18 @@ void	free_table(char **table)
 	free(table);
 }
 
-char	**clean_quotes(char **table)
+void	clean_quotes(char **string)
 {
-	int		i;
 	int		j;
 	int		bar;
 	t_qt	qt;
 	char	*word;
 
-	i = -1;
-	while (table[++i])
-	{
-		count_quotes(table[i], &j, &qt, &bar);
-		word = allocate_for_clean_word(j, qt.qt, qt.qts, bar);
-		if (!word)
-		{
-			perror("malloc = 0");
-			free_table(table);
-			return (0);
-		}
-		transfer_word(table[i], word);
-		free(table[i]);
-		table[i] = word;
-	}
-	return (table);
+	count_quotes(*string, &j, &qt, &bar);
+	word = allocate_for_clean_word(j, qt.qt, qt.qts, bar);
+	if (!word)
+		return (perror(0));
+	transfer_word(*string, word);
+	free(*string);
+	*string = word;
 }

@@ -56,6 +56,7 @@ static int	open_writefd(char **menvp, t_token *token, int oldwritefd)
 	int	writefd;
 	char	*filename;
 	
+	writefd = 0;
 	filename = token->value;
 	ambient_variable_expansion(&filename, menvp);
 	if (oldwritefd)

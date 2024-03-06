@@ -39,8 +39,7 @@ typedef struct s_session
 	int		**readfrom;
 	t_token		**writeto;
 	t_operator	*operators;
-	int			*envlvl;
-	char		***menvp;
+	char		**menvp;
 	t_cd		cd;
 }	t_session;
 
@@ -59,15 +58,16 @@ int			(*create_pipes(t_operator *operators))[2];
 int			check_builtin(t_session *session, int taskn);
 void	exec_builtin(t_session *session, int taskn, int builtin);
 char		*validate_bin_path(char **envp, char *cmd);
-void		link_cmd_codes(char *cmd);
+void		link_cmd_codes(t_session *session, int taskn, char *cmd);
 
 void		free_session_commands(t_session *session);
-int			free_session(t_session *session, char flag);
+int			free_session(t_session *session);
+void		free_args(char **table);
 
 int	open_taskfiles(t_session *session, char **menvp, int taskn);
 t_token	**obtain_write_documents(t_token *tokens, int ntasks);
 
 int	*environment_levels(t_session *session, t_token *tokens, char **menvp);
-char	**correct_environment(t_session *session, int taskn);
+char	***correct_environment(t_session *session, int taskn);
 
 #endif
