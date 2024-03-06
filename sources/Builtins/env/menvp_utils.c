@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 18:22:59 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:06:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,62 +36,23 @@ char **setup_menvp(char **envp)
 	return(menvp);
 }
 
-int	ft_envncmp(const char *str1, const char *str2, size_t n)
-{
-	if (n == 0)
-		return (0);
-	while ((*str1 || *str2) && (n > 1) && (*str1 == *str2) && (*str1 != '=' && *str2 != '='))
-	{
-		str1++;
-		str2++;
-		n--;
-	}
-	return (*(unsigned char *)str1 - *(unsigned char *)str2);
-}
-
-int	menvp_has_value(char *add, char **menvp)
+int	menvp_lookup(char *value, char **menvp)
 {
 	int	i;
 
 	i = 0;
-	while(menvp[i])
+	while (menvp[i])
 	{
-		if (ft_envncmp(menvp[i], add, ft_strlen(add)) == 0)
+		if (!ft_strncmp(menvp[i], value, ft_strlen(value))
+			&& (menvp[i][ft_strlen(value)] == '='
+			|| menvp[i][ft_strlen(value)] == '\0'))
 		{
-			printf("found %s\n", menvp[i]);
-			return (1);
+			printf("lookup found %s ->\n", menvp[i]);
+			return (i);
 		}
 		i++;
 	}
-	return (0);
-}
-
-int	export_is_replace(char *add)
-{
-	int	i;
-
-	i = 0;
-	while(add[i])
-	{
-		if (add[i] == '=' && add[i - 1] != '+')
-			return(1);
-		i++;
-	}
-	return(0);
-}
-
-int	export_is_concat(char *add)
-{
-	int	i;
-
-	i = 0;
-	while(add[i])
-	{
-		if (add[i] == '+' && add[i + 1] == '=')
-			return(1);
-		i++;
-	}
-	return(0);
+	return (-1);
 }
 
 char **export_to_menvp(char *add, char **menvp)
@@ -137,10 +98,7 @@ char **unset_from_menvp(char *del, char **menvp)
 	{
 		if (!ft_strncmp(menvp[i], del, ft_strlen(del))
 			&& (menvp[i][ft_strlen(del)] == '=' || menvp[i][ft_strlen(del)] == '\0'))
-		{
-			printf("unset found %s ->\n", menvp[i]);
 			i++;
-		}
 		else
 		{
 			new[j] = ft_strdup(menvp[i]);

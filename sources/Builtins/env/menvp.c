@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 18:29:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:34:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,68 +24,71 @@ void	m_envp(char **menvp)
 	while (menvp[i])
 	{
 		if (ft_strchr(menvp[i], '='))
-			printf("%s\n", menvp[i]);
+			ft_putendl_fd(menvp[i], 1);
 		i++;
 	}
 }
 
-char	*transform_for_unset(char *value)
+void	print_export(char **menvp)
 {
-	char	*tmp;
-	int		i;
-	int		j;
+	char **parsed;
+	int	i;
 
 	i = 0;
-	while(value[i])
+	while(menvp[i])
 	{
-		if (value[i] == '=' || (value[i] == '=' && value[i + 1] == '+'))
-			break;
+		parsed = parse_for_export(menvp[i]);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(parsed[0], 1);
+		if (parsed[1])
+		{
+			ft_putstr_fd(parsed[1], 1);
+					ft_putstr_fd("\"", 1);
+			if (parsed[2])
+				ft_putstr_fd(parsed[2], 1);
+			ft_putendl_fd("\"", 1);
+		}
+		else
+			ft_putendl_fd("", 1);
+		clear(parsed);
 		i++;
 	}
-	tmp = (char *)malloc(sizeof(char) * i + 1);
-	j = 0;
-	while(j < i)
-	{
-		tmp[j] = value[j];
-		j++;
-	}
-	tmp[j] = '\0';
-	return(tmp);
 }
 
 void	m_export(char ***menvp, char *value) // int fd
 {
-	int		i;
-	char	*tmp;
-	//char	*extracted;
+	char	**parsed;
 
 	if (!*menvp)
 		return ;
 	if (!value)
 	{
-		i = 0;
-		while (menvp[0][i])
-			printf("declare -x %s\n", menvp[0][i++]); // putstr_fd(str, fd)
+		print_export(*menvp);
+		return ;
 	}
 	else
 	{
-		if (export_is_replace(value))
+		if (is_valid_env_format(value))
 		{
-			tmp = transform_for_unset(value);
-			printf("value %s will be replaced.\n", value);
-			*menvp = unset_from_menvp(tmp, *menvp);
-			free(tmp);
+			parsed = parse_for_export(value);
+			if (menvp_lookup(parsed[0], *menvp) != -1)
+			{
+				if (!parsed[1] || parsed[1][0] == '=')
+					export_operation(menvp, value, parsed, 0);
+				else if (parsed[1][0] == '+')
+					concat_export(menvp, parsed);
+			}
+			else
+			{
+				if (parsed[2])
+					export_operation(menvp, NULL, parsed, 1);
+				else if (parsed[1] && !parsed[2])
+					export_operation(menvp, NULL, parsed, 2);
+				else
+					*menvp = export_to_menvp(parsed[0], *menvp);
+			}
+			clear(parsed);
 		}
-		else if(export_is_concat(value))
-		{
-			printf("value %s will be joined.\n", value);
-			return ;
-		}
-		else if (menvp_has_value(value, *menvp))
-			return ;
-		*menvp = export_to_menvp(value, *menvp);
-		if (!*menvp)
-			perror("**export error\n");
 	}
 }
 
@@ -94,10 +97,7 @@ void	m_unset(char ***menvp, char *value) // int fd
 	int		i;
 
 	if (!value)
-	{
-		write(2, "unset: not enough arguments\n", 28); // debug -> delete
 		return ;
-	}
 	if (!*menvp)
 		return ;
 	i = 0;
