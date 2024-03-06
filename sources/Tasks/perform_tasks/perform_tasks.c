@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 16:27:07 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:38 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	task(t_session *session, int taskn)
 	int	writefd;
 
 	i = -1;
-	while (session->commands[taskn][++i])
+	while (session->commands[taskn] && session->commands[taskn][++i])
 	{
 		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
 		clean_quotes(&session->commands[taskn][i]);
@@ -38,10 +38,15 @@ void	task(t_session *session, int taskn)
 	writefd = open_taskfiles(session, session->menvp, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
-	session->commands[taskn][0] =
-		validate_bin_path(session->menvp, session->commands[taskn][0]);
-	link_cmd_codes(session, taskn, session->commands[taskn][0]);
-	execute_task(session->commands[taskn], session->menvp, session);
+	if (session->commands[taskn])
+	{
+		session->commands[taskn][0] =
+			validate_bin_path(session->menvp, session->commands[taskn][0]);
+		link_cmd_codes(session, taskn, session->commands[taskn][0]);
+		execute_task(session->commands[taskn], session->menvp, session);
+	}
+	free_session(session);
+	exit(0);
 }
 
 /*
@@ -99,7 +104,7 @@ void	perform_tasks(t_session *session)
 {
 	int	i;
 	int	on;
- 
+
 	i = 0;
 	on = 0;
 	while (i < session->ntasks)

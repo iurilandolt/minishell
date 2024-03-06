@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/06 16:33:18 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/06 16:53:25 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
-	$(SRC_PATH)/Setup/environment_levels/environment_levels.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/string_utils/str_fd.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
@@ -53,7 +52,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
-	$(SRC_PATH)/Tasks/correct_environment/correct_environment.c \
 
 SANITIZER = -g -fsanitize=address
 

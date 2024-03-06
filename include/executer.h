@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 16:29:41 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:04:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_path_tools
 
 typedef struct s_session
 {
+	char		*line;
 	int			ntasks;
 	int			(*pipes)[2];
 	t_token		*tokens;
@@ -40,7 +41,7 @@ typedef struct s_session
 	t_token		**writeto;
 	t_operator	*operators;
 	char		**menvp;
-	int		status;
+	int			status;
 	t_cd		cd;
 }	t_session;
 

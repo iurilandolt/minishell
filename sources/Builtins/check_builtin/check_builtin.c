@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 14:26:35 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:55:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_builtin(t_session *session, int taskn)
 	char	*builtins[8];
 	int		i;
 
+	if (!session->commands[taskn])
+		return (0);
 	if (session->commands[taskn][0])
 	{
 		i = 0;
