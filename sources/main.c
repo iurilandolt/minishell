@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 17:06:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:12:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	process_line(t_session *session, char *line)
 		return (free_session(session));
 	print_session(session);
 	perform_tasks(session);
+	printf("tasks were performed :)\n");
 	return (free_session(session));
 }
 
@@ -75,8 +76,11 @@ void	read_evaluate_print_loop(t_session *session)
 
 		}
 		session->line = readline("<Minishell> ");
+		perror("REPL");
+		printf("line ->%s\n", session->line);
 	}
 }
+
 
 void	initialize_session(t_session *session)
 {

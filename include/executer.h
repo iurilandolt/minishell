@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:04:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:24:52 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,16 @@ int			(*create_pipes(t_operator *operators))[2];
 
 int			check_builtin(t_session *session, int taskn);
 void		exec_builtin(t_session *session, int taskn, int builtin);
+void		builtin_task(t_session *session, int taskn, int builtn);
+int			open_builtin_taskfiles(t_session *session, char **menvp, int taskn);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(t_session *session, int taskn, char *cmd);
 
-void		free_session_commands(t_session *session);
 int			free_session(t_session *session);
 void		free_args(char **table);
 
-int	open_taskfiles(t_session *session, char **menvp, int taskn);
-t_token	**obtain_write_documents(t_token *tokens, int ntasks);
+int			open_taskfiles(t_session *session, char **menvp, int taskn);
+t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 
 int	ft_isalnum(char c);
 

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:03:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:28:34 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,6 @@ void	task(t_session *session, int taskn)
 	exit(0);
 }
 
-/*
-int	forked_builtin(t_session *session, int taskn)
-{
-	if (session->operators[taskn - 1].token->type == PIPE || session->operators[taskn].token->type == PIPE)
-	{}
-
-}
-*/
-
 void	perform_task(t_session *session, int taskn)
 {
 	int	pid;
@@ -67,7 +58,7 @@ void	perform_task(t_session *session, int taskn)
 	if (builtn > 0)
 	{
 		printf("call to builtin %d\n", builtn);
-		exec_builtin(session, taskn, builtn);
+		builtin_task(session, taskn, builtn);
 	}
 	else
 	{

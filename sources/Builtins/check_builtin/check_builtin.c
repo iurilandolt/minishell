@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 16:55:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:20:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	check_builtin(t_session *session, int taskn)
 	return (0);
 }
 
-
 void	exec_builtin(t_session *session, int taskn, int builtin)
 {
 	int	i;
@@ -73,3 +72,76 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 		m_envp(session->menvp);
 }
 
+void	forked_builtin(t_session *session, int taskn, int builtn)
+{
+	int	i;
+	int	writefd;
+
+	printf("forked team\n");
+	i = -1;
+	while (session->commands[taskn] && session->commands[taskn][++i])
+	{
+		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
+		clean_quotes(&session->commands[taskn][i]);
+	}
+	writefd = open_taskfiles(session, session->menvp, taskn);
+	perform_redirects(session, taskn, writefd);
+	close_opened_fds(session, writefd);
+	exec_builtin(session, taskn, builtn);
+	free_args(session->commands[taskn]);
+	free_session(session);
+
+	exit(0);
+}
+
+void	regular_builtin(t_session *session, int taskn, int builtn)
+{
+	int	i;
+	int	stdout_fd;
+	int	writefd;
+
+	printf("regular team\n");
+	i = -1;
+	while (session->commands[taskn] && session->commands[taskn][++i])
+	{
+		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
+		clean_quotes(&session->commands[taskn][i]);
+	}
+	writefd = open_builtin_taskfiles(session, session->menvp, taskn);
+	if (writefd)
+	{
+		if ((stdout_fd = dup(1)) == -1)
+			perror("dup2");
+		if (dup2(writefd, 1) == -1)
+			perror("dup2");
+		close(writefd);
+	}
+	exec_builtin(session, taskn, builtn);
+	free_args(session->commands[taskn]);
+	if (writefd)
+	{
+		if (dup2(stdout_fd, 1) == -1)
+			perror("dup2");
+	}
+}
+
+void builtin_task(t_session *session, int taskn, int builtn)
+{
+	int	i;
+	pid_t	pid;
+
+	i = 0;
+	while(session->writeto[taskn][i].value)
+		i++;
+	if ((i > 0 && session->writeto[taskn][i - 1].type == PIPE)
+		|| (session->readfrom[taskn] && session->readfrom[taskn][0] > 0))
+	{
+		pid = fork();
+		if (pid == -1)
+			perror("builtin fork failed.");
+		else if (pid == 0)
+			forked_builtin(session, taskn, builtn);
+	}
+	else
+		regular_builtin(session, taskn, builtn);
+}

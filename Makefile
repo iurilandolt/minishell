@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/06 16:53:25 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/06 18:26:02 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,11 +47,13 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Builtins/env/parse_export.c \
 	$(SRC_PATH)/Builtins/env/export_operations.c \
 	$(SRC_PATH)/Builtins/echo/echo.c \
+	$(SRC_PATH)/Builtins/builtin_exec/builtin_writeto.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
+
 
 SANITIZER = -g -fsanitize=address
 

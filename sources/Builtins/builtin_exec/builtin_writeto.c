@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_taskfiles.c                                   :+:      :+:    :+:   */
+/*   builtin_writeto.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 13:05:16 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 18:22:52 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
+/*   Updated: 2024/03/06 18:22:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/read.h"
-#include "../../../include/token.h"
+#include "../../../include/builtins.h"
 #include "../../../include/executer.h"
+#include "../../../include/read.h"
+
+
 
 static int	correct_pipe(t_session *session, int taskn)
 {
@@ -32,23 +34,6 @@ static t_token	*startfrom(t_token *token, int taskn)
 			taskn--;
 	}
 	return (&token[i]);
-}
-
-static void	open_readfd(t_session *session, char **menvp, int *readfd, t_token *token)
-{
-	char	*filename;
-
-	filename = &token->value[1];
-	ambient_variable_expansion(session->status, &filename, menvp);
-	*readfd = open(filename, O_RDONLY, 0644);
-	if (filename)
-		free(filename);
-	if (*readfd == -1)
-	{
-		perror(&token->value[1]);
-		free_session(session);
-		exit(1);
-	}
 }
 
 static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd)
@@ -80,7 +65,7 @@ static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd
 	return (writefd);
 }
 
-int	open_taskfiles(t_session *session, char **menvp, int taskn)
+int	open_builtin_taskfiles(t_session *session, char **menvp, int taskn)
 {
 	int	i;
 	int	j;
@@ -95,10 +80,6 @@ int	open_taskfiles(t_session *session, char **menvp, int taskn)
 		j++;
 	while (token[++i].value && token[i].type < PIPE)
 	{
-		if (token[i].type == HERE_DOC)
-			j++;
-		if (token[i].type == RED_IN)
-			open_readfd(session, menvp, &session->readfrom[taskn][j], &token[i]);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
 			writefd = open_writefd(session->status, menvp, &token[i], writefd);
 	}
