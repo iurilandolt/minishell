@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_bin_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 11:27:12 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:16:22 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,20 @@ char	*validate_bin_path(char **envp, char *cmd)
 	return (cmd);
 }
 
-int	cmd_is_dir(char *cmd)
+void	error_message(char *cmd, char * string)
+{
+	int		size;
+	char	*message;
+
+	size = 0;
+	message = ft_strjoin(cmd, string);
+	while (message[size])
+		size++;
+	write(2, message, size);
+	free(message);
+}
+
+int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 {
 	struct stat	cmd_stat;
 
@@ -59,27 +72,12 @@ int	cmd_is_dir(char *cmd)
 		return (S_ISDIR(cmd_stat.st_mode));
 	else if (lstat(cmd, &cmd_stat) == 0)
 		return (S_ISLNK(cmd_stat.st_mode));
-	else if (cmd[0]	== '/')
-		return (1);
-	return (-1);
-}
-
-int	return_dir_code(char *cmd)
-{
-	struct stat	cmd_stat;
-
-	if (lstat(cmd, &cmd_stat) == 0 || stat(cmd, &cmd_stat) == 0)
+	else if (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1]	== '/')
 	{
-		if (S_ISDIR(cmd_stat.st_mode) || S_ISLNK(cmd_stat.st_mode))
-		{
-			printf("%s Is a directory.\n", cmd);
-			return (126);
-		}
-	}
-	else
-	{
-		printf("%s : No such file or directory.\n", cmd);
-		return (127);
+		error_message(cmd, ": No such file or directory.\n");
+		free_args(session->commands[taskn]);
+		free_session(session);
+		exit(127);
 	}
 	return (-1);
 }
@@ -87,30 +85,29 @@ int	return_dir_code(char *cmd)
 void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 {
 	if (!cmd)
-	{
 		free_session(session);
-		exit(127);
-	}
-	if (cmd_is_dir(cmd) > 0)
+	if (!cmd)
+		exit(0);
+	if (cmd_is_dir(session, taskn, cmd) > 0)
 	{
+		error_message(cmd, ": Is a directory.\n");
 		free_args(session->commands[taskn]);
 		free_session(session);
-		exit(return_dir_code(cmd));
+		exit(126);
 	}
 	if (access(cmd, F_OK) != 0)
 	{
-		printf("%s : command not found\n", cmd);
+		error_message(cmd, ": command not found\n");
 		free_args(session->commands[taskn]);
 		free_session(session);
 		exit(127);
 	}
 	if (access(cmd, X_OK) != 0)
 	{
-		printf("%s: Permission denied.\n", cmd);
+		perror(cmd);
 		free_args(session->commands[taskn]);
 		free_session(session);
 		exit(128);
 	}
-	else if (access(cmd, X_OK) == 0)
-		printf("execeve: %s\n", cmd);
+	fprintf(stderr, "execeve: %s\n", cmd);
 }
