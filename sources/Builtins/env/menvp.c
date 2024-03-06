@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 15:32:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:34:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	m_envp(char **menvp)
 	while (menvp[i])
 	{
 		if (ft_strchr(menvp[i], '='))
-			printf("%s\n", menvp[i]);
+			ft_putendl_fd(menvp[i], 1);
 		i++;
 	}
 }
