@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 15:01:06 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:32:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,74 +29,42 @@ void	m_envp(char **menvp)
 	}
 }
 
-//might need stupid struct for these next two functions to comply with norminette
-void	concat_export(char ***menvp, char **parsed)
+void	print_export(char **menvp)
 {
-	char	**old_value;
-	char	*new_value;
-	char	*tmp;
+	char **parsed;
+	int	i;
 
-	old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
-	tmp = ft_strjoin(parsed[0], "=");
-	if (old_value[2] && parsed[2])
+	i = 0;
+	while(menvp[i])
 	{
-		new_value = ft_strjoin(tmp, old_value[2]);
-		free(tmp);
-		tmp = ft_strjoin(new_value, parsed[2]);
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(tmp, *menvp);
-		free(new_value);
+		parsed = parse_for_export(menvp[i]);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(parsed[0], 1);
+		if (parsed[1])
+		{
+			ft_putstr_fd(parsed[1], 1);
+					ft_putstr_fd("\"", 1);
+			if (parsed[2])
+				ft_putstr_fd(parsed[2], 1);
+			ft_putendl_fd("\"", 1);
+		}
+		else
+			ft_putendl_fd("", 1);
+		clear(parsed);
+		i++;
 	}
-	else if (!old_value[2] && parsed[2])
-	{
-		new_value = ft_strjoin(tmp, parsed[2]);
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(new_value, *menvp);
-		free(new_value);
-	}
-	free(tmp);
-	clear(old_value);
-}
-
-void	export_operation(char ***menvp, char* value, char **parsed, int op)
-{
-	char	*new_value;
-	char	*tmp;
-
-	if (op == 0)
-	{
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(value, *menvp);
-	}
-	if (op == 1)
-	{
-		tmp = ft_strjoin(parsed[0], "=");
-		new_value = ft_strjoin(tmp, parsed[2]);
-		*menvp = export_to_menvp(new_value, *menvp);
-		free(new_value);
-		free(tmp);
-	}
-	if (op == 2)
-	{
-		new_value = ft_strjoin(parsed[0], "=");
-		*menvp = export_to_menvp(new_value, *menvp);
-		free(new_value);
-	}
-
 }
 
 void	m_export(char ***menvp, char *value) // int fd
 {
-	int		i;
 	char	**parsed;
 
 	if (!*menvp)
 		return ;
 	if (!value)
 	{
-		i = 0;
-		while (menvp[0][i])
-			printf("declare -x %s\n", menvp[0][i++]); // putstr_fd(str, fd)
+		print_export(*menvp);
+		return ;
 	}
 	else
 	{

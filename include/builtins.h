@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/05 12:29:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:28:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ void	m_export(char ***menvp, char *value);
 char	**export_to_menvp(char *add, char **menvp);
 void	m_unset(char ***menvp, char *value);
 char 	**unset_from_menvp(char *del, char **menvp);
-void	mpwd(void);
+
 
 int		is_valid_env_format(const char *str);
 char	**parse_for_export(char *value);
-
 int		menvp_lookup(char *value, char **menvp);
+void	concat_export(char ***menvp, char **parsed);
+void	export_operation(char ***menvp, char* value, char **parsed, int op);
+
+void	mpwd(void);
 
 #endif
