@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 13:28:59 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:36:38 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,38 @@ void	m_envp(char **menvp)
 	}
 }
 
+void	concat_export(char ***menvp, char **parsed)
+{
+	char	**old_value;
+	char	*new_value;
+	char	*tmp;
+
+	old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
+	tmp = ft_strjoin(parsed[0], "=");
+	if (old_value[2] && parsed[2])
+	{
+		new_value = ft_strjoin(tmp, old_value[2]);
+		free(tmp);
+		tmp = ft_strjoin(new_value, parsed[2]);
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		*menvp = export_to_menvp(tmp, *menvp);
+		free(new_value);
+	}
+	else if (!old_value[2] && parsed[2])
+	{
+		new_value = ft_strjoin(tmp, parsed[2]);
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		*menvp = export_to_menvp(new_value, *menvp);
+		free(new_value);
+	}
+	free(tmp);
+	clear(old_value);
+}
+
 void	m_export(char ***menvp, char *value) // int fd
 {
 	int		i;
 	char	**parsed;
-	char	**old_value;
 	char	*new_value;
 	char	*tmp;
 
@@ -58,43 +85,26 @@ void	m_export(char ***menvp, char *value) // int fd
 					*menvp = export_to_menvp(value, *menvp);
 				}
 				else if (parsed[1][0] == '+')
-				{
-					old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
-					tmp = ft_strjoin(parsed[0], "=");
-					if (old_value[2] && parsed[2])
-					{
-						new_value = ft_strjoin(tmp, old_value[2]);
-						free(tmp);
-						tmp = ft_strjoin(new_value, parsed[2]);
-						*menvp = unset_from_menvp(parsed[0], *menvp);
-						*menvp = export_to_menvp(tmp, *menvp);
-						free(new_value);
-					}
-					else if (!old_value[2] && parsed[2])
-					{
-						new_value = ft_strjoin(tmp, parsed[2]);
-						*menvp = unset_from_menvp(parsed[0], *menvp);
-						*menvp = export_to_menvp(new_value, *menvp);
-						free(new_value);
-					}
-					free(tmp);
-					clear(old_value);
-				}
+					concat_export(menvp, parsed);
 			}
 			else
 			{
-				tmp = ft_strjoin(parsed[0], "=");
 				if (parsed[2])
 				{
+					tmp = ft_strjoin(parsed[0], "=");
 					new_value = ft_strjoin(tmp, parsed[2]);
+					*menvp = export_to_menvp(new_value, *menvp);
+					free(new_value);
+					free(tmp);
+				}
+				else if (parsed[1] && !parsed[2])
+				{
+					new_value = ft_strjoin(parsed[0], "=");
 					*menvp = export_to_menvp(new_value, *menvp);
 					free(new_value);
 				}
 				else
-				{
-					*menvp = export_to_menvp(tmp, *menvp);
-				}
-				free(tmp);
+					*menvp = export_to_menvp(parsed[0], *menvp);
 			}
 			clear(parsed);
 		}

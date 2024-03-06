@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/05 12:34:17 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:06:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ char **unset_from_menvp(char *del, char **menvp)
 	{
 		if (!ft_strncmp(menvp[i], del, ft_strlen(del))
 			&& (menvp[i][ft_strlen(del)] == '=' || menvp[i][ft_strlen(del)] == '\0'))
-		{
-			printf("unset found %s ->\n", menvp[i]);
 			i++;
-		}
 		else
 		{
 			new[j] = ft_strdup(menvp[i]);
