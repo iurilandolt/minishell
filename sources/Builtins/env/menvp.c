@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 14:36:38 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:01:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	m_envp(char **menvp)
 	}
 }
 
+//might need stupid struct for these next two functions to comply with norminette
 void	concat_export(char ***menvp, char **parsed)
 {
 	char	**old_value;
@@ -57,12 +58,37 @@ void	concat_export(char ***menvp, char **parsed)
 	clear(old_value);
 }
 
+void	export_operation(char ***menvp, char* value, char **parsed, int op)
+{
+	char	*new_value;
+	char	*tmp;
+
+	if (op == 0)
+	{
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		*menvp = export_to_menvp(value, *menvp);
+	}
+	if (op == 1)
+	{
+		tmp = ft_strjoin(parsed[0], "=");
+		new_value = ft_strjoin(tmp, parsed[2]);
+		*menvp = export_to_menvp(new_value, *menvp);
+		free(new_value);
+		free(tmp);
+	}
+	if (op == 2)
+	{
+		new_value = ft_strjoin(parsed[0], "=");
+		*menvp = export_to_menvp(new_value, *menvp);
+		free(new_value);
+	}
+
+}
+
 void	m_export(char ***menvp, char *value) // int fd
 {
 	int		i;
 	char	**parsed;
-	char	*new_value;
-	char	*tmp;
 
 	if (!*menvp)
 		return ;
@@ -80,29 +106,16 @@ void	m_export(char ***menvp, char *value) // int fd
 			if (menvp_lookup(parsed[0], *menvp) != -1)
 			{
 				if (!parsed[1] || parsed[1][0] == '=')
-				{
-					*menvp = unset_from_menvp(parsed[0], *menvp);
-					*menvp = export_to_menvp(value, *menvp);
-				}
+					export_operation(menvp, value, parsed, 0);
 				else if (parsed[1][0] == '+')
 					concat_export(menvp, parsed);
 			}
 			else
 			{
 				if (parsed[2])
-				{
-					tmp = ft_strjoin(parsed[0], "=");
-					new_value = ft_strjoin(tmp, parsed[2]);
-					*menvp = export_to_menvp(new_value, *menvp);
-					free(new_value);
-					free(tmp);
-				}
+					export_operation(menvp, NULL, parsed, 1);
 				else if (parsed[1] && !parsed[2])
-				{
-					new_value = ft_strjoin(parsed[0], "=");
-					*menvp = export_to_menvp(new_value, *menvp);
-					free(new_value);
-				}
+					export_operation(menvp, NULL, parsed, 2);
 				else
 					*menvp = export_to_menvp(parsed[0], *menvp);
 			}
