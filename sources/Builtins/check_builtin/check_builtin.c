@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:46:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:26:35 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_builtin(t_session *session, int taskn)
 	if (session->commands[taskn][0])
 	{
 		i = 0;
-		builtins[0] = "echo";
+		builtins[0] = "ourecho";
 		builtins[1] = "cd";
 		builtins[2] = "pwd";
 		builtins[3] = "export";

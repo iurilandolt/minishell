@@ -3,33 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_variable_expansion.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 16:11:52 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:14:54 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
+#include "../../../include/executer.h"
 
-static int	ft_isalnum(char c)
-{
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	else if (c >= 'A' && c <= 'Z')
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-static int	delta_size(char *string, char **envp)
+static int	delta_size(int status, char *string, char **envp)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
+	if (string[0] == '?')
+		return ((status > 99) + (status > 9));
 	while (ft_isalnum(string[i]))
 		i++;
 	if (i == 0)
@@ -72,36 +64,46 @@ void	expand_variable(char *string, char **envp, char *new, int *j)
 	}
 }
 
-static char	*transfer_string(char *string, char **envp, char *new)
+static void	expand_status_variable(int status, char *new, int *j)
 {
-	int	i;
+	status = (status & 0xff00) >> 8;
+	if (status > 99)
+		new[(*j)++] = status / 100 + 48;
+	if (status > 9)
+		new[(*j)++] = status % 100 / 10 + 48;
+	new[(*j)++] = status % 10 + 48;
+}
+
+static char	*transfer_string(char *string, char **envp, char *new, int status)
+{
 	int	j;
 	int	qt;
 	int	qts;
 
-	i = -1;
 	j = 0;
 	qt = 0;
 	qts = 0;
-	while (string[++i])
+	while (*string)
 	{
-		if (string[i] == '\'' && !(qts % 2))
+		if (*string == '\'' && !(qts % 2))
 			qt++;
-		if (string[i] == '\"')
+		if (*string == '\"')
 			qts++;
-		if (string[i] == '$' && (i == 0 || string[i - 1] != '\\') && !(qt % 2))
+		if (*string == '$' && !(qt % 2) && *(string + 1) != '?')
 		{
-			expand_variable(&string[i + 1], envp, new, &j);
-			while (ft_isalnum(string[i + 1]))
-				i++;
+			expand_variable(++string, envp, new, &j);
+			while (ft_isalnum(*(string)))
+				string++;
 		}
+		else if (*string == '$' && !(qt % 2) && string++ && string++)
+			expand_status_variable(status, new, &j);
 		else
-			new[j++] = string[i];
+			new[j++] = *(string++);
 	}
 	return (new);
 }
 
-int	ambient_variable_expansion(char **string, char **envp)
+int	ambient_variable_expansion(int status, char **string, char **envp)
 {
 	int		i;
 	int		j;
@@ -119,13 +121,13 @@ int	ambient_variable_expansion(char **string, char **envp)
 			qt++;
 		if ((*string)[i] == '\"')
 			qts++;
-		if ((*string)[i] == '$' && (i == 0 || (*string)[i - 1] != '\\') && !(qt % 2))
-			j += delta_size(&(*string)[i + 1], envp);
+		if ((*string)[i] == '$' && !(qt % 2))
+			j += delta_size(status, &(*string)[i + 1], envp);
 	}
 	new = malloc(i + j + 1);
 	if (!new)
 		return (1);
 	new[i + j] = 0;
-	*string = transfer_string(*string, envp, new);
+	*string = transfer_string(*string, envp, new, status);
 	return (0);
 }

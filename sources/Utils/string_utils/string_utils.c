@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:37:46 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:47:50 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:49:47 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ size_t	ft_strlen(const char *s)
 	while (*s++)
 		pos++;
 	return (pos);
+}
+
+int	ft_isalnum(char c)
+{
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	else if (c >= 'A' && c <= 'Z')
+		return (1);
+	else if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)

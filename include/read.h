@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:48:03 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:56:35 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 char	*get_next_line(int fd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ambient_variable_expansion(char **string, char **envp);
+int		ambient_variable_expansion(int status, char **string, char **envp);
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
 

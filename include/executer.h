@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/04 14:59:08 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:57:13 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_session
 	t_token		**writeto;
 	t_operator	*operators;
 	char		**menvp;
+	int		status;
 	t_cd		cd;
 }	t_session;
 
@@ -67,7 +68,6 @@ void		free_args(char **table);
 int	open_taskfiles(t_session *session, char **menvp, int taskn);
 t_token	**obtain_write_documents(t_token *tokens, int ntasks);
 
-int	*environment_levels(t_session *session, t_token *tokens, char **menvp);
-char	***correct_environment(t_session *session, int taskn);
+int	ft_isalnum(char c);
 
 #endif

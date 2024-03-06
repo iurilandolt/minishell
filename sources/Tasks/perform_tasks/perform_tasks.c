@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/05 15:07:26 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:11:28 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	task(t_session *session, int taskn)
 	i = -1;
 	while (session->commands[taskn][++i])
 	{
-		ambient_variable_expansion(&session->commands[taskn][i], session->menvp);
+		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
 		clean_quotes(&session->commands[taskn][i]);
 	}
 	writefd = open_taskfiles(session, session->menvp, taskn);
@@ -90,7 +90,6 @@ void	perform_tasks(t_session *session)
 {
 	int	i;
 	int	on;
-	int	status;
  
 	i = 0;
 	on = 0;
@@ -101,14 +100,14 @@ void	perform_tasks(t_session *session)
 			perform_task(session, i + on++);
 		while (on && on--)
 		{
-			wait(&status);
+			wait(&session->status);
 			close_current_pipe(session, i++);
 		}
 		if (i < session->ntasks && session->operators[i - 1].token->type == SAND
-            		&& ((status & 0xff00) >> 8))
+            		&& ((session->status & 0xff00) >> 8))
 			on += session->operators[i - 1].flag;
 		if (i < session->ntasks && session->operators[i - 1].token->type == OR
-			&& !((status & 0xff00) >> 8))
+			&& !((session->status & 0xff00) >> 8))
 			on += session->operators[i - 1].flag;
 		while (on && on--)
 			close_current_pipe(session, i++);

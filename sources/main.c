@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 14:59:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:57:22 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	initialize_session(t_session *session)
 	session->readfrom = 0;
 	session->commands = 0;
 	session->writeto = 0;
+	session->status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
