@@ -76,8 +76,6 @@ void	read_evaluate_print_loop(t_session *session)
 
 		}
 		session->line = readline("<Minishell> ");
-		perror("REPL");
-		printf("line ->%s\n", session->line);
 	}
 }
 

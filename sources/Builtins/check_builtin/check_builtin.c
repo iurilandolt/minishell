@@ -79,12 +79,13 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 
 	printf("forked team\n");
 	i = -1;
+	writefd = open_taskfiles(session, session->menvp, taskn);
 	while (session->commands[taskn] && session->commands[taskn][++i])
 	{
 		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
 		clean_quotes(&session->commands[taskn][i]);
 	}
-	writefd = open_taskfiles(session, session->menvp, taskn);
+
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	exec_builtin(session, taskn, builtn);
@@ -134,7 +135,7 @@ void builtin_task(t_session *session, int taskn, int builtn)
 	while(session->writeto[taskn][i].value)
 		i++;
 	if ((i > 0 && session->writeto[taskn][i - 1].type == PIPE)
-		|| (session->readfrom[taskn] && session->readfrom[taskn][0] > 0))
+		|| (taskn > 0 && session->operators[taskn - 1].token->type == PIPE))
 	{
 		pid = fork();
 		if (pid == -1)
