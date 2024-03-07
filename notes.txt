@@ -112,3 +112,4 @@ exit ABC -> invalid
 exit 123 -> valid
 exit 123 ABC ?
 
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind-out.txt --suppressions=readline.supp --trace-children=yes ./minishell
