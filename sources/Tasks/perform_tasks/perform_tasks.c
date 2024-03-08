@@ -30,12 +30,12 @@ void	task(t_session *session, int taskn)
 	int	writefd;
 
 	i = -1;
+	writefd = open_taskfiles(session, session->menvp, taskn);
 	while (session->commands[taskn] && session->commands[taskn][++i])
 	{
 		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
 		clean_quotes(&session->commands[taskn][i]);
 	}
-	writefd = open_taskfiles(session, session->menvp, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	if (session->commands[taskn])

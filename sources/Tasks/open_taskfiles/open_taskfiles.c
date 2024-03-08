@@ -26,7 +26,9 @@ static t_token	*startfrom(t_token *token, int taskn)
 	int	i;
 
 	i = -1;
-	while (token[++i].value && taskn)
+	if (!taskn)
+		return (&token[0]);
+	while (taskn && token[++i].value)
 	{
 		if (token[i].type >= PIPE)
 			taskn--;
