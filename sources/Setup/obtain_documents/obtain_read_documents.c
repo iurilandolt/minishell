@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_read_documents.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/27 15:58:37 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:25:07 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	open_here_doc(char *delimiter)
 	int	i;
 	char	*line;
 	int	here_doc_pipe[2];
-
+	
 	if (pipe(here_doc_pipe) == -1)
 		return (perror(0), -1);
 	while (1)
@@ -47,7 +47,7 @@ int	open_here_doc(char *delimiter)
 		i = 0;
 		while (line && line[i])
 			i++;
-		if ((i == 1 || !ft_strncmp(line, delimiter, i - 2))
+		if ((i > 1 && !ft_strncmp(line, delimiter, i - 2))
 			&& !ft_strncmp(&line[i - 1], "\n", 1))
 			break;
 		write(here_doc_pipe[1], line, i);
