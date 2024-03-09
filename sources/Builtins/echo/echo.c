@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:08:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 15:17:38 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:04:36 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	new_line_option(char ***cmd)
 {
 	int	i;
 	int	nl;
-	
+
 	nl = 1;
 	while ((**cmd) && (**cmd)[0] == '-' && (**cmd)[1])
 	{
@@ -40,7 +40,7 @@ char	*join_array(char **table)
 	int	j;
 	int	k;
 	char	*string;
-	
+
 	i = -1;
 	k = 0;
 	while (table[++i])
@@ -60,16 +60,14 @@ char	*join_array(char **table)
 		*(string++) = ' ';
 	}
 	*(string) = 0;
-	return (string - k - i);	
+	return (string - k - i);
 }
 
 void	echo(char **cmd)
 {
-	int	i;
 	char	nl;
 	char	*print;
-	
-	i = 0;
+
 	cmd++;
 	nl = new_line_option(&cmd);
 	print = join_array(cmd);

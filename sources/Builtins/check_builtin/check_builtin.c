@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 19:20:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:06:17 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_builtin(t_session *session, int taskn)
 	if (session->commands[taskn][0])
 	{
 		i = 0;
-		builtins[0] = "ourecho";
+		builtins[0] = "echo";
 		builtins[1] = "cd";
 		builtins[2] = "pwd";
 		builtins[3] = "export";
@@ -77,7 +77,6 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 	int	i;
 	int	writefd;
 
-	printf("forked team\n");
 	i = -1;
 	writefd = open_taskfiles(session, session->menvp, taskn);
 	while (session->commands[taskn] && session->commands[taskn][++i])
@@ -101,7 +100,6 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	int	stdout_fd;
 	int	writefd;
 
-	printf("regular team\n");
 	i = -1;
 	while (session->commands[taskn] && session->commands[taskn][++i])
 	{

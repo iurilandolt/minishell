@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 18:28:34 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:06:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	perform_task(t_session *session, int taskn)
 
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
-	{
-		printf("call to builtin %d\n", builtn);
 		builtin_task(session, taskn, builtn);
-	}
 	else
 	{
 		pid = fork();

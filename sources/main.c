@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 19:12:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:07:10 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ int	process_line(t_session *session, char *line)
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session));
-	print_session(session);
+	//print_session(session);
 	perform_tasks(session);
-	printf("tasks were performed :)\n");
 	return (free_session(session));
 }
 
