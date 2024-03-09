@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 15:26:53 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:04:36 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	concat_export(char ***menvp, char **parsed)
 		*menvp = unset_from_menvp(parsed[0], *menvp);
 		*menvp = export_to_menvp(new_value, *menvp);
 		free(new_value);
+	}
+	else if((old_value[0] && !old_value[1]) && parsed[1])
+	{
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		*menvp = export_to_menvp(tmp, *menvp);
 	}
 	free(tmp);
 	clear(old_value);
