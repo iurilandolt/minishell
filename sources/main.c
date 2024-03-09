@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 13:07:10 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:40:24 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	session.menvp = setup_menvp(envp);
 	initialize_session(&session);
-	setup_cd(&session.cd, session.menvp);
+
 	read_evaluate_print_loop(&session);
-	free_cd(&session.cd);
+
 	clear(session.menvp);
 	return (0);
 }

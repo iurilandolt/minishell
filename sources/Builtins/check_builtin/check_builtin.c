@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 13:06:17 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:37:47 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 	if (builtin == 1)
 		echo(session->commands[taskn]);
 	if (builtin == 2)
-		change_dir(&session->cd, session->commands[taskn][1]);
+		change_dir(session, session->commands[taskn][1]);
 	else if (builtin == 3)
 		mpwd();
 	else if (builtin == 4)

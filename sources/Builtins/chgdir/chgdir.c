@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 17:42:00 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:55:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,68 +16,86 @@
 
 void mpwd(void)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = getcwd(NULL, 0);
 	printf("%s\n", tmp);
 	free(tmp);
 }
 
-void	cd_oldpwd(t_cd *cd)
+void	cd_path(t_session *session, char *path)
 {
-	DIR *dir;
-	char *tmp;
+	char	*cwd;
+	char	*value;
 
-	if (!cd->oldpwd)
-	{
-		printf("Minishell doesn't know where you've been.\n");
-		return ;
-	}
-	dir = opendir(cd->oldpwd);
-	if (dir != 0)
-	{
-		tmp = getcwd(NULL, 0);
-		chdir(cd->oldpwd);
-		free(cd->oldpwd);
-		cd->oldpwd = tmp;
-		closedir(dir);
-	}
-}
-
-void	cd_path(t_cd *cd, char *path, DIR *dir)
-{
-	free(cd->oldpwd);
-	cd->oldpwd = getcwd(NULL, 0);
+	// update oldpwd to current dir
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("OLDPWD=", cwd);
+	m_unset(&session->menvp, "OLDPWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+	//move to new dir
 	chdir(path);
-	free(cd->pwd);
-	cd->pwd = getcwd(NULL, 0);
-	closedir(dir);
+	//update pwd to current dir
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("PWD=", cwd);
+	m_unset(&session->menvp, "PWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
 }
 
-void	change_dir(t_cd *cd, char *path)
+void	cd_oldpwd(t_session *session)
 {
 	DIR		*dir;
+	char	*oldpwd;
+
+
+	oldpwd = set_directory(OLDPWD, session->menvp);
+	if (!oldpwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		return ;
+	}
+	dir = opendir(oldpwd);
+	if (dir != 0)
+	{
+		//cd_path(session, oldpwd);
+		chdir(oldpwd);
+		closedir(dir);
+		mpwd();
+		return ;
+	}
+}
+
+void	change_dir(t_session *session, char *path)
+{
+	DIR		*dir;
+	char	*home;
 
 	if (!path)
 	{
-		if (!cd->home)
+		home = set_directory(HOME, session->menvp);
+		if (!home)
 		{
-			printf("Minishell is homeless.\n");
+			ft_putendl_fd("cd: HOME not set", 2);
 			return ;
 		}
-		chdir(cd->home);
+		chdir(home);
 		return ;
 	}
 	if (path[0] == '-' && path[1] == '\0')
 	{
-		cd_oldpwd(cd);
+		cd_oldpwd(session);
 		return ;
 	}
 	dir = opendir(path);
 	if (dir != 0)
 	{
-		cd_path(cd, path, dir);
+		cd_path(session, path);
+		closedir(dir);
 		return ;
 	}
-	printf("cd: %s: Not a directory\n", path);
+	printf("cd: %s: Not a directory\n", path); // replace error msg
 }
