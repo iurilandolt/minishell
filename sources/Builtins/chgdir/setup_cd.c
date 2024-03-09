@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 18:39:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:33:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,70 @@ char	*set_directory(t_sysdir dir, char **menvp)
 			return(ptr);
 	}
 	return(NULL);
+}
+
+void	cd_path(t_session *session, char *path)
+{
+	char	*cwd;
+	char	*value;
+
+	// update oldpwd to current dir
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("OLDPWD=", cwd);
+	m_unset(&session->menvp, "OLDPWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+	//move to new dir
+	chdir(path);
+	//update pwd to current dir
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("PWD=", cwd);
+	m_unset(&session->menvp, "PWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+}
+
+void	cd_oldpwd(t_session *session)
+{
+	DIR		*dir;
+	char	*oldpwd;
+	char	*buffer;
+
+
+	oldpwd = set_directory(OLDPWD, session->menvp);
+	if (!oldpwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		return ;
+	}
+	dir = opendir(oldpwd);
+	if (dir != 0)
+	{
+		buffer = ft_strdup(oldpwd);
+		cd_path(session, buffer);
+		closedir(dir);
+		free(buffer);
+		mpwd();
+		return ;
+	}
+}
+
+void	cd_home(t_session *session)
+{
+	char	*home;
+	char	*buffer;
+
+
+	home = set_directory(HOME, session->menvp);
+	if (!home)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
+		return ;
+	}
+	buffer = ft_strdup(home);
+	cd_path(session, buffer);
+	free(buffer);
+	return ;
 }

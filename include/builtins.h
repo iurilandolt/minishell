@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 14:14:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:27:29 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <sys/stat.h>
 # include <dirent.h>
-#include "executer.h"
+# include "executer.h"
 
 // CD
 typedef enum e_sysdir
@@ -29,7 +29,9 @@ typedef enum e_sysdir
 
 char	*set_directory(t_sysdir dir, char **menvp);
 void	change_dir(t_session *session, char *path);
-
+void	cd_path(t_session *session, char *path);
+void	cd_oldpwd(t_session *session);
+void	cd_home(t_session *session);
 
 // ENV, EXPORT & UNSET
 char	**setup_menvp(char **envp);

@@ -112,4 +112,33 @@ exit ABC -> invalid
 exit 123 -> valid
 exit 123 ABC ?
 
+
+void	update_oldpwd(t_session *session, char *path)
+{
+	char	*cwd;
+	char	*value;
+
+	(void)path;
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("OLDPWD=", cwd);
+	m_unset(&session->menvp, "OLDPWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+}
+
+void	update_pwd(t_session *session, char *path)
+{
+	char	*cwd;
+	char	*value;
+
+	(void)path;
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("PWD=", cwd);
+	m_unset(&session->menvp, "PWD");
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+}
+
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind-out.txt --suppressions=readline.supp --trace-children=yes ./minishell
