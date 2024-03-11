@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 12:28:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:34:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	exp_is_alphanum(char c)
 
 static int	is_validchar(char c)
 {
-	char	*valid = "*.:/_-=@+!"; // %&?{}[]()~^$#
+	char	*valid = "*.:/_-=@+!?[]{}#^&\%\'\"";
 	int		i;
 
 	i = 0;
