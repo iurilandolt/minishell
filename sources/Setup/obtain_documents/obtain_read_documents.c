@@ -6,13 +6,14 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/08 15:25:07 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:02:16 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
+#include "../../../include/signals.h"
 
 int	number_of_ins(t_token *tokens)
 {
@@ -42,38 +43,55 @@ int	open_here_doc(char *delimiter)
 		return (perror(0), -1);
 	while (1)
 	{
-		write(1, "heredoc> ", 9);
-		line = get_next_line(0);
+		line = readline("heredoc> ");
 		i = 0;
 		while (line && line[i])
 			i++;
-		if ((i > 1 && !ft_strncmp(line, delimiter, i - 2))
+		if (shell_signal == SIGINT)
+			return (close(here_doc_pipe[0]), close(here_doc_pipe[1]), -1);
+		if (i == 0)
+			return (free(line), close(here_doc_pipe[1]),
+				printf("heredoc ended by ^D (wanted '%s')\n", delimiter),
+				here_doc_pipe[0]);
+		if (i > 1 && !ft_strncmp(line, delimiter, i - 2)
 			&& !ft_strncmp(&line[i - 1], "\n", 1))
-			break;
+			return (free(line), close(here_doc_pipe[1]), here_doc_pipe[0]);
 		write(here_doc_pipe[1], line, i);
 		free(line);
 	}
-	free(line);
-	close(here_doc_pipe[1]);
-	return (here_doc_pipe[0]);
+}
+
+int	here_doc(char *delimiter)
+{
+	int	fd;
+	struct sigaction sigint;
+	
+	sigint.sa_handler = received_signal;
+	sigemptyset(&sigint.sa_mask);
+	sigint.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &sigint, NULL) == -1)
+		perror("sigaction");
+	rl_getc_function = getc;	
+	fd = open_here_doc(delimiter);
+	shell_signal = 0;
+	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
+        perror("signal not default");
+	return (fd);
 }
 
 int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 {
 	int	i;
 	int	j;
-	int	number;
 	int	*readfds;
 
-	i = -1;
-	number = number_of_ins(tokens);
-	readfds = malloc((number + 1) * sizeof(int));
+	i = number_of_ins(tokens);
+	readfds = malloc((i + 1) * sizeof(int));
 	if (!readfds)
 		return (perror(0), (void *)0);
-	while (++i < number)
+	readfds[i] = 0;
+	while (i--)
 		readfds[i] = -1;
-	readfds[number] = 0;
-	i = -1;
 	j = 0;
 	if (tokens[i + 1].type == PIPE && tokens[++i].value)
 		readfds[j++] = (*(*pipefd)++)[0];
@@ -82,7 +100,9 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 		if (tokens[i].type == RED_IN)
 			j++;
 		else if (tokens[i].type == HERE_DOC)
-			readfds[j++] = open_here_doc(&tokens[i].value[2]);
+			readfds[j++] = here_doc(&tokens[i].value[2]);
+		if (tokens[i].type == HERE_DOC && readfds[j - 1] == -1)
+			return (free(readfds), (void *)0);
 	}
 	return (readfds);
 }
@@ -106,6 +126,8 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 		if (i == 0 || tokens[i].type >= PIPE)
 			readfrom[++j] = get_read_documents(
 				&tokens[i + (tokens[i].type > PIPE)], &pipefd);
+		if ((i == 0 || tokens[i].type >= PIPE) && !readfrom[j])
+			return (free(readfrom), (int **)0);
 	}
 	return (readfrom);
 }

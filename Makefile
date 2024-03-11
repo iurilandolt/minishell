@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/06 18:26:02 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/11 17:23:11 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,9 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
+	$(SRC_PATH)/Signals/received_signals/received_signals.c\
+	$(SRC_PATH)/Signals/initialize_signals/initialize_signals.c\
+	$(SRC_PATH)/Signals/task_signals/task_signals.c\
 
 
 SANITIZER = -g -fsanitize=address
