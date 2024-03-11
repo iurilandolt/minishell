@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 19:27:29 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:14:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**parse_for_export(char *value);
 int		menvp_lookup(char *value, char **menvp);
 void	concat_export(char ***menvp, char **parsed);
 void	export_operation(char ***menvp, char* value, char **parsed, int op);
+void	update_shlvl(t_session *session);
 // PWD
 void	mpwd(void);
 // echo

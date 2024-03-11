@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 13:40:24 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:16:06 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,10 @@ void	read_evaluate_print_loop(t_session *session)
 		{
 			add_history(session->line);
 			process_line(session, session->line);
-
 		}
 		session->line = readline("<Minishell> ");
 	}
 }
-
 
 void	initialize_session(t_session *session)
 {
@@ -97,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	session.menvp = setup_menvp(envp);
+	update_shlvl(&session);
 	initialize_session(&session);
 
 	read_evaluate_print_loop(&session);

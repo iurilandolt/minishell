@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 20:04:36 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:14:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,29 @@ void	export_operation(char ***menvp, char* value, char **parsed, int op)
 		new_value = ft_strjoin(parsed[0], "=");
 		*menvp = export_to_menvp(new_value, *menvp);
 		free(new_value);
+	}
+}
+
+void	update_shlvl(t_session *session)
+{
+	char	**parsed;
+	char	*new_value;
+	int		pos;
+	int		level;
+
+	pos = -1;
+	level = 1;
+	if((pos = menvp_lookup("SHLVL", session->menvp)) > -1)
+	{
+		parsed = parse_for_export(session->menvp[pos]);
+		level = ft_atoi(parsed[2]);
+		level++;
+		free(parsed[2]);
+		parsed[2] = ft_itoa(level);
+		new_value = ft_strjoin("SHLVL=", parsed[2]);
+		m_export(&session->menvp, new_value);
+		m_export(&session->menvp, "SHELL=Minishell");
+		free(new_value);
+		clear(parsed);
 	}
 }

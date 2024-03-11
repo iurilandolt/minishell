@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 13:02:35 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:28:48 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ int is_valid_env_format(const char *str)
 {
 	int	i;
 
+	if (!ft_strncmp(str, "_=", 2) || !ft_strncmp(str, "_+=", 3)
+		|| (str[0] == '_' && str[1] == '\0')
+		|| (str[0] == '_' && str[1] == '='))
+		return (0);
 	if (!str || *str == '\0' || !exp_is_alpha(str[0]))
 		return 0;
 	i = 0;

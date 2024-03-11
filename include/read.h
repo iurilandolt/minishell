@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 14:08:47 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 10:34:59 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strdup(const char *str);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *str, int fd);
+
+char	*ft_itoa(int nbr);
+int		ft_atoi(const char *nptr);
 
 char	**ft_split(const char *str, char c);
 void	*clear(char **array);

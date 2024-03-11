@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/09 14:08:32 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/11 10:35:34 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/string_utils/str_fd.c \
+	$(SRC_PATH)/Utils/string_utils/itoa.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \
