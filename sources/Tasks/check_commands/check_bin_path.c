@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 14:17:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:47:48 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		perror(cmd);
 		free_args(session->commands[taskn]);
 		free_session(session);
-		exit(128);
+		exit(126);
 	}
 	fprintf(stderr, "execeve: %s\n", cmd);
 }

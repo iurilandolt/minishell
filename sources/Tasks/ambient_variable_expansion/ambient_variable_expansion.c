@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_variable_expansion.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 13:37:28 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:32:50 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	delta_size(int status, char *string, char **envp)
 	i = 1;
 	j = 0;
 	if (string[0] == '?')
-		return ((status > 99) + (status > 9));
+		return ((status > 99) + (status > 9) - 1);
 	if (!ft_isalpha(string[0]) && string[0] != '_')
 		return (0);
 	while (ft_isalnum(string[i]) || string[i] == '_')
@@ -70,7 +70,6 @@ void	expand_variable(char **string, char **envp, char *new, int *j)
 
 static void	expand_status_variable(int status, char *new, int *j)
 {
-	status = (status & 0xff00) >> 8;
 	if (status > 99)
 		new[(*j)++] = status / 100 + 48;
 	if (status > 9)
@@ -122,12 +121,12 @@ int	ambient_variable_expansion(int status, char **string, char **envp)
 		if ((*string)[i] == '\"')
 			qts++;
 		if ((*string)[i] == '$' && !(qt % 2))
-			j += delta_size(status, &(*string)[i + 1], envp);
+			j += delta_size((status & 0xff00) >> 8, &(*string)[i + 1], envp);
 	}
 	new = malloc(i + j + 1);
 	if (!new)
 		return (1);
 	new[i + j] = 0;
-	*string = transfer_string(*string, envp, new, status);
+	*string = transfer_string(*string, envp, new, (status & 0xff00) >> 8);
 	return (0);
 }
