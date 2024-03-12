@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 18:36:35 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:59:29 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	perform_task(t_session *session, int taskn)
 
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
-	{
-		printf("call to builtin %d\n", builtn);
 		builtin_task(session, taskn, builtn);
-	}
 	else
 	{
 		task_signals();

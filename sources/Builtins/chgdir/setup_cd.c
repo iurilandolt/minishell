@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/02/29 17:42:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:20:59 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,85 @@
 #include "../../../include/executer.h"
 #include "../../../include/read.h"
 
-void	set_home_directory(t_cd *cd, char **menvp)
+char	*set_directory(t_sysdir dir, char **menvp)
 {
-	int	i;
+	char	*ptr;
+	int		i;
+
 
 	i = -1;
-	cd->home = NULL;
+	ptr = NULL;
 	while (menvp[++i])
 	{
-		if (ft_strncmp(menvp[i], "HOME=", 5) == 0)
-		{
-			cd->home = ft_strdup(menvp[i] + 5);
-			break ;
-		}
+		if (dir == HOME && ft_strncmp(menvp[i], "HOME=", 5) == 0)
+			ptr = (menvp[i] + 5);
+		else if (dir == PWD && ft_strncmp(menvp[i], "PWD=", 4) == 0)
+			ptr = (menvp[i] + 4);
+		else if (dir == OLDPWD && ft_strncmp(menvp[i], "OLDPWD=", 7) == 0)
+			ptr = (menvp[i] + 7);
+		if (ptr)
+			return(ptr);
+	}
+	return(NULL);
+}
+
+void	cd_path(t_session *session, char *path)
+{
+	char	*cwd;
+	char	*value;
+
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("OLDPWD=", cwd);
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+	chdir(path);
+	cwd = getcwd(NULL, 0);
+	value	= ft_strjoin("PWD=", cwd);
+	m_export(&session->menvp, value);
+	free(cwd);
+	free(value);
+}
+
+void	cd_oldpwd(t_session *session)
+{
+	DIR		*dir;
+	char	*oldpwd;
+	char	*buffer;
+
+
+	oldpwd = set_directory(OLDPWD, session->menvp);
+	if (!oldpwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		return ;
+	}
+	dir = opendir(oldpwd);
+	if (dir != 0)
+	{
+		buffer = ft_strdup(oldpwd);
+		cd_path(session, buffer);
+		closedir(dir);
+		free(buffer);
+		mpwd();
+		return ;
 	}
 }
 
-void	set_current_directory(t_cd *cd, char **menvp)
+void	cd_home(t_session *session)
 {
-	int	i;
+	char	*home;
+	char	*buffer;
 
-	i = -1;
-	cd->pwd = NULL;
-	while (menvp[++i])
+
+	home = set_directory(HOME, session->menvp);
+	if (!home)
 	{
-		if (ft_strncmp(menvp[i], "PWD=", 4) == 0)
-		{
-			cd->pwd = getcwd(NULL, 0);
-			break ;
-		}
+		ft_putendl_fd("cd: HOME not set", 2);
+		return ;
 	}
-}
-
-void	set_old_directory(t_cd *cd, char **menvp)
-{
-	int	i;
-
-	i = -1;
-	cd->oldpwd = NULL;
-	while (menvp[++i])
-	{
-		if (ft_strncmp(menvp[i], "OLDPWD=", 7) == 0)
-		{
-			cd->oldpwd = ft_strdup(menvp[i] + 7);
-			break ;
-		}
-	}
-}
-
-void	setup_cd(t_cd *cd, char **menvp)
-{
-	set_home_directory(cd, menvp);
-	set_current_directory(cd, menvp);
-	set_old_directory(cd, menvp);
-	printf("home: %s\n", cd->home);
-	printf("pwd: %s\n", cd->pwd);
-	printf("oldpwd: %s\n", cd->oldpwd);
-}
-
-void free_cd(t_cd *cd)
-{
-	free(cd->home);
-	free(cd->pwd);
-	free(cd->oldpwd);
+	buffer = ft_strdup(home);
+	cd_path(session, buffer);
+	free(buffer);
+	return ;
 }

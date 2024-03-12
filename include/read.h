@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 13:27:37 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:59:20 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 # include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <signal.h> 
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 char	*get_next_line(int fd);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ambient_variable_expansion(int status, char **string, char **envp);
+
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
 
-char *expand_tilde(char *cmd);
+
 
 int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);
@@ -39,6 +39,9 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strdup(const char *str);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *str, int fd);
+
+char	*ft_itoa(int nbr);
+int		ft_atoi(const char *nptr);
 
 char	**ft_split(const char *str, char c);
 void	*clear(char **array);

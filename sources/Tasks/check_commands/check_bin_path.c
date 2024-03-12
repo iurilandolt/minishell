@@ -6,13 +6,14 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 16:30:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:17:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/token.h"
 #include "../../../include/read.h"
 #include "../../../include/executer.h"
+#include "../../../include/builtins.h"
 
 void	path_to_program(t_path_tools *tool, char *cmd, int i)
 {

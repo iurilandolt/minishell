@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/11 17:23:11 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/03/12 12:59:58 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,12 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/tokens_check/tokens_check.c \
 	$(SRC_PATH)/Setup/create_pipes/create_pipes.c \
 	$(SRC_PATH)/Setup/obtain_commands/obtain_commands.c \
-	$(SRC_PATH)/Setup/obtain_commands/expand_tilde.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/string_utils/str_fd.c \
+	$(SRC_PATH)/Utils/string_utils/itoa.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \

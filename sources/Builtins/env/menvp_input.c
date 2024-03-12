@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/04 23:24:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:34:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	exp_is_alphanum(char c)
 
 static int	is_validchar(char c)
 {
-	char	*valid = "*.:/_-=@+!"; // %&?{}[]()~^$#
+	char	*valid = "*.:/_-=@+!?[]{}#^&\%\'\"";
 	int		i;
 
 	i = 0;
@@ -49,7 +49,11 @@ int is_valid_env_format(const char *str)
 {
 	int	i;
 
-	if (!str || *str == '\0' || !exp_is_alpha(str[0])) // add _
+	if (!ft_strncmp(str, "_=", 2) || !ft_strncmp(str, "_+=", 3)
+		|| (str[0] == '_' && str[1] == '\0')
+		|| (str[0] == '_' && str[1] == '='))
+		return (0);
+	if (!str || *str == '\0' || !exp_is_alpha(str[0]))
 		return 0;
 	i = 0;
 	while(str[i] && exp_is_alphanum(str[i]))

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 15:34:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:17:56 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	print_export(char **menvp)
 	}
 }
 
-void	m_export(char ***menvp, char *value) // int fd
+void	m_export(char ***menvp, char *value)
 {
 	char	**parsed;
 
@@ -92,7 +92,7 @@ void	m_export(char ***menvp, char *value) // int fd
 	}
 }
 
-void	m_unset(char ***menvp, char *value) // int fd
+void	m_unset(char ***menvp, char *value)
 {
 	int		i;
 
@@ -100,10 +100,15 @@ void	m_unset(char ***menvp, char *value) // int fd
 		return ;
 	if (!*menvp)
 		return ;
+	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
+		|| (value[0] == '_' && value[1] == '\0')
+		|| (value[0] == '_' && value[1] == '='))
+		return ;
 	i = 0;
 	while (menvp[0][i])
 	{
-		if (ft_strncmp(value, menvp[0][i], ft_strlen(value)) == 0 && value[0] != '\0')
+		if (ft_strncmp(value, menvp[0][i],
+		ft_strlen(value)) == 0 && value[0] != '\0')
 		{
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 17:03:43 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:59:50 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ int	process_line(t_session *session, char *line)
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session));
-	print_session(session);
+	//print_session(session);
 	perform_tasks(session);
-	printf("tasks were performed :)\n");
 	return (free_session(session));
 }
 
@@ -77,12 +76,10 @@ void	read_evaluate_print_loop(t_session *session)
 		{
 			add_history(session->line);
 			process_line(session, session->line);
-
 		}
 		session->line = readline("<Minishell> ");
 	}
 }
-
 
 void	initialize_session(t_session *session)
 {
@@ -102,11 +99,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	session.menvp = setup_menvp(envp);
+	update_shlvl(&session);
 	initialize_session(&session);
 	initialize_signals();
-	setup_cd(&session.cd, session.menvp);
+
+
 	read_evaluate_print_loop(&session);
-	free_cd(&session.cd);
+
 	clear(session.menvp);
 	return (0);
 }

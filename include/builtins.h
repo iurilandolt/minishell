@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 18:25:08 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:14:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 
 # include <sys/stat.h>
 # include <dirent.h>
+# include "executer.h"
 
-// CD & PWD
-typedef struct s_cd
+// CD
+typedef enum e_sysdir
 {
-	char	*home;
-	char	*pwd;
-	char	*oldpwd;
-}	t_cd;
+	HOME,
+	PWD,
+	OLDPWD,
 
-void	setup_cd(t_cd *cd, char **envp);
-void	change_dir(t_cd *cd, char *path);
-void	free_cd(t_cd *cd);
+}	t_sysdir;
+
+
+char	*set_directory(t_sysdir dir, char **menvp);
+void	change_dir(t_session *session, char *path);
+void	cd_path(t_session *session, char *path);
+void	cd_oldpwd(t_session *session);
+void	cd_home(t_session *session);
+
 // ENV, EXPORT & UNSET
 char	**setup_menvp(char **envp);
 void	m_envp(char **menvp);
@@ -41,10 +47,11 @@ char	**parse_for_export(char *value);
 int		menvp_lookup(char *value, char **menvp);
 void	concat_export(char ***menvp, char **parsed);
 void	export_operation(char ***menvp, char* value, char **parsed, int op);
+void	update_shlvl(t_session *session);
 // PWD
 void	mpwd(void);
 // echo
-void	echo(char **cmd); //where are you?
+void	echo(char **cmd);
 
 
 #endif
