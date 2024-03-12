@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 17:07:12 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:09:10 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ int	free_session(t_session *session)
 		free_table_n((void **)session->writeto, session->ntasks);
 	if (session->line)
 		free(session->line);
+	if (session->p_ids)
+		free(session->p_ids);
 	return (0);
 }

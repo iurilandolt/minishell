@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 16:38:38 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:49:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 	}
 	else if (builtin == 6)
 		m_envp(session->menvp);
+	else if (builtin == 7)
+		m_exit(session, taskn);
 }
 
 void	forked_builtin(t_session *session, int taskn, int builtn)

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 12:14:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:47:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	mpwd(void);
 // echo
 void	echo(char **cmd);
 
+void	m_exit(t_session *session, int taskn);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 17:27:13 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:50:31 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ void	read_evaluate_print_loop(t_session *session)
 	while (session->line || shell_signal == SIGINT)
 	{
 		shell_signal = 0;
+		/*
 		if (!ft_strncmp(session->line, "exit", 4) && ft_strlen(session->line) == 4)
 		{
 			free(session->line);
 			rl_clear_history();
 			break ;
 		}
+		*/
 		if (ft_strlen(session->line) > 0)
 		{
 			add_history(session->line);
