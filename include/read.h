@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/08 15:10:22 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:27:37 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ typedef struct s_qt
 char	**quote_split(char const *s, char c);
 void	clean_quotes(char **string);
 
+int	ft_isalpha(int c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 15:14:54 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:37:28 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ static int	delta_size(int status, char *string, char **envp)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	j = 0;
 	if (string[0] == '?')
 		return ((status > 99) + (status > 9));
-	while (ft_isalnum(string[i]))
+	if (!ft_isalpha(string[0]) && string[0] != '_')
+		return (0);
+	while (ft_isalnum(string[i]) || string[i] == '_')
 		i++;
 	if (i == 0)
 		return (0);
@@ -39,21 +41,23 @@ static int	delta_size(int status, char *string, char **envp)
 	return (j - i - 1);
 }
 
-void	expand_variable(char *string, char **envp, char *new, int *j)
+void	expand_variable(char **string, char **envp, char *new, int *j)
 {
 	int	k;
 
-	k = 0;
-	while (ft_isalnum(string[k]))
-		k++;
-	if (k == 0)
+	k = 1;
+	(*string)++;
+	if (!ft_isalpha((*string)[0]) && (*string)[0] != '_')
 	{
 		new[(*j)++] = '$';
 		return ;
 	}
+	(*string)++;
+	while (ft_isalnum(**string) && k++)
+		(*string)++;
 	while (*envp)
 	{
-		if (ft_strncmp(string, *envp, k) == 0 && (*envp)[k] == '=')
+		if (ft_strncmp((*string - k), *envp, k) == 0 && (*envp)[k] == '=')
 			break ;
 		envp++;
 	}
@@ -90,11 +94,7 @@ static char	*transfer_string(char *string, char **envp, char *new, int status)
 		if (*string == '\"')
 			qts++;
 		if (*string == '$' && !(qt % 2) && *(string + 1) != '?')
-		{
-			expand_variable(++string, envp, new, &j);
-			while (ft_isalnum(*(string)))
-				string++;
-		}
+			expand_variable(&(string), envp, new, &j);
 		else if (*string == '$' && !(qt % 2) && string++ && string++)
 			expand_status_variable(status, new, &j);
 		else

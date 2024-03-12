@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_taskfiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:05:16 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 18:22:52 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:21:46 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	open_readfd(t_session *session, char **menvp, int *readfd, t_token *
 
 	filename = &token->value[1];
 	ambient_variable_expansion(session->status, &filename, menvp);
+	clean_quotes(&filename);
 	*readfd = open(filename, O_RDONLY, 0644);
 	if (filename)
 		free(filename);
@@ -61,19 +62,18 @@ static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd
 	writefd = 0;
 	filename = token->value;
 	ambient_variable_expansion(status, &filename, menvp);
+	clean_quotes(&filename);
 	if (oldwritefd)
 		close(oldwritefd);
 	if (token->type == RED_OUT)
 	{
-		writefd = open(&filename[1],
-			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		writefd = open(&filename[1],O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (writefd == -1)
 			perror(&token->value[1]);
 	}
 	if (token->type == RED_APP)
 	{
-		writefd = open(&filename[2],
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
+		writefd = open(&filename[2],O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (writefd == -1)
 			perror(&token->value[2]);
 	}
