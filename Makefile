@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/12 12:59:58 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/12 16:07:30 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_read_documents.c \
 	$(SRC_PATH)/Setup/obtain_documents/obtain_write_documents.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
+	$(SRC_PATH)/Setup/list_process_ids/list_process_ids.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
 	$(SRC_PATH)/Utils/string_utils/str_fd.c \
 	$(SRC_PATH)/Utils/string_utils/itoa.c \
@@ -54,7 +55,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
 	$(SRC_PATH)/Signals/received_signals/received_signals.c\
-	$(SRC_PATH)/Signals/initialize_signals/initialize_signals.c\
+	$(SRC_PATH)/Signals/main_signals/main_signals.c\
 	$(SRC_PATH)/Signals/task_signals/task_signals.c\
 
 

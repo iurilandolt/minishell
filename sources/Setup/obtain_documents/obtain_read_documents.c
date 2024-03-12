@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 17:02:16 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:02:45 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ int	open_here_doc(char *delimiter)
 			i++;
 		if (shell_signal == SIGINT)
 			return (close(here_doc_pipe[0]), close(here_doc_pipe[1]), -1);
-		if (i == 0)
+		if (!line)
 			return (free(line), close(here_doc_pipe[1]),
 				printf("heredoc ended by ^D (wanted '%s')\n", delimiter),
 				here_doc_pipe[0]);
-		if (i > 1 && !ft_strncmp(line, delimiter, i - 2)
-			&& !ft_strncmp(&line[i - 1], "\n", 1))
+		if (i > 1 && !ft_strncmp(line, delimiter, i - 1))
 			return (free(line), close(here_doc_pipe[1]), here_doc_pipe[0]);
 		write(here_doc_pipe[1], line, i);
+		write(here_doc_pipe[1], "\n", 1);
 		free(line);
 	}
 }
@@ -68,10 +68,9 @@ int	here_doc(char *delimiter)
 	
 	sigint.sa_handler = received_signal;
 	sigemptyset(&sigint.sa_mask);
-	sigint.sa_flags = SA_RESTART;
+	sigint.sa_flags = 0;
 	if (sigaction(SIGINT, &sigint, NULL) == -1)
-		perror("sigaction");
-	rl_getc_function = getc;	
+		perror("sigaction");	
 	fd = open_here_doc(delimiter);
 	shell_signal = 0;
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)

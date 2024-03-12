@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_variable_expansion.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 14:32:50 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:05:59 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

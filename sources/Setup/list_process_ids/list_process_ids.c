@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_signals.c                               :+:      :+:    :+:   */
+/*   list_process_ids.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 16:57:52 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 17:20:14 by rcastelo         ###   ########.fr       */
+/*   Created: 2024/03/12 15:58:20 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/03/12 17:04:27 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
-#include "../../../include/signals.h"
 
-void    initialize_signals(void)
+int	*list_process_ids(int ntasks)
 {
-    struct sigaction sigint;
-    struct sigaction sigquit;
-	
-	sigint.sa_handler = received_signal;
-	sigemptyset(&sigint.sa_mask);
-	sigint.sa_flags = 0;
-	if (sigaction(SIGINT, &sigint, NULL) == -1)
-		perror("sigaction");
-	sigquit.sa_handler = SIG_IGN;
-	sigemptyset(&sigquit.sa_mask);
-	sigquit.sa_flags = 0;
-	if (sigaction(SIGQUIT, &sigquit, NULL) == -1)
-		perror("sigaction");
-	shell_signal = 0;
-	rl_getc_function = getc;
+	int	*list_p_ids;
+
+	list_p_ids = malloc(ntasks * sizeof(int));
+	if (!list_p_ids)
+		return (perror(0), (int *)0);
+	while (ntasks--)
+		list_p_ids[ntasks] = 0;
+	return (list_p_ids);
 }

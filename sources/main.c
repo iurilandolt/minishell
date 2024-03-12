@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 12:59:50 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:25:12 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int	process_line(t_session *session, char *line)
 	session->writeto = obtain_write_documents(session->tokens, session->ntasks);
 	if (!session->writeto)
 		return (free_session(session));
+	session->p_ids = list_process_ids(session->ntasks);
+	if (!session->p_ids)
+		return (free_session(session));
 	//print_session(session);
 	perform_tasks(session);
 	return (free_session(session));
@@ -90,6 +93,7 @@ void	initialize_session(t_session *session)
 	session->commands = 0;
 	session->writeto = 0;
 	session->status = 0;
+	shell_signal = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -101,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 	session.menvp = setup_menvp(envp);
 	update_shlvl(&session);
 	initialize_session(&session);
-	initialize_signals();
+	main_signals();
 
 
 	read_evaluate_print_loop(&session);

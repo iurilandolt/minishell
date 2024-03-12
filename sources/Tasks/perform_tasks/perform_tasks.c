@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 14:17:07 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:04:44 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	perform_task(t_session *session, int taskn)
 			return (perror(0));
 		else if (pid == 0)
 			task(session, taskn);
+		session->p_ids[taskn] = pid;
 	}
 }
 
@@ -101,16 +102,16 @@ void	perform_tasks(t_session *session)
 	int	on;
 
 	i = 0;
-	while (i < session->ntasks)
+	while (i < session->ntasks && !shell_signal)
 	{
 		on = 0;
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
 			perform_task(session, i + on++);
 		close_current_pipes(session, i, on);
-		while (on && on-- && ++i)
-			wait(&session->status);
-		initialize_signals();
+		while (on && on--)
+			waitpid(session->p_ids[i++], &session->status, 0);
+		main_signals();
 		if (i < session->ntasks && ((session->operators[i - 1].token->type == SAND
             		&& ((session->status & 0xff00) >> 8))
 					|| (session->operators[i - 1].token->type == OR

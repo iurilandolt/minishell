@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 13:37:47 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:38:38 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	i = -1;
 	while (session->commands[taskn] && session->commands[taskn][++i])
 	{
+		// printf("2: %i\n", session->status);
 		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
 		clean_quotes(&session->commands[taskn][i]);
 	}
@@ -140,6 +141,7 @@ void builtin_task(t_session *session, int taskn, int builtn)
 			perror("builtin fork failed.");
 		else if (pid == 0)
 			forked_builtin(session, taskn, builtn);
+		session->p_ids[taskn] = pid;
 	}
 	else
 		regular_builtin(session, taskn, builtn);
