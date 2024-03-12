@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 19:12:19 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:03:43 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "../include/token.h"
 #include "../include/executer.h"
 #include "../include/builtins.h"
+#include "../include/signals.h"
+
+int	shell_signal;
 
 int	number_of_tasks(t_token *tokens)
 {
@@ -61,8 +64,9 @@ int	process_line(t_session *session, char *line)
 void	read_evaluate_print_loop(t_session *session)
 {
 	session->line = readline("<Minishell> ");
-	while (session->line)
+	while (session->line || shell_signal == SIGINT)
 	{
+		shell_signal = 0;
 		if (!ft_strncmp(session->line, "exit", 4) && ft_strlen(session->line) == 4)
 		{
 			free(session->line);
@@ -99,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	session.menvp = setup_menvp(envp);
 	initialize_session(&session);
+	initialize_signals();
 	setup_cd(&session.cd, session.menvp);
 	read_evaluate_print_loop(&session);
 	free_cd(&session.cd);

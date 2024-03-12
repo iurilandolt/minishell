@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:17:55 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/21 12:18:29 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:13:46 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	redirect_value(t_token *tokens)
 	{
 		if (tokens[i].type == RED_IN && !tokens[i].value[1])
 			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == HERE_DOC && !tokens[i].value[2])
+		if (tokens[i].type == HERE_DOC && (tokens[i].value[2] == '<'
+			|| tokens[i].value[2] == '>' || !tokens[i].value[2]))
 			return (write(2, "Syntax Error\n", 13));
 		if (tokens[i].type == RED_OUT && !tokens[i].value[1])
 			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == RED_APP && !tokens[i].value[2])
+		if (tokens[i].type == RED_APP && (tokens[i].value[2] == '>'
+			|| tokens[i].value[2] == '<' || !tokens[i].value[2]))
 			return (write(2, "Syntax Error\n", 13));
 	}
 	return (0);
