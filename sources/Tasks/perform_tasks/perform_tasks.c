@@ -89,7 +89,7 @@ void	close_current_pipes(t_session *session, int taskn, int on)
 		if (session->tokens[i].type >= PIPE)
 			on--;
 		if (session->tokens[i].type == PIPE)
-			close(session->pipes[pipen++][0]);
+			close(session->pipes[pipen][0]);
 		if (session->tokens[i].type == PIPE)
 			close(session->pipes[pipen++][1]);
 		i++;
