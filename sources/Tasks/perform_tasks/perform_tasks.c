@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 17:04:44 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:34:51 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	perform_task(t_session *session, int taskn)
 	int	builtn;
 
 	builtn = check_builtin(session, taskn);
+	shell_signal = -1;
 	if (builtn > 0)
 		builtin_task(session, taskn, builtn);
 	else
@@ -96,6 +97,7 @@ void	close_current_pipes(t_session *session, int taskn, int on)
 		i++;
 	}
 }
+
 void	perform_tasks(t_session *session)
 {
 	int	i;
@@ -113,7 +115,7 @@ void	perform_tasks(t_session *session)
 			waitpid(session->p_ids[i++], &session->status, 0);
 		main_signals();
 		if (i < session->ntasks && ((session->operators[i - 1].token->type == SAND
-            		&& ((session->status & 0xff00) >> 8))
+					&& ((session->status & 0xff00) >> 8))
 					|| (session->operators[i - 1].token->type == OR
 					&& !((session->status & 0xff00) >> 8))))
 			on = session->operators[i - 1].flag;
@@ -121,4 +123,6 @@ void	perform_tasks(t_session *session)
 			close_current_pipes(session, i, on);
 		i += on;
 	}
+	if (shell_signal == SIGINT || shell_signal == SIGQUIT)
+		session->status = (128 + shell_signal) << 8;
 }

@@ -1,95 +1,98 @@
-==307994== Memcheck, a memory error detector
-==307994== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==307994== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==307994== Command: ./minishell
-==307994== Parent PID: 307851
-==307994== 
-==308026== 
-==308026== HEAP SUMMARY:
-==308026==     in use at exit: 212,289 bytes in 284 blocks
-==308026==   total heap usage: 801 allocs, 517 frees, 250,994 bytes allocated
-==308026== 
-==308026== LEAK SUMMARY:
-==308026==    definitely lost: 0 bytes in 0 blocks
-==308026==    indirectly lost: 0 bytes in 0 blocks
-==308026==      possibly lost: 0 bytes in 0 blocks
-==308026==    still reachable: 4,064 bytes in 59 blocks
-==308026==         suppressed: 208,225 bytes in 225 blocks
-==308026== Rerun with --leak-check=full to see details of leaked memory
-==308026== 
-==308026== For lists of detected and suppressed errors, rerun with: -s
-==308026== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==308155== 
-==308155== HEAP SUMMARY:
-==308155==     in use at exit: 213,249 bytes in 331 blocks
-==308155==   total heap usage: 983 allocs, 652 frees, 287,005 bytes allocated
-==308155== 
-==308155== LEAK SUMMARY:
-==308155==    definitely lost: 0 bytes in 0 blocks
-==308155==    indirectly lost: 0 bytes in 0 blocks
-==308155==      possibly lost: 0 bytes in 0 blocks
-==308155==    still reachable: 4,064 bytes in 59 blocks
-==308155==         suppressed: 209,185 bytes in 272 blocks
-==308155== Rerun with --leak-check=full to see details of leaked memory
-==308155== 
-==308155== For lists of detected and suppressed errors, rerun with: -s
-==308155== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==308165== 
-==308165== HEAP SUMMARY:
-==308165==     in use at exit: 213,335 bytes in 337 blocks
-==308165==   total heap usage: 1,019 allocs, 682 frees, 320,082 bytes allocated
-==308165== 
-==308165== LEAK SUMMARY:
-==308165==    definitely lost: 0 bytes in 0 blocks
-==308165==    indirectly lost: 0 bytes in 0 blocks
-==308165==      possibly lost: 0 bytes in 0 blocks
-==308165==    still reachable: 4,064 bytes in 59 blocks
-==308165==         suppressed: 209,271 bytes in 278 blocks
-==308165== Rerun with --leak-check=full to see details of leaked memory
-==308165== 
-==308165== For lists of detected and suppressed errors, rerun with: -s
-==308165== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==308172== 
-==308172== HEAP SUMMARY:
-==308172==     in use at exit: 213,428 bytes in 343 blocks
-==308172==   total heap usage: 1,105 allocs, 762 frees, 321,494 bytes allocated
-==308172== 
-==308172== LEAK SUMMARY:
-==308172==    definitely lost: 0 bytes in 0 blocks
-==308172==    indirectly lost: 0 bytes in 0 blocks
-==308172==      possibly lost: 0 bytes in 0 blocks
-==308172==    still reachable: 4,064 bytes in 59 blocks
-==308172==         suppressed: 209,364 bytes in 284 blocks
-==308172== Rerun with --leak-check=full to see details of leaked memory
-==308172== 
-==308172== For lists of detected and suppressed errors, rerun with: -s
-==308172== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==308211== 
-==308211== HEAP SUMMARY:
-==308211==     in use at exit: 213,517 bytes in 349 blocks
-==308211==   total heap usage: 1,140 allocs, 791 frees, 354,601 bytes allocated
-==308211== 
-==308211== LEAK SUMMARY:
-==308211==    definitely lost: 0 bytes in 0 blocks
-==308211==    indirectly lost: 0 bytes in 0 blocks
-==308211==      possibly lost: 0 bytes in 0 blocks
-==308211==    still reachable: 4,064 bytes in 59 blocks
-==308211==         suppressed: 209,453 bytes in 290 blocks
-==308211== Rerun with --leak-check=full to see details of leaked memory
-==308211== 
-==308211== For lists of detected and suppressed errors, rerun with: -s
-==308211== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==307994== 
-==307994== HEAP SUMMARY:
-==307994==     in use at exit: 208,440 bytes in 225 blocks
-==307994==   total heap usage: 1,230 allocs, 1,005 frees, 355,719 bytes allocated
-==307994== 
-==307994== LEAK SUMMARY:
-==307994==    definitely lost: 0 bytes in 0 blocks
-==307994==    indirectly lost: 0 bytes in 0 blocks
-==307994==      possibly lost: 0 bytes in 0 blocks
-==307994==    still reachable: 0 bytes in 0 blocks
-==307994==         suppressed: 208,440 bytes in 225 blocks
-==307994== 
-==307994== For lists of detected and suppressed errors, rerun with: -s
-==307994== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==318119== Memcheck, a memory error detector
+==318119== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==318119== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==318119== Command: /usr/bin/cat
+==318119== Parent PID: 318118
+==318119== ==318122== 
+==318122== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==318122== Open file descriptor 3: /home/rlandolt/42/github/minishell/valgrind-out.txt
+==318122==    <inherited from parent>
+==318122== 
+==318122== 
+==318122== HEAP SUMMARY:
+==318122==     in use at exit: 212,398 bytes in 289 blocks
+==318122==   total heap usage: 821 allocs, 532 frees, 250,494 bytes allocated
+==318122== 
+==318122== 4 bytes in 1 blocks are still reachable in loss record 1 of 71
+==318122==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318122==    by 0x405C37: list_process_ids (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4014F5: process_line (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x401622: read_evaluate_print_loop (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x401706: main (in /home/rlandolt/42/github/minishell/minishell)
+==318122== 
+==318122== 4 bytes in 1 blocks are definitely lost in loss record 2 of 71
+==318122==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318122==    by 0x405C37: list_process_ids (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4014F5: process_line (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x401622: read_evaluate_print_loop (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x401706: main (in /home/rlandolt/42/github/minishell/minishell)
+==318122== 
+==318122== 16 bytes in 1 blocks are still reachable in loss record 12 of 71
+==318122==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318122==    by 0x4061C9: ft_strdup (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4085FF: export_to_menvp (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408E4D: export_operation (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x407D3F: m_export (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408FE1: update_shlvl (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4016EF: main (in /home/rlandolt/42/github/minishell/minishell)
+==318122== 
+==318122== 472 bytes in 1 blocks are still reachable in loss record 29 of 71
+==318122==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318122==    by 0x40856D: export_to_menvp (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408E4D: export_operation (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x407D3F: m_export (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408FE1: update_shlvl (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4016EF: main (in /home/rlandolt/42/github/minishell/minishell)
+==318122== 
+==318122== 3,641 bytes in 57 blocks are still reachable in loss record 46 of 71
+==318122==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318122==    by 0x4061C9: ft_strdup (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4085B4: export_to_menvp (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408E4D: export_operation (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x407D3F: m_export (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x408FE1: update_shlvl (in /home/rlandolt/42/github/minishell/minishell)
+==318122==    by 0x4016EF: main (in /home/rlandolt/42/github/minishell/minishell)
+==318122== 
+==318122== LEAK SUMMARY:
+==318122==    definitely lost: 4 bytes in 1 blocks
+==318122==    indirectly lost: 0 bytes in 0 blocks
+==318122==      possibly lost: 0 bytes in 0 blocks
+==318122==    still reachable: 4,133 bytes in 60 blocks
+==318122==         suppressed: 208,261 bytes in 228 blocks
+==318122== 
+==318122== For lists of detected and suppressed errors, rerun with: -s
+==318122== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==318118== 
+==318118== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==318118== Open file descriptor 3: /home/rlandolt/42/github/minishell/valgrind-out.txt
+==318118==    <inherited from parent>
+==318118== 
+==318118== 
+==318118== HEAP SUMMARY:
+==318118==     in use at exit: 208,192 bytes in 225 blocks
+==318118==   total heap usage: 791 allocs, 566 frees, 249,906 bytes allocated
+==318118== 
+==318118== 1 bytes in 1 blocks are definitely lost in loss record 1 of 65
+==318118==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318118==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==318118==    by 0x4888694: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==318118==    by 0x4892D2A: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==318118==    by 0x401631: read_evaluate_print_loop (in /home/rlandolt/42/github/minishell/minishell)
+==318118==    by 0x401706: main (in /home/rlandolt/42/github/minishell/minishell)
+==318118== 
+==318118== 8 bytes in 2 blocks are definitely lost in loss record 4 of 65
+==318118==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==318118==    by 0x405C37: list_process_ids (in /home/rlandolt/42/github/minishell/minishell)
+==318118==    by 0x4014F5: process_line (in /home/rlandolt/42/github/minishell/minishell)
+==318118==    by 0x401622: read_evaluate_print_loop (in /home/rlandolt/42/github/minishell/minishell)
+==318118==    by 0x401706: main (in /home/rlandolt/42/github/minishell/minishell)
+==318118== 
+==318118== LEAK SUMMARY:
+==318118==    definitely lost: 9 bytes in 3 blocks
+==318118==    indirectly lost: 0 bytes in 0 blocks
+==318118==      possibly lost: 0 bytes in 0 blocks
+==318118==    still reachable: 0 bytes in 0 blocks
+==318118==         suppressed: 208,183 bytes in 222 blocks
+==318118== 
+==318118== For lists of detected and suppressed errors, rerun with: -s
+==318118== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
