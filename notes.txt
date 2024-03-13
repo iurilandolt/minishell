@@ -142,3 +142,8 @@ void	update_pwd(t_session *session, char *path)
 }
 
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind-out.txt --suppressions=readline.supp --trace-children=yes ./minishell
+
+
+update exit status on out redir without permission
+update exit status on builtins, all except exit ^^
+protect env for multiple args

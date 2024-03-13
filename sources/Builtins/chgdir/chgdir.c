@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/09 19:38:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:57:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	change_dir(t_session *session, char *path)
 	{
 		cd_path(session, path);
 		closedir(dir);
+		// status = 0?
 		return ;
 	}
 	ft_putstr_fd("cd: ", 2);
 	ft_putstr_fd(path, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd("Not a directory.", 2);
+	// status = 1
 }

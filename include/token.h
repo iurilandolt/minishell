@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:18:09 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 13:27:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:43:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token
 	char			**cmd;
 }	t_token;
 
-t_token		*tokenize(char *line);
+t_token		*tokenize(char *line, int *status);
 
 t_token		*tok_create_array(char **split);
 void		set_token_type(t_token *token);

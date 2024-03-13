@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/13 17:15:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:43:40 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	number_of_tasks(t_token *tokens)
 
 int	process_line(t_session *session, char *line)
 {
-	session->tokens = tokenize(line);
+	session->tokens = tokenize(line, &session->status);
 	if (!session->tokens)
 		return (0);
 	session->ntasks = number_of_tasks(session->tokens);
@@ -46,7 +46,7 @@ int	process_line(t_session *session, char *line)
 	if (!session->pipes)
 		return (free_session(session));
 	session->readfrom = obtain_read_documents(session->tokens,
-			session->pipes, session->ntasks);
+			session->pipes, session->ntasks, &session->status);
 	if (!session->readfrom)
 		return (free_session(session));
 	session->commands = obtain_commands(session->tokens, session->ntasks);

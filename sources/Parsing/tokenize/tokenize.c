@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:47:46 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/09 13:15:45 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:55:26 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ void	print_tokens(t_token *tokens)
 		printf("token: %s, type: %d\n", tokens[i].value, tokens[i].type);
 }
 
-t_token	*tokenize(char *line)
+t_token	*tokenize(char *line, int *status)
 {
 	char	**split;
 	t_token	*tokens;
+	int		curr_status;
 
+	curr_status = *status;
+	*status = 2 << 8;
 	if (check_analyzer(line))
 		return (0);
 	if (expand_and_contract(&line))
@@ -65,6 +68,7 @@ t_token	*tokenize(char *line)
 	if (tokens_check(tokens))
 		return (tok_free_array(tokens));
 	//print_tokens(tokens);
+	*status = curr_status;
 	return (tokens);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/13 16:56:00 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:37:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_here_doc(char *delimiter)
 	}
 }
 
-int	here_doc(char *delimiter)
+int	here_doc(char *delimiter, int *status)
 {
 	int	fd;
 	int	original_stdin;
@@ -77,6 +77,7 @@ int	here_doc(char *delimiter)
 	fd = open_here_doc(delimiter);
 	if (shell_signal == SIGINT)
 	{
+		*status = 130 << 8;
 		if (dup2(original_stdin, 0) == -1)
 			perror(0);
 	}
@@ -88,7 +89,7 @@ int	here_doc(char *delimiter)
 	return (fd);
 }
 
-int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
+int	*get_read_documents(t_token *tokens, int (**pipefd)[2], int *status)
 {
 	int	i;
 	int	j;
@@ -109,14 +110,14 @@ int	*get_read_documents(t_token *tokens, int (**pipefd)[2])
 		if (tokens[i].type == RED_IN)
 			j++;
 		else if (tokens[i].type == HERE_DOC)
-			readfds[j++] = here_doc(&tokens[i].value[2]);
+			readfds[j++] = here_doc(&tokens[i].value[2], status);
 		if (tokens[i].type == HERE_DOC && readfds[j - 1] == -1)
 			return (free(readfds), (void *)0);
 	}
 	return (readfds);
 }
 
-int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
+int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks, int *status)
 {
 	int	i;
 	int	j;
@@ -134,7 +135,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks)
 	{
 		if (i == 0 || tokens[i].type >= PIPE)
 			readfrom[++j] = get_read_documents(
-				&tokens[i + (tokens[i].type > PIPE)], &pipefd);
+				&tokens[i + (tokens[i].type > PIPE)], &pipefd, status);
 		if ((i == 0 || tokens[i].type >= PIPE) && !readfrom[j])
 			return (free(readfrom), (int **)0);
 	}

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:53:05 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/06 17:51:36 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:41:00 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_closure(char *string)
 	int	i;
 	int	opener;
 	int	closer;
-	
+
 	i = -1;
 	opener = 0;
 	closer = 0;
@@ -39,7 +39,7 @@ int	check_openers(char *string)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (string[i])
 		i++;
@@ -52,7 +52,7 @@ int	check_openers(char *string)
 				j++;
 			if (i - j > 0 && (string[i - j] != '&' && string[i - j] != '|'
 				&& string[i - j] != '(' && string[i - j]))
-				return (1);	
+				return (1);
 		}
 	}
 	return (0);
@@ -62,7 +62,7 @@ int	check_closers(char *string)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
 	while (string[++i])
 	{
@@ -73,7 +73,7 @@ int	check_closers(char *string)
 				j++;
 			if (string[i + j] != '&' && string[i + j] != '|'
 				&& string[i + j] != ')' && string[i + j])
-				return (1);	
+				return (1);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 13:47:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:31:21 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		error_message(cmd, ": Is a directory.\n");
 		free_args(session->commands[taskn]);
 		free_session(session);
+		clear_history();
 		exit(126);
 	}
 	if (access(cmd, F_OK) != 0)
@@ -101,6 +102,7 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		error_message(cmd, ": command not found\n");
 		free_args(session->commands[taskn]);
 		free_session(session);
+		clear_history();
 		exit(127);
 	}
 	if (access(cmd, X_OK) != 0)
@@ -108,6 +110,7 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		perror(cmd);
 		free_args(session->commands[taskn]);
 		free_session(session);
+		clear_history();
 		exit(126);
 	}
 	fprintf(stderr, "execeve: %s\n", cmd);
