@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_read_documents.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 17:02:45 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:56:00 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	open_here_doc(char *delimiter)
 	int	i;
 	char	*line;
 	int	here_doc_pipe[2];
-	
+
 	if (pipe(here_doc_pipe) == -1)
 		return (perror(0), -1);
 	while (1)
@@ -64,14 +64,24 @@ int	open_here_doc(char *delimiter)
 int	here_doc(char *delimiter)
 {
 	int	fd;
+	int	original_stdin;
 	struct sigaction sigint;
-	
+
+	shell_signal = -2;
+	original_stdin = dup(0);
 	sigint.sa_handler = received_signal;
 	sigemptyset(&sigint.sa_mask);
 	sigint.sa_flags = 0;
 	if (sigaction(SIGINT, &sigint, NULL) == -1)
-		perror("sigaction");	
+		perror("sigaction");
 	fd = open_here_doc(delimiter);
+	if (shell_signal == SIGINT)
+	{
+		if (dup2(original_stdin, 0) == -1)
+			perror(0);
+	}
+	else
+		close(original_stdin);
 	shell_signal = 0;
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
         perror("signal not default");

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:59:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 17:38:34 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:04:08 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@
 
 void	received_signal(int signum)
 {
+	if (signum == SIGINT && shell_signal == -2)
+	{
+		write(1, "\n", 1);
+		close(0);
+	}
 	if (signum == SIGINT && shell_signal == -1)
 		write(2, "\n", 1);
-	if (signum == SIGINT && shell_signal != -1)
-		write(2, "\n<Minishell> ", 13);
+	if (signum == SIGINT && shell_signal > -1)
+		write(2, "\n<Minishell!> ", 14);
 	shell_signal = signum;
 	if (signum == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);

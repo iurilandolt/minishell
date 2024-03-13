@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 18:50:31 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:15:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,6 @@ int	process_line(t_session *session, char *line)
 	return (free_session(session));
 }
 
-void	read_evaluate_print_loop(t_session *session)
-{
-	session->line = readline("<Minishell> ");
-	while (session->line || shell_signal == SIGINT)
-	{
-		shell_signal = 0;
-		/*
-		if (!ft_strncmp(session->line, "exit", 4) && ft_strlen(session->line) == 4)
-		{
-			free(session->line);
-			rl_clear_history();
-			break ;
-		}
-		*/
-		if (ft_strlen(session->line) > 0)
-		{
-			add_history(session->line);
-			process_line(session, session->line);
-		}
-		session->line = readline("<Minishell> ");
-	}
-}
-
 void	initialize_session(t_session *session)
 {
 	session->tokens = 0;
@@ -94,8 +71,27 @@ void	initialize_session(t_session *session)
 	session->readfrom = 0;
 	session->commands = 0;
 	session->writeto = 0;
-	session->status = 0;
+	session->p_ids = 0;
 	shell_signal = 0;
+}
+
+void	read_evaluate_print_loop(t_session *session)
+{
+	initialize_session(session);
+	session->line = readline("<Minishell> ");
+	while (session->line || shell_signal == SIGINT)
+	{
+		shell_signal = 0;
+		if (ft_strlen(session->line) > 0)
+		{
+			add_history(session->line);
+			process_line(session, session->line);
+		}
+		else
+			free(session->line);
+		initialize_session(session);
+		session->line = readline("<Minishell> ");
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -104,14 +100,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	session.status = 0;
 	session.menvp = setup_menvp(envp);
 	update_shlvl(&session);
-	initialize_session(&session);
 	main_signals();
-
-
 	read_evaluate_print_loop(&session);
-
 	clear(session.menvp);
 	return (0);
 }
