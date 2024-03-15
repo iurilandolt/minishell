@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:14:50 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:38:16 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	task(t_session *session, int taskn)
 	int	writefd;
 
 	i = -1;
-	writefd = open_taskfiles(session, session->menvp, taskn);
+	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	if (session->commands[taskn])
@@ -75,6 +75,7 @@ void	perform_task(t_session *session, int taskn)
 		session->p_ids[taskn] = pid;
 		free_args(session->commands[taskn]);
 	}
+	ignore_signals();
 }
 
 void	close_current_pipes(t_session *session, int taskn, int on)
@@ -110,7 +111,7 @@ void	perform_tasks(t_session *session)
 	int	on;
 
 	i = 0;
-	while (i < session->ntasks && !shell_signal)
+	while (i < session->ntasks && shell_signal <= 0)
 	{
 		on = 0;
 		while (on == 0 || (i + on < session->ntasks

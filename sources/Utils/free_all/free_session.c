@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 13:26:41 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:26:55 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	free_table_n(void **table, int ntasks)
 
 int	free_session(t_session *session)
 {
-	tok_free_array(session->tokens);
+	if (session->tokens)
+		tok_free_array(session->tokens);
 	if (session->operators)
 		free(session->operators);
 	if (session->pipes)

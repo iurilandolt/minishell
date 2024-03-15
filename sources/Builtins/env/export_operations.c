@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 16:45:07 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:34:24 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	update_shlvl(t_session *session)
 		free(parsed[2]);
 		parsed[2] = ft_itoa(level);
 		new_value = ft_strjoin("SHLVL=", parsed[2]);
-		m_export(&session->menvp, new_value);
-		m_export(&session->menvp, "SHELL=Minishell");
+		m_export(&session->status, &session->menvp, new_value);
+		m_export(&session->status, &session->menvp, "SHELL=Minishell");
 		free(new_value);
 		clear(parsed);
 	}

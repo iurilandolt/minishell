@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:05:16 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 16:21:46 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:24:32 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ static t_token	*startfrom(t_token *token, int taskn)
 	return (&token[i]);
 }
 
-static void	open_readfd(t_session *session, char **menvp, int *readfd, t_token *token)
+static void	open_readfd(t_session *session, int *readfd, t_token *token)
 {
 	char	*filename;
 
 	filename = &token->value[1];
-	ambient_variable_expansion(session->status, &filename, menvp);
-	clean_quotes(&filename);
+	ambient_variable_expansion(session, &filename, 0);
+	clean_quotes(&filename, 1);
 	*readfd = open(filename, O_RDONLY, 0644);
 	if (filename)
 		free(filename);
@@ -54,15 +54,15 @@ static void	open_readfd(t_session *session, char **menvp, int *readfd, t_token *
 	}
 }
 
-static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd)
+static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 {
 	int	writefd;
 	char	*filename;
 
 	writefd = 0;
 	filename = token->value;
-	ambient_variable_expansion(status, &filename, menvp);
-	clean_quotes(&filename);
+	ambient_variable_expansion(session, &filename, 0);
+	clean_quotes(&filename, 1);
 	if (oldwritefd)
 		close(oldwritefd);
 	if (token->type == RED_OUT)
@@ -82,7 +82,7 @@ static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd
 	return (writefd);
 }
 
-int	open_taskfiles(t_session *session, char **menvp, int taskn)
+int	open_taskfiles(t_session *session, int taskn)
 {
 	int	i;
 	int	j;
@@ -100,9 +100,9 @@ int	open_taskfiles(t_session *session, char **menvp, int taskn)
 		if (token[i].type == HERE_DOC)
 			j++;
 		if (token[i].type == RED_IN)
-			open_readfd(session, menvp, &session->readfrom[taskn][j], &token[i]);
+			open_readfd(session, &session->readfrom[taskn][j], &token[i]);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
-			writefd = open_writefd(session->status, menvp, &token[i], writefd);
+			writefd = open_writefd(session, &token[i], writefd);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_writeto.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/06 18:22:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:48:39 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static t_token	*startfrom(t_token *token, int taskn)
 	return (&token[i]);
 }
 
-static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd)
+static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 {
 	int	writefd;
 	char	*filename;
 
 	writefd = 0;
 	filename = token->value;
-	ambient_variable_expansion(status, &filename, menvp);
+	ambient_variable_expansion(session, &filename, 0);
 	if (oldwritefd)
 		close(oldwritefd);
 	if (token->type == RED_OUT)
@@ -65,7 +65,7 @@ static int	open_writefd(int status, char **menvp, t_token *token, int oldwritefd
 	return (writefd);
 }
 
-int	open_builtin_taskfiles(t_session *session, char **menvp, int taskn)
+int	open_builtin_taskfiles(t_session *session, int taskn)
 {
 	int	i;
 	int	j;
@@ -81,7 +81,7 @@ int	open_builtin_taskfiles(t_session *session, char **menvp, int taskn)
 	while (token[++i].value && token[i].type < PIPE)
 	{
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
-			writefd = open_writefd(session->status, menvp, &token[i], writefd);
+			writefd = open_writefd(session, &token[i], writefd);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

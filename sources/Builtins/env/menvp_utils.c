@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 13:31:27 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:32:31 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char **unset_from_menvp(char *del, char **menvp)
 	size = split_size(menvp);
 	new = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!new)
-		return (NULL);
+		return (perror("malloc"), (char **)NULL);
 	i = 0;
 	j =	0;
 	while (menvp[i])

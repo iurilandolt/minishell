@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 16:52:25 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:32:55 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../../include/executer.h"
 #include "../../../include/read.h"
 
-void	m_envp(char **menvp)
+void	m_envp(int *status, char **menvp)
 {
 	int	i;
 
@@ -27,6 +27,7 @@ void	m_envp(char **menvp)
 			ft_putendl_fd(menvp[i], 1);
 		i++;
 	}
+	*status = 0;
 }
 
 void	print_export(char **menvp)
@@ -55,47 +56,43 @@ void	print_export(char **menvp)
 	}
 }
 
-void	m_export(char ***menvp, char *value)
+void	m_export(int *status, char ***menvp, char *value)
 {
 	char	**parsed;
 
 	if (!*menvp)
 		return ;
 	if (!value)
+		return (print_export(*menvp));
+	if (is_valid_env_format(value))
 	{
-		print_export(*menvp);
-		return ;
-	}
-	else
-	{
-		if (is_valid_env_format(value))
+		parsed = parse_for_export(value);
+		if (menvp_lookup(parsed[0], *menvp) != -1)
 		{
-			parsed = parse_for_export(value);
-			if (menvp_lookup(parsed[0], *menvp) != -1)
-			{
-				if (!parsed[1] || parsed[1][0] == '=')
-					export_operation(menvp, value, parsed, 0);
-				else if (parsed[1][0] == '+')
-					concat_export(menvp, parsed);
-			}
-			else
-			{
-				if (parsed[2])
-					export_operation(menvp, NULL, parsed, 1);
-				else if (parsed[1] && !parsed[2])
-					export_operation(menvp, NULL, parsed, 2);
-				else
-					*menvp = export_to_menvp(parsed[0], *menvp);
-			}
-			clear(parsed);
+			if (!parsed[1] || parsed[1][0] == '=')
+				export_operation(menvp, value, parsed, 0);
+			else if (parsed[1][0] == '+')
+				concat_export(menvp, parsed);
 		}
+		else
+		{
+			if (parsed[2])
+				export_operation(menvp, NULL, parsed, 1);
+			else if (parsed[1] && !parsed[2])
+				export_operation(menvp, NULL, parsed, 2);
+			else
+				*menvp = export_to_menvp(parsed[0], *menvp);
+		}
+		clear(parsed);
 	}
+	*status = 0;
 }
 
-void	m_unset(char ***menvp, char *value)
+void	m_unset(int *status, char ***menvp, char *value)
 {
 	int		i;
 
+	*status = 0;
 	if (!value)
 		return ;
 	if (!*menvp)
@@ -112,7 +109,7 @@ void	m_unset(char ***menvp, char *value)
 		{
 			*menvp = unset_from_menvp(value, *menvp);
 			if (!*menvp)
-				perror("**unset error\n");
+				*status = 2;
 			return ;
 		}
 		i++;

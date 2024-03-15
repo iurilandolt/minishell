@@ -6,7 +6,7 @@
 #    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/15 14:50:20 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/03/15 16:36:08 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Signals/received_signals/received_signals.c\
 	$(SRC_PATH)/Signals/main_signals/main_signals.c\
 	$(SRC_PATH)/Signals/task_signals/task_signals.c\
+	$(SRC_PATH)/Signals/ignore_signals/ignore_signals.c\
 
 
 SANITIZER = -g -fsanitize=address

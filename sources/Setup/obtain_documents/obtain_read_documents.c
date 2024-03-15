@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 14:50:04 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:45:53 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	number_of_ins(t_token *tokens)
 	return (number);
 }
 
-int	open_here_doc(char *delimiter, int status, char **menvp)
+int	open_here_doc(t_session *session, char *delimiter)
 {
 	int	i;
 	char	*line;
@@ -49,7 +49,7 @@ int	open_here_doc(char *delimiter, int status, char **menvp)
 		if (!line)
 			return (printf("heredoc ended by ^D (wanted '%s')\n", delimiter),
 			close(here_doc_pipe[1]), here_doc_pipe[0]);
-		ambient_variable_expansion(status, &line, menvp);
+		ambient_variable_expansion(session, &line, 1);
 		i = 0;
 		while (line && line[i])
 			i++;		
@@ -61,7 +61,7 @@ int	open_here_doc(char *delimiter, int status, char **menvp)
 	}
 }
 
-int	here_doc(char *delimiter, int *status, char **menvp)
+int	here_doc(t_session *session, char *delimiter)
 {
 	int	fd;
 	int	original_stdin;
@@ -70,10 +70,10 @@ int	here_doc(char *delimiter, int *status, char **menvp)
 	original_stdin = dup(0);
 	if (signal(SIGINT, received_signal) == (void *)-1)
 		perror("signal");
-	fd = open_here_doc(delimiter, *status, menvp);
+	fd = open_here_doc(session,delimiter);
 	if (shell_signal == SIGINT)
 	{
-		*status = 130 << 8;
+		session->status = 130 << 8;
 		if (dup2(original_stdin, 0) == -1)
 			perror(0);
 	}
@@ -84,7 +84,7 @@ int	here_doc(char *delimiter, int *status, char **menvp)
 	return (fd);
 }
 
-int	*get_read_documents(int (**pipefd)[2], int *status, char **menvp, t_token *tokens)
+int	*get_read_documents(int (**pipefd)[2], t_session *session, t_token *tokens)
 {
 	int	i;
 	int	j;
@@ -105,14 +105,14 @@ int	*get_read_documents(int (**pipefd)[2], int *status, char **menvp, t_token *t
 		if (tokens[i].type == RED_IN)
 			j++;
 		else if (tokens[i].type == HERE_DOC)
-			readfds[j++] = here_doc(&tokens[i].value[2], status, menvp);
+			readfds[j++] = here_doc(session, &tokens[i].value[2]);
 		if (tokens[i].type == HERE_DOC && readfds[j - 1] == -1)
 			return (free(readfds), (void *)0);
 	}
 	return (readfds);
 }
 
-int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session, int *status)
+int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session)
 {
 	int	i;
 	int	j;
@@ -129,7 +129,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *sessio
 	while (tokens[++i].value)
 	{
 		if (i == 0 || tokens[i].type >= PIPE)
-			readfrom[++j] = get_read_documents(&pipefd, status, session->menvp,
+			readfrom[++j] = get_read_documents(&pipefd, session,
 				&tokens[i + (tokens[i].type > PIPE)]);
 		if ((i == 0 || tokens[i].type >= PIPE) && !readfrom[j])
 			return (free(readfrom), (int **)0);

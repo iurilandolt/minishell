@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 13:17:42 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:09:36 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	process_line(t_session *session, char *line)
 {
 	session->tokens = tokenize(line, &session->status);
 	if (!session->tokens)
-		return (0);
+		return (free_session(session));
 	session->ntasks = number_of_tasks(session->tokens);
 	session->operators = operator_rules(session->tokens);
 	if (!session->operators)
@@ -46,7 +46,7 @@ int	process_line(t_session *session, char *line)
 	if (!session->pipes)
 		return (free_session(session));
 	session->readfrom = obtain_read_documents(session->tokens,
-			session->pipes, session, &session->status);
+		session->pipes, session);
 	if (!session->readfrom)
 		return (free_session(session));
 	session->commands = obtain_commands(session->tokens, session->ntasks);
@@ -72,14 +72,13 @@ void	initialize_session(t_session *session)
 	session->commands = 0;
 	session->writeto = 0;
 	session->p_ids = 0;
-	shell_signal = 0;
 }
 
 void	read_evaluate_print_loop(t_session *session)
 {
 	initialize_session(session);
 	session->line = readline("<Minishell> ");
-	while (session->line || shell_signal == SIGINT)
+	while (session->line)
 	{
 		shell_signal = 0;
 		if (ft_strlen(session->line) > 0)
@@ -100,10 +99,10 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	main_signals();
 	session.status = 0;
 	session.menvp = setup_menvp(envp);
 	update_shlvl(&session);
-	main_signals();
 	read_evaluate_print_loop(&session);
 	clear(session.menvp);
 	return (0);

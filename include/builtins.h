@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 13:46:13 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:22:52 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	cd_home(t_session *session);
 
 // ENV, EXPORT & UNSET
 char	**setup_menvp(char **envp);
-void	m_envp(char **menvp);
-void	m_export(char ***menvp, char *value);
+void	m_envp(int *status, char **menvp);
+void	m_export(int *status, char ***menvp, char *value);
 char	**export_to_menvp(char *add, char **menvp);
-void	m_unset(char ***menvp, char *value);
+void	m_unset(int *status, char ***menvp, char *value);
 char 	**unset_from_menvp(char *del, char **menvp);
 
 

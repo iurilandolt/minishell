@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 17:53:26 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:30:32 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,30 @@ int	check_builtin(t_session *session, int taskn)
 	return (0);
 }
 
-void	exec_builtin(t_session *session, int taskn, int builtin)
+void	exec_builtin(t_session *session, char **cmd, int taskn, int builtin)
 {
-	int	i;
-
-	i = 1;
 	if (builtin == 1)
-		echo(session->commands[taskn], &session->status);
+		echo(cmd, &session->status);
 	if (builtin == 2)
-		change_dir(session, session->commands[taskn][1], &session->status);
+		change_dir(session, *(++cmd), &session->status);
 	else if (builtin == 3)
 		mpwd(&session->status);
 	else if (builtin == 4)
 	{
-		if (!session->commands[taskn][i])
-			m_export(&session->menvp, 0);
-		while (session->commands[taskn][i])
-			m_export(&session->menvp, session->commands[taskn][i++]);
+		if (!*(++cmd))
+			m_export(&session->status, &session->menvp, 0);
+		while (*cmd)
+			m_export(&session->status, &session->menvp, *cmd++);
 	}
 	else if (builtin == 5)
-		{
-		if (!session->commands[taskn][i])
-			m_unset(&session->menvp, 0);
-		while (session->commands[taskn][i])
-			m_unset(&session->menvp, session->commands[taskn][i++]);
+	{
+		if (!*(++cmd))
+			m_unset(&session->status, &session->menvp, 0);
+		while (*cmd)
+			m_unset(&session->status, &session->menvp, *cmd++);
 	}
 	else if (builtin == 6)
-		m_envp(session->menvp);
+		m_envp(&session->status, session->menvp);
 	else if (builtin == 7)
 		m_exit(session, taskn);
 }
@@ -80,10 +77,10 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 	int	writefd;
 
 	i = -1;
-	writefd = open_taskfiles(session, session->menvp, taskn);
+	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
-	exec_builtin(session, taskn, builtn);
+	exec_builtin(session, session->commands[taskn], taskn, builtn);
 	free_args(session->commands[taskn]);
 	free_session(session);
 	exit(0);
@@ -96,7 +93,7 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	int	writefd;
 
 	i = -1;
-	writefd = open_builtin_taskfiles(session, session->menvp, taskn);
+	writefd = open_builtin_taskfiles(session, taskn);
 	if (writefd)
 	{
 		stdout_fd = dup(1);
@@ -106,7 +103,7 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 			perror("dup2");
 		close(writefd);
 	}
-	exec_builtin(session, taskn, builtn);
+	exec_builtin(session, session->commands[taskn], taskn, builtn);
 	free_args(session->commands[taskn]);
 	if (writefd)
 	{

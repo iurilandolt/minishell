@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:15:45 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:22:30 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,21 @@ int			*list_process_ids(int ntasks);
 void		perform_redirects(t_session *session, int taskn, int writefd);
 void		ambient_variable_expansion(t_session *session, char **string, char flag);
 void		organize_after_expansion(char ***command);
-int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session, int *status);
+int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session);
 char		***obtain_commands(t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];
 
 int			check_builtin(t_session *session, int taskn);
-void		exec_builtin(t_session *session, int taskn, int builtin);
 void		builtin_task(t_session *session, int taskn, int builtn);
-int			open_builtin_taskfiles(t_session *session, char **menvp, int taskn);
+int			open_builtin_taskfiles(t_session *session, int taskn);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(t_session *session, int taskn, char *cmd);
 
 int			free_session(t_session *session);
 void		free_args(char **table);
 
-int			open_taskfiles(t_session *session, char **menvp, int taskn);
+int			open_taskfiles(t_session *session, int taskn);
 t_token		**obtain_write_documents(t_token *tokens, int ntasks);
 
 int	ft_isalnum(char c);

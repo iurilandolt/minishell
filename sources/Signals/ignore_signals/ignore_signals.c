@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_signals.c                                     :+:      :+:    :+:   */
+/*   ignore_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 16:57:52 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:38:27 by rcastelo         ###   ########.fr       */
+/*   Created: 2024/03/15 16:35:19 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/03/15 16:39:54 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../../include/read.h"
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 #include "../../../include/signals.h"
 
-void    main_signals(void)
+void    ignore_signals(void)
 {
     struct sigaction sigint;
-    struct sigaction sigquit;
+	struct sigaction sigquit;
 
-	sigint.sa_handler = received_signal;
+	sigint.sa_handler = SIG_IGN;
 	sigemptyset(&sigint.sa_mask);
 	sigint.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sigint, NULL) == -1)
