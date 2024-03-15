@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 12:14:27 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:45:07 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	concat_export(char ***menvp, char **parsed)
 	char	*new_value;
 	char	*tmp;
 
+	printf("concat_export\n");
 	old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
 	tmp = ft_strjoin(parsed[0], "=");
 	if (old_value[2] && parsed[2])

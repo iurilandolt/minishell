@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 12:59:20 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:42:32 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -58,8 +59,9 @@ typedef struct s_qt
 }	t_qt;
 
 char	**quote_split(char const *s, char c);
-void	clean_quotes(char **string);
+void	clean_quotes(char **string, char flag);
 
-int	ft_isalpha(int c);
+int		ft_isalpha(int c);
+int		has_no_quotes(char *string);
 
 #endif

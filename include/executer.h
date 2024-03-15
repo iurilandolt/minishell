@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/13 17:34:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:15:45 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void		close_opened_fds(t_session *session, int writefd);
 void		perform_tasks(t_session *session);
 int			*list_process_ids(int ntasks);
 void		perform_redirects(t_session *session, int taskn, int writefd);
-int			ambient_variable_expansion(int status, char **string, char **envp);
-int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], int ntasks, int *status);
+void		ambient_variable_expansion(t_session *session, char **string, char flag);
+void		organize_after_expansion(char ***command);
+int			**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session, int *status);
 char		***obtain_commands(t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			(*create_pipes(t_operator *operators))[2];

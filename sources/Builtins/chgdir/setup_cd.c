@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 12:20:59 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:48:34 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	cd_oldpwd(t_session *session)
 		cd_path(session, buffer);
 		closedir(dir);
 		free(buffer);
-		mpwd();
+		mpwd(&session->status);
 		return ;
 	}
 }

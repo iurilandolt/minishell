@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:31:45 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 17:05:59 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:19:16 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,17 @@ static void	expand_status_variable(int status, char *new, int *j)
 	new[(*j)++] = status % 10 + 48;
 }
 
-static char	*transfer_string(char *string, char **envp, char *new, int status)
+static char	*transfer_string(t_session *session, char *string, char *new, char flag)
 {
 	int	j;
 	int	qt;
 	int	qts;
+	char	*original;
 
 	j = 0;
 	qt = 0;
 	qts = 0;
+	original = string;
 	while (*string)
 	{
 		if (*string == '\'' && !(qts % 2))
@@ -93,16 +95,18 @@ static char	*transfer_string(char *string, char **envp, char *new, int status)
 		if (*string == '\"')
 			qts++;
 		if (*string == '$' && !(qt % 2) && *(string + 1) != '?')
-			expand_variable(&(string), envp, new, &j);
+			expand_variable(&(string), session->menvp, new, &j);
 		else if (*string == '$' && !(qt % 2) && string++ && string++)
-			expand_status_variable(status, new, &j);
+			expand_status_variable((session->status & 0xff00) >> 8, new, &j);
 		else
 			new[j++] = *(string++);
 	}
+	if (flag)
+		free(original);
 	return (new);
 }
 
-int	ambient_variable_expansion(int status, char **string, char **envp)
+void	ambient_variable_expansion(t_session *session, char **string, char flag)
 {
 	int		i;
 	int		j;
@@ -114,19 +118,19 @@ int	ambient_variable_expansion(int status, char **string, char **envp)
 	j = 0;
 	qt = 0;
 	qts = 0;
-	while ((*string)[++i])
+	while (*string && (*string)[++i])
 	{
 		if ((*string)[i] == '\'' && !(qts % 2))
 			qt++;
 		if ((*string)[i] == '\"')
 			qts++;
 		if ((*string)[i] == '$' && !(qt % 2))
-			j += delta_size((status & 0xff00) >> 8, &(*string)[i + 1], envp);
+			j += delta_size((session->status & 0xff00) >> 8,
+			&(*string)[i + 1], session->menvp);
 	}
 	new = malloc(i + j + 1);
 	if (!new)
-		return (1);
+		return ;
 	new[i + j] = 0;
-	*string = transfer_string(*string, envp, new, (status & 0xff00) >> 8);
-	return (0);
+	*string = transfer_string(session, *string, new, flag);
 }

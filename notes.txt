@@ -147,3 +147,5 @@ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds
 update exit status on out redir without permission
 update exit status on builtins, all except exit ^^
 protect env for multiple args
+
+Fix expansions to nothing

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_session.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/12 19:09:10 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:26:41 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_args(char **table)
 	int	i;
 
 	i = -1;
-	while (table[++i])
+	while (table && table[++i])
 		free(table[i]);
 }
 

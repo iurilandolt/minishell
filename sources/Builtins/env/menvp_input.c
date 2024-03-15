@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menvp_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 13:34:37 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:54:36 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	exp_is_alphanum(char c)
 
 static int	is_validchar(char c)
 {
-	char	*valid = "*.:/_-=@+!?[]{}#^&\%\'\"";
+	char	*valid = "*.:/_-=@+! |?[]{}#^&\%\'\"";
 	int		i;
 
 	i = 0;

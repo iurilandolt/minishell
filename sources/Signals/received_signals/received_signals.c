@@ -25,7 +25,7 @@ void	received_signal(int signum)
 	if (signum == SIGINT && shell_signal == -1)
 		write(2, "\n", 1);
 	if (signum == SIGINT && shell_signal > -1)
-		write(2, "\n<Minishell!> ", 14);
+		write(2, "\n<Minishell> ", 13);
 	shell_signal = signum;
 	if (signum == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);

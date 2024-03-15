@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:08:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/09 13:04:36 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:33:23 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*join_array(char **table)
 	return (string - k - i);
 }
 
-void	echo(char **cmd)
+void	echo(char **cmd, int *status)
 {
 	char	nl;
 	char	*print;
@@ -76,4 +76,5 @@ void	echo(char **cmd)
 	else
 		printf("%s", print);
 	free(print);
+	*status = 0;	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 18:47:39 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:46:13 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef enum e_sysdir
 
 
 char	*set_directory(t_sysdir dir, char **menvp);
-void	change_dir(t_session *session, char *path);
+void	change_dir(t_session *session, char *path, int *status);
 void	cd_path(t_session *session, char *path);
 void	cd_oldpwd(t_session *session);
 void	cd_home(t_session *session);
@@ -49,9 +49,9 @@ void	concat_export(char ***menvp, char **parsed);
 void	export_operation(char ***menvp, char* value, char **parsed, int op);
 void	update_shlvl(t_session *session);
 // PWD
-void	mpwd(void);
+void	mpwd(int *status);
 // echo
-void	echo(char **cmd);
+void	echo(char **cmd, int *status);
 
 void	m_exit(t_session *session, int taskn);
 

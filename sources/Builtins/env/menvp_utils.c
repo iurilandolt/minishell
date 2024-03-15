@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menvp_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/11 10:41:03 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:31:27 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ int	menvp_lookup(char *value, char **menvp)
 		if (!ft_strncmp(menvp[i], value, ft_strlen(value))
 			&& (menvp[i][ft_strlen(value)] == '='
 			|| menvp[i][ft_strlen(value)] == '\0'))
-		{
-			printf("lookup found %s ->\n", menvp[i]);
 			return (i);
-		}
 		i++;
 	}
 	return (-1);

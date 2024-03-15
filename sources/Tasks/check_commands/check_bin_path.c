@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_bin_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/13 17:31:21 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:56:46 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (!envp[i])
-		return (NULL);
+		return (cmd);
 	tool.paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (*(tool.paths + i))
@@ -113,5 +113,4 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		clear_history();
 		exit(126);
 	}
-	fprintf(stderr, "execeve: %s\n", cmd);
 }

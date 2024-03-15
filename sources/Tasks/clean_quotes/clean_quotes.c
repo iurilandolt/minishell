@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:05:43 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/06 11:41:14 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:35:20 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	free_table(char **table)
 	free(table);
 }
 
-void	clean_quotes(char **string)
+void	clean_quotes(char **string, char flag)
 {
 	int		j;
 	int		bar;
@@ -87,6 +87,7 @@ void	clean_quotes(char **string)
 	if (!word)
 		return (perror(0));
 	transfer_word(*string, word);
-	free(*string);
+	if (flag)
+		free(*string);
 	*string = word;
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/12 18:48:33 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/15 14:50:20 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Parsing/quote_split/clean_quotes.c \
 	$(SRC_PATH)/Parsing/quote_split/quote_split.c \
 	$(SRC_PATH)/Parsing/check_analyzer/check_analyzer.c \
-	$(SRC_PATH)/Parsing/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/Parsing/string_expander/string_expander.c \
 	$(SRC_PATH)/Parsing/string_contracter/string_contracter.c \
 	$(SRC_PATH)/Parsing/string_utils/split.c \
@@ -50,6 +49,8 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Builtins/echo/echo.c \
 	$(SRC_PATH)/Builtins/exit/exit.c \
 	$(SRC_PATH)/Builtins/builtin_exec/builtin_writeto.c \
+	$(SRC_PATH)/Task/ambient_variable_expansion/ambient_variable_expansion.c \
+	$(SRC_PATH)/Tasks/organize_after_expansion/organize_after_expansion.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \

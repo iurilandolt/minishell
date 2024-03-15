@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/12 18:49:27 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:53:26 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	exec_builtin(t_session *session, int taskn, int builtin)
 
 	i = 1;
 	if (builtin == 1)
-		echo(session->commands[taskn]);
+		echo(session->commands[taskn], &session->status);
 	if (builtin == 2)
-		change_dir(session, session->commands[taskn][1]);
+		change_dir(session, session->commands[taskn][1], &session->status);
 	else if (builtin == 3)
-		mpwd();
+		mpwd(&session->status);
 	else if (builtin == 4)
 	{
 		if (!session->commands[taskn][i])
@@ -81,18 +81,11 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 
 	i = -1;
 	writefd = open_taskfiles(session, session->menvp, taskn);
-	while (session->commands[taskn] && session->commands[taskn][++i])
-	{
-		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
-		clean_quotes(&session->commands[taskn][i]);
-	}
-
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	exec_builtin(session, taskn, builtn);
 	free_args(session->commands[taskn]);
 	free_session(session);
-
 	exit(0);
 }
 
@@ -103,17 +96,12 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	int	writefd;
 
 	i = -1;
-	while (session->commands[taskn] && session->commands[taskn][++i])
-	{
-		// printf("2: %i\n", session->status);
-		ambient_variable_expansion(session->status, &session->commands[taskn][i], session->menvp);
-		clean_quotes(&session->commands[taskn][i]);
-	}
 	writefd = open_builtin_taskfiles(session, session->menvp, taskn);
 	if (writefd)
 	{
-		if ((stdout_fd = dup(1)) == -1)
-			perror("dup2");
+		stdout_fd = dup(1);
+		if (stdout_fd == -1)
+			perror("dup");
 		if (dup2(writefd, 1) == -1)
 			perror("dup2");
 		close(writefd);
@@ -144,6 +132,7 @@ void builtin_task(t_session *session, int taskn, int builtn)
 		else if (pid == 0)
 			forked_builtin(session, taskn, builtn);
 		session->p_ids[taskn] = pid;
+		free_args(session->commands[taskn]);
 	}
 	else
 		regular_builtin(session, taskn, builtn);
