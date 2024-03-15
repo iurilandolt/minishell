@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   received_signals.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:59:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/13 17:04:08 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:06:36 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ void	received_signal(int signum)
 	if (signum == SIGINT && shell_signal > -1)
 	{
 		printf("\n");
-		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	shell_signal = signum;
 	if (signum == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);
+	shell_signal = signum;
 }

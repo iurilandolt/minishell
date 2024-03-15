@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 16:38:16 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:19:56 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,18 @@ void	perform_task(t_session *session, int taskn)
 		builtin_task(session, taskn, builtn);
 	else
 	{
-		task_signals();
 		pid = fork();
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
+		{
+			task_signals();
 			task(session, taskn);
+		}
 		session->p_ids[taskn] = pid;
 		free_args(session->commands[taskn]);
 	}
-	ignore_signals();
+	//ignore_signals();
 }
 
 void	close_current_pipes(t_session *session, int taskn, int on)

@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:09:36 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:49:55 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ int	number_of_tasks(t_token *tokens)
 			number++;
 	}
 	return (number);
+}
+
+void	initialize_session(t_session *session)
+{
+	session->tokens = 0;
+	session->operators = 0;
+	session->pipes = 0;
+	session->readfrom = 0;
+	session->commands = 0;
+	session->writeto = 0;
+	session->p_ids = 0;
 }
 
 int	process_line(t_session *session, char *line)
@@ -61,17 +72,6 @@ int	process_line(t_session *session, char *line)
 	//print_session(session);
 	perform_tasks(session);
 	return (free_session(session));
-}
-
-void	initialize_session(t_session *session)
-{
-	session->tokens = 0;
-	session->operators = 0;
-	session->pipes = 0;
-	session->readfrom = 0;
-	session->commands = 0;
-	session->writeto = 0;
-	session->p_ids = 0;
 }
 
 void	read_evaluate_print_loop(t_session *session)
