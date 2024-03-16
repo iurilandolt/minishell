@@ -15,7 +15,7 @@
 
 extern int	shell_signal;
 
-void    main_signals(void);
+void    main_signals(int status);
 void	received_signal(int signum);
 void    task_signals(void);
 void    ignore_signals(void);

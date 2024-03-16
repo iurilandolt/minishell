@@ -15,11 +15,15 @@
 #include "../../../include/executer.h"
 #include "../../../include/signals.h"
 
-void    main_signals(void)
+void    main_signals(int status)
 {
     struct sigaction sigint;
     struct sigaction sigquit;
 
+	if (status == 2)
+		printf("\n");
+	if (status == 131)
+		printf("Quit (core dumped)\n");
 	sigint.sa_handler = received_signal;
 	sigemptyset(&sigint.sa_mask);
 	sigint.sa_flags = SA_RESTART;

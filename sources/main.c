@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	main_signals();
+	main_signals(0);
 	session.status = 0;
 	session.menvp = setup_menvp(envp);
 	update_shlvl(&session);

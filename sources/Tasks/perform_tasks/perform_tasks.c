@@ -17,10 +17,8 @@
 
 void	task(t_session *session, int taskn)
 {
-	int	i;
 	int	writefd;
 
-	i = -1;
 	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
@@ -60,6 +58,7 @@ void	perform_task(t_session *session, int taskn)
 	int	builtn;
 
 	shell_signal = -1;
+	task_signals();
 	expand_commands(session, taskn);
 	builtn = check_builtin(session, taskn);
 	if (builtn > 0)
@@ -70,14 +69,11 @@ void	perform_task(t_session *session, int taskn)
 		if (pid == -1)
 			return (perror(0));
 		else if (pid == 0)
-		{
-			task_signals();
 			task(session, taskn);
-		}
 		session->p_ids[taskn] = pid;
 		free_args(session->commands[taskn]);
 	}
-	//ignore_signals();
+	ignore_signals();
 }
 
 void	close_current_pipes(t_session *session, int taskn, int on)
@@ -92,6 +88,8 @@ void	close_current_pipes(t_session *session, int taskn, int on)
 		return ;
 	while (session->tokens[++i].value && taskn)
 	{
+		if (session->tokens[i].type == PIPE)
+			pipen++;
 		if (session->tokens[i].type >= PIPE)
 			taskn--;
 	}
@@ -113,25 +111,25 @@ void	perform_tasks(t_session *session)
 	int	on;
 
 	i = 0;
-	while (i < session->ntasks && shell_signal <= 0)
-	{
-		on = 0;
+	on = 0;
+	while (i < session->ntasks && (!session->status || session->status > 255))
+	{ 
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
 			perform_task(session, i + on++);
 		close_current_pipes(session, i, on);
 		while (on && on--)
-			waitpid(session->p_ids[i++], &session->status, 0);
-		main_signals();
+		{
+			if (session->p_ids[i++] != 0)
+				waitpid(session->p_ids[i - 1], &session->status, 0);
+		}
+		main_signals(session->status);
 		if (i < session->ntasks && ((session->operators[i - 1].token->type == SAND
 					&& ((session->status & 0xff00) >> 8))
 					|| (session->operators[i - 1].token->type == OR
 					&& !((session->status & 0xff00) >> 8))))
 			on = session->operators[i - 1].flag;
-		if (on)
-			close_current_pipes(session, i, on);
-		i += on;
 	}
-	if (shell_signal == SIGINT || shell_signal == SIGQUIT)
-		session->status = (128 + shell_signal) << 8;
+	if (session->status > 0 && session->status < 256)
+		session->status = (session->status + (session->status == 2) * 128) << 8;
 }

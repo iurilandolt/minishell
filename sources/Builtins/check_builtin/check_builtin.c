@@ -73,10 +73,8 @@ void	exec_builtin(t_session *session, char **cmd, int taskn, int builtin)
 
 void	forked_builtin(t_session *session, int taskn, int builtn)
 {
-	int	i;
 	int	writefd;
 
-	i = -1;
 	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
@@ -88,11 +86,9 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 
 void	regular_builtin(t_session *session, int taskn, int builtn)
 {
-	int	i;
 	int	stdout_fd;
 	int	writefd;
 
-	i = -1;
 	writefd = open_builtin_taskfiles(session, taskn);
 	if (writefd)
 	{

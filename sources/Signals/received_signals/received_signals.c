@@ -22,15 +22,12 @@ void	received_signal(int signum)
 		write(1, "\n", 1);
 		close(0);
 	}
-	if (signum == SIGINT && shell_signal == -1)
-		write(2, "\n", 1);
-	if (signum == SIGINT && shell_signal > -1)
+	if (signum == SIGINT && shell_signal >= 0)
 	{
 		printf("\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (signum == SIGQUIT)
-		write(2, "Quit (core dumped)\n", 19);
 	shell_signal = signum;
 }

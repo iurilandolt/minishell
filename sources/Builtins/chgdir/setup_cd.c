@@ -43,13 +43,13 @@ void	cd_path(t_session *session, char *path)
 
 	cwd = getcwd(NULL, 0);
 	value	= ft_strjoin("OLDPWD=", cwd);
-	m_export(&session->menvp, value);
+	m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
 	chdir(path);
 	cwd = getcwd(NULL, 0);
 	value	= ft_strjoin("PWD=", cwd);
-	m_export(&session->menvp, value);
+	m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
 }

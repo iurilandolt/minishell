@@ -22,12 +22,12 @@ void    task_signals(void)
 	
 	sigint.sa_handler = received_signal;
 	sigemptyset(&sigint.sa_mask);
-	sigint.sa_flags = 0;
+	sigint.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sigint, NULL) == -1)
 		perror("sigaction");
 	sigquit.sa_handler = received_signal;
 	sigemptyset(&sigquit.sa_mask);
-	sigquit.sa_flags = 0;
+	sigquit.sa_flags = SA_RESTART;
 	if (sigaction(SIGQUIT, &sigquit, NULL) == -1)
 		perror("sigaction");
 }
