@@ -112,7 +112,7 @@ void	perform_tasks(t_session *session)
 
 	i = 0;
 	on = 0;
-	while (i < session->ntasks && (!session->status || session->status > 255))
+	while (i + on < session->ntasks && (!session->status || session->status > 255))
 	{ 
 		while (on == 0 || (i + on < session->ntasks
 			&& session->operators[i + on - 1].token->type == PIPE))
