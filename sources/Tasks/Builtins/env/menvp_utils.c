@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menvp_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:32:31 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:27:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,20 @@ char **unset_from_menvp(char *del, char **menvp)
 	new = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!new)
 		return (perror("malloc"), (char **)NULL);
-	i = 0;
+	i = -1;
 	j =	0;
-	while (menvp[i])
+	while (menvp[++i])
 	{
 		if (!ft_strncmp(menvp[i], del, ft_strlen(del))
 			&& (menvp[i][ft_strlen(del)] == '=' || menvp[i][ft_strlen(del)] == '\0'))
-			i++;
+			continue;
 		else
 		{
 			new[j] = ft_strdup(menvp[i]);
-			if (!new[j])
+			if (!new[j++])
 				return(clear(new));
-			j++;
-			i++;
 		}
 	}
 	new[j] = NULL;
-	clear(menvp);
-	return(new);
+	return(clear(menvp), new);
 }
