@@ -144,6 +144,64 @@ void	update_pwd(t_session *session, char *path)
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind-out.txt --suppressions=readline.supp --trace-children=yes ./minishell
 
 
+void	m_unset(int *status, char ***menvp, char *value)
+{
+	char **parsed;
+
+	*status = 0;
+	if (!value || !*menvp)
+		return ;
+	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
+		|| (value[0] == '_' && value[1] == '\0')
+		|| (value[0] == '_' && value[1] == '='))
+		return ;
+	parsed = parse_for_export(value);
+	if (parsed[1])
+	{
+		clear(parsed);
+		return ;
+	}
+	if (menvp_lookup(parsed[0], *menvp) != -1)
+	{
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		if (!*menvp)
+			*status = 2;
+		clear(parsed);
+		return ;
+	}
+	clear(parsed);
+}
+
+/*
+void	m_unset(int *status, char ***menvp, char *value)
+{
+	int		i;
+
+	*status = 0;
+	if (!value)
+		return ;
+	if (!*menvp)
+		return ;
+	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
+		|| (value[0] == '_' && value[1] == '\0')
+		|| (value[0] == '_' && value[1] == '='))
+		return ;
+	i = 0;
+	while (menvp[0][i])
+	{
+		if (ft_strncmp(value, menvp[0][i],
+		ft_strlen(value)) == 0 && value[0] != '\0')
+		{
+			*menvp = unset_from_menvp(value, *menvp);
+			if (!*menvp)
+				*status = 2;
+			return ;
+		}
+		i++;
+	}
+}
+*/
+
 update exit status on out redir without permission
 update exit status on builtins, all except exit ^^
 protect env for multiple args
@@ -185,4 +243,4 @@ cat | cat | ls
 >1 | >2 && >3 || >not && >4 | >5
 <file >>outfile | <file2 >>outfile2 && <file3 >>outfile3
 
-<file cat | 
+<file cat |

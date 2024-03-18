@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 16:31:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:06:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,35 @@ void	m_export(int *status, char ***menvp, char *value)
 
 void	m_unset(int *status, char ***menvp, char *value)
 {
+	char **parsed;
+
+	*status = 0;
+	if (!value || !*menvp)
+		return ;
+	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
+		|| (value[0] == '_' && value[1] == '\0')
+		|| (value[0] == '_' && value[1] == '='))
+		return ;
+	parsed = parse_for_export(value);
+	if (parsed[1])
+	{
+		clear(parsed);
+		return ;
+	}
+	if (menvp_lookup(parsed[0], *menvp) != -1)
+	{
+		*menvp = unset_from_menvp(parsed[0], *menvp);
+		if (!*menvp)
+			*status = 2;
+		clear(parsed);
+		return ;
+	}
+	clear(parsed);
+}
+
+/*
+void	m_unset(int *status, char ***menvp, char *value)
+{
 	int		i;
 
 	*status = 0;
@@ -118,3 +147,4 @@ void	m_unset(int *status, char ***menvp, char *value)
 		i++;
 	}
 }
+*/
