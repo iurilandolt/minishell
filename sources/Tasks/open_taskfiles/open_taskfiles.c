@@ -56,7 +56,7 @@ static void	open_readfd(t_session *session, int *readfd, t_token *token)
 
 static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 {
-	int	writefd;
+	int		writefd;
 	char	*filename;
 
 	writefd = 0;
@@ -67,13 +67,13 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 		close(oldwritefd);
 	if (token->type == RED_OUT)
 	{
-		writefd = open(&filename[1],O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		writefd = open(&filename[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (writefd == -1)
 			perror(&token->value[1]);
 	}
 	if (token->type == RED_APP)
 	{
-		writefd = open(&filename[2],O_WRONLY | O_CREAT | O_APPEND, 0644);
+		writefd = open(&filename[2], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (writefd == -1)
 			perror(&token->value[2]);
 	}
@@ -84,10 +84,10 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 
 int	open_taskfiles(t_session *session, int taskn)
 {
-	int	i;
-	int	j;
-	int	writefd;
-	t_token	*token;
+	int			i;
+	int			j;
+	int			writefd;
+	t_token		*token;
 
 	i = -1;
 	j = 0;

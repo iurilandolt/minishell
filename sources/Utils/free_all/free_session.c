@@ -46,7 +46,7 @@ void	free_table_n(void **table, int ntasks)
 	free(table);
 }
 
-int	free_session(t_session *session)
+void	free_session(t_session *session)
 {
 	if (session->tokens)
 		tok_free_array(session->tokens);
@@ -64,5 +64,4 @@ int	free_session(t_session *session)
 		free(session->line);
 	if (session->p_ids)
 		free(session->p_ids);
-	return (0);
 }

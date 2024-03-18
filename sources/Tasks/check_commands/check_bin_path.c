@@ -48,11 +48,10 @@ char	*validate_bin_path(char **envp, char *cmd)
 		free(tool.program);
 		i++;
 	}
-	clear(tool.paths);
-	return (cmd);
+	return (clear(tool.paths), cmd);
 }
 
-void	error_message(char *cmd, char * string)
+void	error_message(char *cmd, char *string)
 {
 	int		size;
 	char	*message;
@@ -73,7 +72,7 @@ int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 		return (S_ISDIR(cmd_stat.st_mode));
 	else if (lstat(cmd, &cmd_stat) == 0)
 		return (S_ISLNK(cmd_stat.st_mode));
-	else if (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1]	== '/')
+	else if (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/')
 	{
 		error_message(cmd, ": No such file or directory.\n");
 		free_args(session->commands[taskn]);
@@ -85,10 +84,6 @@ int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 
 void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 {
-	if (!cmd)
-		free_session(session);
-	if (!cmd)
-		exit(0);
 	if (cmd_is_dir(session, taskn, cmd) > 0)
 	{
 		error_message(cmd, ": Is a directory.\n");

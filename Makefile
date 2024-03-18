@@ -6,7 +6,7 @@
 #    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/15 16:36:08 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/03/18 17:58:46 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,23 +32,14 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Setup/obtain_operators/obtain_operators.c \
 	$(SRC_PATH)/Setup/list_process_ids/list_process_ids.c \
 	$(SRC_PATH)/Utils/string_utils/string_utils.c \
+	$(SRC_PATH)/Utils/string_utils/string_utils2.c \
 	$(SRC_PATH)/Utils/string_utils/str_fd.c \
 	$(SRC_PATH)/Utils/string_utils/itoa.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
-	$(SRC_PATH)/Builtins/check_builtin/check_builtin.c \
-	$(SRC_PATH)/Builtins/chgdir/chgdir.c \
-	$(SRC_PATH)/Builtins/chgdir/setup_cd.c \
-	$(SRC_PATH)/Builtins/env/menvp.c \
-	$(SRC_PATH)/Builtins/env/menvp_input.c \
-	$(SRC_PATH)/Builtins/env/menvp_utils.c \
-	$(SRC_PATH)/Builtins/env/parse_export.c \
-	$(SRC_PATH)/Builtins/env/export_operations.c \
-	$(SRC_PATH)/Builtins/echo/echo.c \
-	$(SRC_PATH)/Builtins/exit/exit.c \
-	$(SRC_PATH)/Builtins/builtin_exec/builtin_writeto.c \
+	$(SRC_PATH)/Tasks/Builtins/builtin_exec/builtin_writeto.c \
 	$(SRC_PATH)/Task/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/Tasks/organize_after_expansion/organize_after_expansion.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
@@ -56,6 +47,16 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
+	$(SRC_PATH)/Tasks/Builtins/check_builtin/check_builtin.c \
+	$(SRC_PATH)/Tasks/Builtins/chgdir/chgdir.c \
+	$(SRC_PATH)/Tasks/Builtins/chgdir/setup_cd.c \
+	$(SRC_PATH)/Tasks/Builtins/env/menvp.c \
+	$(SRC_PATH)/Tasks/Builtins/env/menvp_input.c \
+	$(SRC_PATH)/Tasks/Builtins/env/menvp_utils.c \
+	$(SRC_PATH)/Tasks/Builtins/env/parse_export.c \
+	$(SRC_PATH)/Tasks/Builtins/env/export_operations.c \
+	$(SRC_PATH)/Tasks/Builtins/echo/echo.c \
+	$(SRC_PATH)/Tasks/Builtins/exit/exit.c \
 	$(SRC_PATH)/Signals/received_signals/received_signals.c\
 	$(SRC_PATH)/Signals/main_signals/main_signals.c\
 	$(SRC_PATH)/Signals/task_signals/task_signals.c\
@@ -78,6 +79,9 @@ objects/%.o: */%.c| objects
 	cc $(CFLAGS) -c $< -o $@
 
 objects/%.o: */*/*/%.c | objects
+	cc $(CFLAGS) -c $< -o $@
+	
+objects/%.o: */*/*/*/%.c | objects
 	cc $(CFLAGS) -c $< -o $@
 
 objects:

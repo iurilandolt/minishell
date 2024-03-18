@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_session.c                                        :+:      :+:    :+:   */
+/*   print_session.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -57,7 +57,8 @@ void	print_operator(t_operator operator)
 	if (operator.token)
 	{
 		printf("operator:\n");
-		printf("\tvalue: %s; type: %i\n", operator.token->value, operator.token->type);
+		printf("\tvalue: %s; type: %i\n",
+			operator.token->value, operator.token->type);
 		printf("\tflag: %i\n", operator.flag);
 	}
 }

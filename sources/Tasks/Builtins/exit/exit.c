@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
-#include "../../../include/executer.h"
-#include "../../../include/read.h"
+#include "../../../../include/builtins.h"
+#include "../../../../include/executer.h"
+#include "../../../../include/read.h"
 
 
 static int valid_exit_arg(char *str)

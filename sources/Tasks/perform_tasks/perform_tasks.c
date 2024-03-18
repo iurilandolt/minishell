@@ -24,8 +24,8 @@ void	task(t_session *session, int taskn)
 	close_opened_fds(session, writefd);
 	if (session->commands[taskn])
 	{
-		session->commands[taskn][0] =
-			validate_bin_path(session->menvp, session->commands[taskn][0]);
+		session->commands[taskn][0]
+			= validate_bin_path(session->menvp, session->commands[taskn][0]);
 		link_cmd_codes(session, taskn, session->commands[taskn][0]);
 		if (execve(session->commands[taskn][0],
 			session->commands[taskn], session->menvp) == -1)
@@ -42,7 +42,7 @@ void	task(t_session *session, int taskn)
 void	expand_commands(t_session *session, int taskn)
 {
 	int	i;
-	
+
 	i = -1;
 	while (session->commands[taskn] && session->commands[taskn][++i])
 		ambient_variable_expansion(session, &session->commands[taskn][i], 0);
@@ -110,12 +110,12 @@ void	perform_tasks(t_session *session)
 	int	i;
 	int	on;
 
-	i = 0;
+	i = -1;
 	on = 0;
-	while (i < session->ntasks && (!session->status || session->status > 255))
-	{ 
+	while (++i < session->ntasks && (!session->status || session->status > 255))
+	{
 		while (on == 0 || (i + on < session->ntasks
-			&& session->operators[i + on - 1].token->type == PIPE))
+				&& session->operators[i + on - 1].token->type == PIPE))
 			perform_task(session, i + on++);
 		close_current_pipes(session, i, on);
 		while (on && on--)
@@ -124,11 +124,11 @@ void	perform_tasks(t_session *session)
 				waitpid(session->p_ids[i - 1], &session->status, 0);
 		}
 		main_signals(session->status);
-		if (i < session->ntasks && ((session->operators[i - 1].token->type == SAND
+		if (i-- < session->ntasks && ((session->operators[i].token->type == SAND
 					&& ((session->status & 0xff00) >> 8))
-					|| (session->operators[i - 1].token->type == OR
+				|| (session->operators[i].token->type == OR
 					&& !((session->status & 0xff00) >> 8))))
-			on = session->operators[i - 1].flag;
+			on = session->operators[i].flag;
 	}
 	if (session->status > 0 && session->status < 256)
 		session->status = (session->status + (session->status == 2) * 128) << 8;

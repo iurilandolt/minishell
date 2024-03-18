@@ -77,11 +77,12 @@ static void	expand_status_variable(int status, char *new, int *j)
 	new[(*j)++] = status % 10 + 48;
 }
 
-static char	*transfer_string(t_session *session, char *string, char *new, char flag)
+static char	*transfer_string(t_session *session,
+		char *string, char *new, char flag)
 {
-	int	j;
-	int	qt;
-	int	qts;
+	int		j;
+	int		qt;
+	int		qts;
 	char	*original;
 
 	j = 0;
@@ -126,7 +127,7 @@ void	ambient_variable_expansion(t_session *session, char **string, char flag)
 			qts++;
 		if ((*string)[i] == '$' && !(qt % 2))
 			j += delta_size((session->status & 0xff00) >> 8,
-			&(*string)[i + 1], session->menvp);
+					&(*string)[i + 1], session->menvp);
 	}
 	new = malloc(i + j + 1);
 	if (!new)

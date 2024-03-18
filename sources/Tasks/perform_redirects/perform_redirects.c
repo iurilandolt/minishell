@@ -17,7 +17,7 @@
 void	perform_redirects(t_session *session, int taskn, int writefd)
 {
 	int	i;
-	
+
 	i = 0;
 	while (session->readfrom[taskn][i])
 		i++;

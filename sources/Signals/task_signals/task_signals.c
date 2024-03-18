@@ -15,11 +15,11 @@
 #include "../../../include/executer.h"
 #include "../../../include/signals.h"
 
-void    task_signals(void)
+void	task_signals(void)
 {
-    struct sigaction sigint;
-	struct sigaction sigquit;
-	
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
+
 	sigint.sa_handler = received_signal;
 	sigemptyset(&sigint.sa_mask);
 	sigint.sa_flags = SA_RESTART;

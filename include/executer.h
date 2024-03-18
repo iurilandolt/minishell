@@ -65,7 +65,7 @@ int			open_builtin_taskfiles(t_session *session, int taskn);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(t_session *session, int taskn, char *cmd);
 
-int			free_session(t_session *session);
+void			free_session(t_session *session);
 void		free_args(char **table);
 
 int			open_taskfiles(t_session *session, int taskn);

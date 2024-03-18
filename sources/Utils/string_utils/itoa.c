@@ -12,7 +12,6 @@
 
 #include "../../../include/read.h"
 
-
 static int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
@@ -23,7 +22,7 @@ static int	ft_isdigit(int c)
 
 static int	int_chars(int nbr)
 {
-	int chars;
+	int	chars;
 
 	chars = 0;
 	if (nbr < 0)
@@ -41,18 +40,18 @@ static int	int_chars(int nbr)
 	return (chars);
 }
 
-
 char	*ft_itoa(int nbr)
 {
 	char	*new;
 	int		size;
 
 	if (nbr == -2147483648)
-		return("-2147483648\0");
-	if ((size = int_chars(nbr)) > 0)
+		return ("-2147483648\0");
+	size = int_chars(nbr);
+	if (size > 0)
 		new = (char *)malloc(size * sizeof(char) + 1);
 	else
-		return(NULL);
+		return (NULL);
 	new[size] = '\0';
 	if (nbr == 0)
 		new[0] = '0';
@@ -61,13 +60,13 @@ char	*ft_itoa(int nbr)
 		new[0] = '-';
 		nbr = -nbr;
 	}
-	while(nbr > 0)
+	while (nbr > 0)
 	{
 		size--;
 		new[size] = nbr % 10 + '0';
 		nbr /= 10;
 	}
-	return(new);
+	return (new);
 }
 
 int	ft_atoi(const char *nptr)

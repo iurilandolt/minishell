@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
-#include "../../../include/executer.h"
-#include "../../../include/read.h"
+#include "../../../../include/builtins.h"
+#include "../../../../include/executer.h"
+#include "../../../../include/read.h"
 
 int	check_builtin(t_session *session, int taskn)
 {

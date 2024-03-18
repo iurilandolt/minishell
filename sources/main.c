@@ -44,7 +44,7 @@ void	initialize_session(t_session *session)
 	session->p_ids = 0;
 }
 
-int	process_line(t_session *session, char *line)
+void	process_line(t_session *session, char *line)
 {
 	session->tokens = tokenize(line, &session->status);
 	if (!session->tokens)

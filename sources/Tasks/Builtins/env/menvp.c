@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
-#include "../../../include/executer.h"
-#include "../../../include/read.h"
+#include "../../../../include/builtins.h"
+#include "../../../../include/executer.h"
+#include "../../../../include/read.h"
 
 void	m_envp(int *status, char **menvp)
 {

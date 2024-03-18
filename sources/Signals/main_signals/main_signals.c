@@ -15,10 +15,10 @@
 #include "../../../include/executer.h"
 #include "../../../include/signals.h"
 
-void    main_signals(int status)
+void	main_signals(int status)
 {
-    struct sigaction sigint;
-    struct sigaction sigquit;
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
 
 	if (status == 2)
 		printf("\n");

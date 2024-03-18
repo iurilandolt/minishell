@@ -14,7 +14,7 @@
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 
-static int		count_arguments(char **command, int qt, int qts)
+static int	count_arguments(char **command, int qt, int qts)
 {
 	int	i;
 	int	j;
@@ -45,7 +45,7 @@ static int		count_arguments(char **command, int qt, int qts)
 
 static char	*ft_strdup_n(char *string, int n, int *k, int j)
 {
-	int	i;
+	int		i;
 	char	*new;
 
 	new = malloc ((n + 1) * sizeof(char));
@@ -64,7 +64,7 @@ static void	transfer_arguments(char **new, char **command, int qt, int qts)
 	int	i;
 	int	j;
 	int	k;
-	
+
 	i = -1;
 	while (command[++i])
 	{
@@ -79,19 +79,19 @@ static void	transfer_arguments(char **new, char **command, int qt, int qts)
 			if (command[i][j] == '\"' && !(qt % 2))
 				qts++;
 			if ((command[i][j++] == ' ' && command[i][j] != ' ' && command[i][j]
-				 && !(qt % 2) && !(qts % 2)) || !command[i][j])
+				&& !(qt % 2) && !(qts % 2)) || !command[i][j])
 				*(new++) = ft_strdup_n(&command[i][k],
-					j - 1 - k + !command[i][j], &k, j);
-		}	
+						j - 1 - k + !command[i][j], &k, j);
+		}
 	}
 }
 
 void	organize_after_expansion(char ***command)
 {
-	int	i;
-	int	count;
+	int		i;
+	int		count;
 	char	**new;
-	
+
 	if (!*command)
 		return ;
 	count = count_arguments(*command, 0, 0);

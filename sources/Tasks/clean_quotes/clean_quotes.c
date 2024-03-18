@@ -60,7 +60,7 @@ static void	transfer_word(char *str, char *word)
 		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
 			qts++;
 		if ((!(str[i] == '\'' && !(qts % 2)) && !(str[i] == '\"' && !(qt % 2))
-			 && !(str[i] == '\\')) || (i != 0 && str[i - 1] == '\\'))
+				&& !(str[i] == '\\')) || (i != 0 && str[i - 1] == '\\'))
 			word[j++] = str[i];
 	}
 }

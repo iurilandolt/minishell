@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../../include/read.h"
 #include "../../../include/token.h"
 #include "../../../include/executer.h"
 #include "../../../include/signals.h"
 
-void    ignore_signals(void)
+void	ignore_signals(void)
 {
-    struct sigaction sigint;
-	struct sigaction sigquit;
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
 
 	sigint.sa_handler = SIG_IGN;
 	sigemptyset(&sigint.sa_mask);
