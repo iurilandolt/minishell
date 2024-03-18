@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/15 16:36:08 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/03/18 16:03:32 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
+	$(SRC_PATH)/Utils/string_utils/str_sort.c \
 	$(SRC_PATH)/Builtins/check_builtin/check_builtin.c \
 	$(SRC_PATH)/Builtins/chgdir/chgdir.c \
 	$(SRC_PATH)/Builtins/chgdir/setup_cd.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:22:52 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:01:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	m_export(int *status, char ***menvp, char *value);
 char	**export_to_menvp(char *add, char **menvp);
 void	m_unset(int *status, char ***menvp, char *value);
 char 	**unset_from_menvp(char *del, char **menvp);
-
 
 int		is_valid_env_format(const char *str);
 char	**parse_for_export(char *value);
