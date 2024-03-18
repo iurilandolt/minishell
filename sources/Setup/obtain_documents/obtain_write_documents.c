@@ -32,7 +32,7 @@ int	number_of_write_documents(t_token *tokens)
 		i++;
 	if (tokens[i].value && tokens[i].type == PRTS && tokens[i + 1].value
 		&& tokens[i + 1].type == PIPE)
-		number++;	
+		number++;
 	return (number);
 }
 

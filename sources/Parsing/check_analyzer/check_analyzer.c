@@ -51,7 +51,7 @@ int	check_openers(char *string)
 			while (i - j > 0 && string[i - j] == ' ')
 				j++;
 			if (i - j > 0 && (string[i - j] != '&' && string[i - j] != '|'
-				&& string[i - j] != '(' && string[i - j]))
+					&& string[i - j] != '(' && string[i - j]))
 				return (1);
 		}
 	}

@@ -48,10 +48,7 @@ static char	**concatenate_cmd(t_token *tokens)
 	while (tokens->value && tokens->type <= ARG)
 	{
 		if (tokens->type == STD || tokens->type == ARG)
-		{
-			//tokens->value = expand_tilde(tokens->value);
 			cmd[i++] = tokens->value;
-		}
 		tokens++;
 	}
 	return (cmd);

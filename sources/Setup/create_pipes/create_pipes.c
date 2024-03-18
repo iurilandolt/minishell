@@ -33,10 +33,10 @@ int	(*create_pipes(t_operator *operators))[2]
 	count = 0;
 	while (operators[++i].token)
 	{
-		if(operators[i].token->type == PIPE)
+		if (operators[i].token->type == PIPE)
 			count++;
 	}
-	pipefd = malloc((count + 1) * sizeof(int[2]));
+	pipefd = malloc((count + 1) * sizeof(int [2]));
 	if (!pipefd)
 		return (perror(0), (void *)0);
 	pipefd[count][0] = 0;

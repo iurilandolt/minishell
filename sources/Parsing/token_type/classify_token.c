@@ -38,4 +38,3 @@ void	set_token_type(t_token *token)
 	else
 		token->type = STD;
 }
-

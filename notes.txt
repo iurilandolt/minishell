@@ -148,4 +148,41 @@ update exit status on out redir without permission
 update exit status on builtins, all except exit ^^
 protect env for multiple args
 
-Fix expansions to nothing
+
+
+Sequencia de testes de verificacao:
+
+""
+0
+nocmd
+$NOVAR
+$CMDVAR
+cat
+cat file1 file2 file3 file4
+
+0 && 0 || 0 && 0 | 0 | 0
+"" && "" || "" && "" | "" | ""
+$NOVAR && $NOVAR || $NOVAR && $NOVAR | $NOVAR | $NOVAR
+
+echo ola tudo bem sim fantastico
+echo -n ola tudo bem sim fantastico
+
+<file cat
+<notafile cat
+<<eof cat
+<<"eof" cat
+cat >file
+cat >>file
+cat >>notafile
+
+
+cat | cat | cat
+cat | cat | ls
+
+
+<file | <file | <file
+<file | >outfile | <<eof
+>1 | >2 && >3 || >not && >4 | >5
+<file >>outfile | <file2 >>outfile2 && <file3 >>outfile3
+
+<file cat | 

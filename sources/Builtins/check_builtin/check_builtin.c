@@ -81,7 +81,7 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 	exec_builtin(session, session->commands[taskn], taskn, builtn);
 	free_args(session->commands[taskn]);
 	free_session(session);
-	exit(0);
+	exit(session->status);
 }
 
 void	regular_builtin(t_session *session, int taskn, int builtn)

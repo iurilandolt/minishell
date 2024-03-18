@@ -59,7 +59,7 @@ char	*join_array(char **table)
 			*(string++) = (*table)[j];
 		*(string++) = ' ';
 	}
-	*(string) = 0;
+	*(string - 1) = 0;
 	return (string - k - i);
 }
 

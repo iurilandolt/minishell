@@ -44,7 +44,7 @@ void	tok_free_array_i(t_token *tokens, int i)
 void	distinguish_cmd_arg(t_token *tokens)
 {
 	int	i;
-	int		cmd;
+	int	cmd;
 
 	i = 0;
 	cmd = 0;

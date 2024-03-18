@@ -33,11 +33,11 @@ int	number_of_ins(t_token *tokens)
 	return (number);
 }
 
-int	open_here_doc(t_session *session, char *delimiter)
+int	open_here_doc(t_session *session, char *delimiter, char flag)
 {
-	int	i;
+	int		i;
+	int		here_doc_pipe[2];
 	char	*line;
-	int	here_doc_pipe[2];
 
 	if (pipe(here_doc_pipe) == -1)
 		return (perror(0), -1);
@@ -48,11 +48,12 @@ int	open_here_doc(t_session *session, char *delimiter)
 			return (close(here_doc_pipe[0]), close(here_doc_pipe[1]), -1);
 		if (!line)
 			return (printf("heredoc ended by ^D (wanted '%s')\n", delimiter),
-			close(here_doc_pipe[1]), here_doc_pipe[0]);
-		ambient_variable_expansion(session, &line, 1);
+				close(here_doc_pipe[1]), here_doc_pipe[0]);
+		if (!flag)
+			ambient_variable_expansion(session, &line, 1);
 		i = 0;
 		while (line && line[i])
-			i++;		
+			i++;
 		if (i > 0 && !ft_strncmp(line, delimiter, INT_MAX))
 			return (free(line), close(here_doc_pipe[1]), here_doc_pipe[0]);
 		write(here_doc_pipe[1], line, i);
@@ -63,14 +64,20 @@ int	open_here_doc(t_session *session, char *delimiter)
 
 int	here_doc(t_session *session, char *delimiter)
 {
-	int	fd;
-	int	original_stdin;
+	int		i;
+	int		fd;
+	int		original_stdin;
+	char	quote;
 
+	i = -1;
 	shell_signal = -2;
 	original_stdin = dup(0);
-	if (signal(SIGINT, received_signal) == (void *)-1)
-		perror("signal");
-	fd = open_here_doc(session,delimiter);
+	if (original_stdin == -1 || signal(SIGINT, received_signal) == SIG_ERR)
+		perror("dup and/or signal");
+	while (i == -1 || (delimiter[i] && delimiter[i] != '\"'))
+		quote = delimiter[i++ + 1];
+	clean_quotes(&delimiter, 0);
+	fd = open_here_doc(session, delimiter, quote);
 	if (shell_signal == SIGINT)
 	{
 		session->status = 130 << 8;
@@ -80,8 +87,8 @@ int	here_doc(t_session *session, char *delimiter)
 	close(original_stdin);
 	shell_signal = 0;
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
-        perror("signal not default");
-	return (fd);
+		perror("signal not default");
+	return (free(delimiter), fd);
 }
 
 int	*get_read_documents(int (**pipefd)[2], t_session *session, t_token *tokens)
@@ -112,7 +119,8 @@ int	*get_read_documents(int (**pipefd)[2], t_session *session, t_token *tokens)
 	return (readfds);
 }
 
-int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *session)
+int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2],
+		t_session *session)
 {
 	int	i;
 	int	j;
@@ -130,7 +138,7 @@ int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2], t_session *sessio
 	{
 		if (i == 0 || tokens[i].type >= PIPE)
 			readfrom[++j] = get_read_documents(&pipefd, session,
-				&tokens[i + (tokens[i].type > PIPE)]);
+					&tokens[i + (tokens[i].type > PIPE)]);
 		if ((i == 0 || tokens[i].type >= PIPE) && !readfrom[j])
 			return (free(readfrom), (int **)0);
 	}

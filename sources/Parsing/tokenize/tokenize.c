@@ -29,7 +29,6 @@ int	handle_quotes(char *line, char ***split)
 {
 	*split = quote_split(line, ' ');
 	free(line);
-	//*split = clean_quotes(*split);
 	if (!*split)
 	{
 		perror("**handle_quotes failed.\n");
@@ -67,8 +66,6 @@ t_token	*tokenize(char *line, int *status)
 	free_table(split);
 	if (tokens_check(tokens))
 		return (tok_free_array(tokens));
-	//print_tokens(tokens);
 	*status = curr_status;
 	return (tokens);
 }
-
