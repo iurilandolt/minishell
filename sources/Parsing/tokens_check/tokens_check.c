@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:17:55 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/11 16:13:46 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:01:17 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	operator_value(t_token *tokens)
 	i = -1;
 	while (tokens[++i].value)
 	{
-		if (tokens[i].type == SAND 
+		if (tokens[i].type == SAND
 			&& ((tokens[i].value[0] != tokens[i].value[1])
 				|| (tokens[i].value[1] && tokens[i].value[2])))
 			return (write(2, "Syntax Error\n", 13));
@@ -60,7 +60,7 @@ int	operator_position(t_token *tokens)
 		return (write(2, "Syntax Error\n", 13));
 	while (tokens[++i].value)
 	{
-		if (tokens[i].type >= PIPE 
+		if (tokens[i].type >= PIPE
 			&& (tokens[i + 1].value && tokens[i + 1].type >= PIPE))
 			return (write(2, "Syntax Error\n", 13));
 	}

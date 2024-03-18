@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:29:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 16:53:08 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:06:01 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../../../include/executer.h"
 #include "../../../../include/read.h"
 
-static char *extract_var(char *value)
+static char	*extract_var(char *value)
 {
 	int		i;
 	int		size;
@@ -42,14 +42,14 @@ static char *extract_var(char *value)
 	return (var);
 }
 
-static char *extract_op(char *value)
+static char	*extract_op(char *value)
 {
 	char	*ptr;
 
 	if (!value)
 		return (NULL);
 	ptr = value;
-	while(*ptr)
+	while (*ptr)
 	{
 		if (*ptr == '+' || *ptr == '=')
 			break ;
@@ -64,7 +64,7 @@ static char *extract_op(char *value)
 	return (NULL);
 }
 
-static char *extract_value(char *value)
+static char	*extract_value(char *value)
 {
 	char	*ptr;
 	int		size;
@@ -93,9 +93,9 @@ static char *extract_value(char *value)
 	return (NULL);
 }
 
-char **parse_for_export(char *value)
+char	**parse_for_export(char *value)
 {
-	char **new;
+	char	**new;
 
 	new = (char **)malloc(sizeof(char *) * 4);
 	if (!new)

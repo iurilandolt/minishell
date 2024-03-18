@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:05:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 18:00:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:59:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_token	*get_write_documents(t_token *tokens)
 		redout[j++] = tokens[i];
 	while (tokens[i].value && tokens[i].type != 6 && tokens[i].value[0] != ')')
 		i++;
-	if (tokens[i].value && tokens[i].type == PRTS && tokens[i + 1].value 
+	if (tokens[i].value && tokens[i].type == PRTS && tokens[i + 1].value
 		&& tokens[i + 1].type == PIPE)
 		redout[j++] = tokens[i + 1];
 	return (redout);

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:43:13 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/11 02:01:22 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:00:52 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	expanded_size(char *str)
 			size++;
 		if ((str[i + 1] != ' ' && str[i + 1] != '&' && str[i + 1] != '|'
 				&& str[i + 1] != '<' && str[i + 1] != '>')
-			&& (str[i] == '&' || str[i] == '|' 
+			&& (str[i] == '&' || str[i] == '|'
 				|| str[i] == '<' || str[i] == '>'
 				|| str[i] == '(' || str[i] == ')')
 			&& (i == 0 || str[i - 1] != '\\'))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 13:48:34 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:08:15 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*set_directory(t_sysdir dir, char **menvp)
 	char	*ptr;
 	int		i;
 
-
 	i = -1;
 	ptr = NULL;
 	while (menvp[++i])
@@ -31,9 +30,9 @@ char	*set_directory(t_sysdir dir, char **menvp)
 		else if (dir == OLDPWD && ft_strncmp(menvp[i], "OLDPWD=", 7) == 0)
 			ptr = (menvp[i] + 7);
 		if (ptr)
-			return(ptr);
+			return (ptr);
 	}
-	return(NULL);
+	return (NULL);
 }
 
 void	cd_path(t_session *session, char *path)
@@ -42,13 +41,13 @@ void	cd_path(t_session *session, char *path)
 	char	*value;
 
 	cwd = getcwd(NULL, 0);
-	value	= ft_strjoin("OLDPWD=", cwd);
+	value = ft_strjoin("OLDPWD=", cwd);
 	m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
 	chdir(path);
 	cwd = getcwd(NULL, 0);
-	value	= ft_strjoin("PWD=", cwd);
+	value = ft_strjoin("PWD=", cwd);
 	m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
@@ -59,7 +58,6 @@ void	cd_oldpwd(t_session *session)
 	DIR		*dir;
 	char	*oldpwd;
 	char	*buffer;
-
 
 	oldpwd = set_directory(OLDPWD, session->menvp);
 	if (!oldpwd)
@@ -83,7 +81,6 @@ void	cd_home(t_session *session)
 {
 	char	*home;
 	char	*buffer;
-
 
 	home = set_directory(HOME, session->menvp);
 	if (!home)

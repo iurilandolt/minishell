@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chgdir.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 13:45:58 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:08:34 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../../../include/executer.h"
 #include "../../../../include/read.h"
 
-void mpwd(int *status)
+void	mpwd(int *status)
 {
 	char	*tmp;
 

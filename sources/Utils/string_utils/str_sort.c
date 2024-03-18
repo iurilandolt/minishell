@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:41:05 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 16:27:45 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:54:12 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	str_swap(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -33,7 +33,7 @@ void	str_sort(char **arr)
 	if (size < 2)
 		return ;
 	i = 0;
-	while(i < size - 1)
+	while (i < size - 1)
 	{
 		j = 0;
 		while (j < size - i - 1)

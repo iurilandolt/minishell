@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menvp_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 16:54:36 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:53:56 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	is_validchar(char c)
 	return (0);
 }
 
-int is_valid_env_format(const char *str)
+int	is_valid_env_format(const char *str)
 {
 	int	i;
 
@@ -54,15 +54,15 @@ int is_valid_env_format(const char *str)
 		|| (str[0] == '_' && str[1] == '='))
 		return (0);
 	if (!str || *str == '\0' || !exp_is_alpha(str[0]))
-		return 0;
+		return (0);
 	i = 0;
-	while(str[i] && exp_is_alphanum(str[i]))
+	while (str[i] && exp_is_alphanum(str[i]))
 		i++;
 	if (str[i] == '\0')
 		return (1);
-	if(str[i] == '+')
+	if (str[i] == '+')
 		i++;
-	if(str[i] != '=')
+	if (str[i] != '=')
 		return (0);
 	i++;
 	if (!is_validchar(str[i]) && str[i] != '\0')

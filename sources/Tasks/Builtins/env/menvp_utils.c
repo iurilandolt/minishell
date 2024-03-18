@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 18:27:55 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:04:11 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../../../include/executer.h"
 #include "../../../../include/read.h"
 
-char **setup_menvp(char **envp)
+char	**setup_menvp(char **envp)
 {
 	char	**menvp;
 	int		size;
@@ -29,11 +29,11 @@ char **setup_menvp(char **envp)
 	{
 		menvp[i] = ft_strdup(envp[i]);
 		if (!menvp[i])
-			return(clear(menvp));
+			return (clear(menvp));
 		i++;
 	}
 	menvp[size] = NULL;
-	return(menvp);
+	return (menvp);
 }
 
 int	menvp_lookup(char *value, char **menvp)
@@ -52,7 +52,7 @@ int	menvp_lookup(char *value, char **menvp)
 	return (-1);
 }
 
-char **export_to_menvp(char *add, char **menvp)
+char	**export_to_menvp(char *add, char **menvp)
 {
 	char	**new;
 	int		size;
@@ -67,42 +67,41 @@ char **export_to_menvp(char *add, char **menvp)
 	{
 		new[i] = ft_strdup(menvp[i]);
 		if (!new[i])
-			return(clear(new));
+			return (clear(new));
 		i++;
 	}
 	new[i] = ft_strdup(add);
 	if (!new[i])
-		return(clear(new));
+		return (clear(new));
 	new[i + 1] = NULL;
 	clear(menvp);
-	return(new);
+	return (new);
 }
 
-char **unset_from_menvp(char *del, char **menvp)
+char	**unset_from_menvp(char *del, char **menvp)
 {
 	char	**new;
-	int		size;
 	int		i;
 	int		j;
 
-	size = split_size(menvp);
-	new = (char **)malloc(sizeof(char *) * (size + 1));
+	new = (char **)malloc(sizeof(char *) * (split_size(menvp) + 1));
 	if (!new)
-		return (perror("malloc"), (char **)NULL);
+		return (perror("malloc"), (char **) NULL);
 	i = -1;
-	j =	0;
+	j = 0;
 	while (menvp[++i])
 	{
 		if (!ft_strncmp(menvp[i], del, ft_strlen(del))
-			&& (menvp[i][ft_strlen(del)] == '=' || menvp[i][ft_strlen(del)] == '\0'))
-			continue;
+			&& (menvp[i][ft_strlen(del)] == '='
+			|| menvp[i][ft_strlen(del)] == '\0'))
+			continue ;
 		else
 		{
 			new[j] = ft_strdup(menvp[i]);
 			if (!new[j++])
-				return(clear(new));
+				return (clear(new));
 		}
 	}
 	new[j] = NULL;
-	return(clear(menvp), new);
+	return (clear(menvp), new);
 }

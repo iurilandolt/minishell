@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_operators.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:32:38 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 18:11:32 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:00:07 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	and_or_operators(t_token *tokens, t_operator *operator, char bit)
 		&& !(tokens[i].type == PIPE && prts < 0))
 	{
 		if (tokens[i].type == PRTS && tokens[i].value[0] == '(')
-			prts++; 
+			prts++;
 		if (tokens[i].type == PRTS && tokens[i].value[0] == ')')
-			prts--; 
+			prts--;
 		if (tokens[i].type >= PIPE)
 			j++;
 		i++;

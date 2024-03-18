@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:30:32 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:02:16 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	}
 }
 
-void builtin_task(t_session *session, int taskn, int builtn)
+void	builtin_task(t_session *session, int taskn, int builtn)
 {
-	int	i;
+	int		i;
 	pid_t	pid;
 
 	i = 0;
-	while(session->writeto[taskn][i].value)
+	while (session->writeto[taskn][i].value)
 		i++;
 	if ((i > 0 && session->writeto[taskn][i - 1].type == PIPE)
 		|| (taskn > 0 && session->operators[taskn - 1].token->type == PIPE))

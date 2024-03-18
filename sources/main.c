@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:49:55 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 19:47:35 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	process_line(t_session *session, char *line)
 	if (!session->pipes)
 		return (free_session(session));
 	session->readfrom = obtain_read_documents(session->tokens,
-		session->pipes, session);
+			session->pipes, session);
 	if (!session->readfrom)
 		return (free_session(session));
 	session->commands = obtain_commands(session->tokens, session->ntasks);
@@ -69,7 +69,6 @@ void	process_line(t_session *session, char *line)
 	session->p_ids = list_process_ids(session->ntasks);
 	if (!session->p_ids)
 		return (free_session(session));
-	//print_session(session);
 	perform_tasks(session);
 	return (free_session(session));
 }

@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_writeto.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 15:48:39 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:09:30 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../include/builtins.h"
 #include "../../../../include/executer.h"
 #include "../../../../include/read.h"
-
-
 
 static int	correct_pipe(t_session *session, int taskn)
 {
@@ -38,7 +36,7 @@ static t_token	*startfrom(t_token *token, int taskn)
 
 static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 {
-	int	writefd;
+	int		writefd;
 	char	*filename;
 
 	writefd = 0;
@@ -49,14 +47,14 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 	if (token->type == RED_OUT)
 	{
 		writefd = open(&filename[1],
-			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (writefd == -1)
 			perror(&token->value[1]);
 	}
 	if (token->type == RED_APP)
 	{
 		writefd = open(&filename[2],
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (writefd == -1)
 			perror(&token->value[2]);
 	}
@@ -67,9 +65,9 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 
 int	open_builtin_taskfiles(t_session *session, int taskn)
 {
-	int	i;
-	int	j;
-	int	writefd;
+	int		i;
+	int		j;
+	int		writefd;
 	t_token	*token;
 
 	i = -1;

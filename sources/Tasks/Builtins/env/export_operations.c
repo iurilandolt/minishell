@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 17:34:24 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:57:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	concat_export(char ***menvp, char **parsed)
 	char	*new_value;
 	char	*tmp;
 
-	printf("concat_export\n");
 	old_value = parse_for_export((*menvp)[menvp_lookup(parsed[0], *menvp)]);
 	tmp = ft_strjoin(parsed[0], "=");
 	if (old_value[2] && parsed[2])
@@ -39,7 +38,7 @@ void	concat_export(char ***menvp, char **parsed)
 		*menvp = export_to_menvp(new_value, *menvp);
 		free(new_value);
 	}
-	else if((old_value[0] && !old_value[1]) && parsed[1])
+	else if ((old_value[0] && !old_value[1]) && parsed[1])
 	{
 		*menvp = unset_from_menvp(parsed[0], *menvp);
 		*menvp = export_to_menvp(tmp, *menvp);
@@ -48,7 +47,7 @@ void	concat_export(char ***menvp, char **parsed)
 	clear(old_value);
 }
 
-void	export_operation(char ***menvp, char* value, char **parsed, int op)
+void	export_operation(char ***menvp, char *value, char **parsed, int op)
 {
 	char	*new_value;
 	char	*tmp;
@@ -83,7 +82,8 @@ void	update_shlvl(t_session *session)
 
 	pos = -1;
 	level = 1;
-	if((pos = menvp_lookup("SHLVL", session->menvp)) > -1)
+	pos = menvp_lookup("SHLVL", session->menvp);
+	if (pos > -1)
 	{
 		parsed = parse_for_export(session->menvp[pos]);
 		level = ft_atoi(parsed[2]);

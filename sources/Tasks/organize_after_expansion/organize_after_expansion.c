@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   organize_after_expansion.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:45:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/14 17:38:14 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:11:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	count_arguments(char **command, int qt, int qts)
 				qt++;
 			if (command[i][j] == '\"' && !(qt % 2))
 				qts++;
-			if (command[i][j++] == ' ' && command[i][j] != ' ' 
+			if (command[i][j++] == ' ' && command[i][j] != ' '
 				&& command[i][j] && !(qt % 2) && !(qts % 2))
 				count++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:08:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/14 13:33:23 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:06:12 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ char	new_line_option(char ***cmd)
 
 char	*join_array(char **table)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
 	char	*string;
 
 	i = -1;
@@ -76,5 +76,5 @@ void	echo(char **cmd, int *status)
 	else
 		printf("%s", print);
 	free(print);
-	*status = 0;	
+	*status = 0;
 }
