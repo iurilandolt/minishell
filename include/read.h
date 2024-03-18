@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/15 14:42:32 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:22:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*string_expander(char *string);
 char	*string_contracter(char *string);
 
-
+void	str_sort(char **arr);
 
 int		check_analyzer(char *string);
 size_t	ft_strlen(const char *s);

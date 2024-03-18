@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 18:16:45 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:19:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ void	m_envp(int *status, char **menvp)
 
 void	print_export(char **menvp)
 {
-	char **parsed;
-	int	i;
+	char	**parsed;
+	char	**dupped;
+	int		i;
 
-	i = 0;
-	while(menvp[i])
+	dupped = setup_menvp(menvp);
+	str_sort(dupped);
+	i = -1;
+	while(dupped[++i])
 	{
-		parsed = parse_for_export(menvp[i]);
+		parsed = parse_for_export(dupped[i]);
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(parsed[0], 1);
 		if (parsed[1])
@@ -52,8 +55,8 @@ void	print_export(char **menvp)
 		else
 			ft_putendl_fd("", 1);
 		clear(parsed);
-		i++;
 	}
+	clear(dupped);
 }
 
 void	m_export(int *status, char ***menvp, char *value)

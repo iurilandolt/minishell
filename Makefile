@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/18 17:58:46 by rcastelo         ###   ########.fr        #
+#    Updated: 2024/03/18 18:21:41 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Utils/get_next_line/get_next_line_utils.c \
 	$(SRC_PATH)/Utils/free_all/free_session.c \
 	$(SRC_PATH)/Utils/prints/print_session.c \
+	$(SRC_PATH)/Utils/string_utils/str_sort.c \
 	$(SRC_PATH)/Tasks/Builtins/builtin_exec/builtin_writeto.c \
 	$(SRC_PATH)/Task/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/Tasks/organize_after_expansion/organize_after_expansion.c \
@@ -80,7 +81,7 @@ objects/%.o: */%.c| objects
 
 objects/%.o: */*/*/%.c | objects
 	cc $(CFLAGS) -c $< -o $@
-	
+
 objects/%.o: */*/*/*/%.c | objects
 	cc $(CFLAGS) -c $< -o $@
 
