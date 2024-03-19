@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/14 14:56:46 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:47:27 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 	t_path_tools	tool;
 
 	i = 0;
-	if (access(cmd, F_OK) == 0)
+	if (!*cmd || access(cmd, F_OK) == 0)
 		return (cmd);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
@@ -72,7 +72,7 @@ int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 		return (S_ISDIR(cmd_stat.st_mode));
 	else if (lstat(cmd, &cmd_stat) == 0)
 		return (S_ISLNK(cmd_stat.st_mode));
-	else if (cmd[0] == '/' || cmd[ft_strlen(cmd) - 1] == '/')
+	else if (cmd[0] == '/' || (*cmd && cmd[ft_strlen(cmd) - 1] == '/'))
 	{
 		error_message(cmd, ": No such file or directory.\n");
 		free_args(session->commands[taskn]);
