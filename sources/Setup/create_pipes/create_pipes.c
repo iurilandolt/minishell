@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 17:55:29 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/29 18:11:22 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:58:34 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	clean_pipefd(int (*pipefd)[2], int i)
 	free(pipefd);
 }
 
-int	(*create_pipes(t_operator *operators))[2]
+int	**create_pipes(t_operator *operators)
 {
 	int	i;
 	int	count;
@@ -46,5 +46,5 @@ int	(*create_pipes(t_operator *operators))[2]
 		if (pipe(pipefd[i]) == -1)
 			return (perror(0), clean_pipefd(pipefd, i), (void *)0);
 	}
-	return (pipefd);
+	return ((int **)pipefd);
 }

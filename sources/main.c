@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:54:35 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 19:47:35 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:56:55 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../include/builtins.h"
 #include "../include/signals.h"
 
-int	shell_signal;
+int	g_shell_signal;
 
 int	number_of_tasks(t_token *tokens)
 {
@@ -79,7 +79,7 @@ void	read_evaluate_print_loop(t_session *session)
 	session->line = readline("<Minishell> ");
 	while (session->line)
 	{
-		shell_signal = 0;
+		g_shell_signal = 0;
 		if (ft_strlen(session->line) > 0)
 		{
 			add_history(session->line);

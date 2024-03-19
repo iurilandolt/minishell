@@ -6,13 +6,19 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 21:57:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:47:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../include/builtins.h"
 #include "../../../../include/executer.h"
 #include "../../../../include/read.h"
+
+static void	unset_and_export(char ***menvp, char *unset, char *export)
+{
+	*menvp = unset_from_menvp(unset, *menvp);
+	*menvp = export_to_menvp(export, *menvp);
+}
 
 void	concat_export(char ***menvp, char **parsed)
 {
@@ -27,24 +33,18 @@ void	concat_export(char ***menvp, char **parsed)
 		new_value = ft_strjoin(tmp, old_value[2]);
 		free(tmp);
 		tmp = ft_strjoin(new_value, parsed[2]);
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(tmp, *menvp);
+		unset_and_export(menvp, parsed[0], tmp);
 		free(new_value);
 	}
 	else if (!old_value[2] && parsed[2])
 	{
 		new_value = ft_strjoin(tmp, parsed[2]);
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(new_value, *menvp);
+		unset_and_export(menvp, parsed[0], new_value);
 		free(new_value);
 	}
 	else if ((old_value[0] && !old_value[1]) && parsed[1])
-	{
-		*menvp = unset_from_menvp(parsed[0], *menvp);
-		*menvp = export_to_menvp(tmp, *menvp);
-	}
-	free(tmp);
-	clear(old_value);
+		unset_and_export(menvp, parsed[0], tmp);
+	return (clear(old_value), free(tmp));
 }
 
 void	export_operation(char ***menvp, char *value, char **parsed, int op)

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/18 19:52:10 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:01:48 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_session
 {
 	char		*line;
 	int			ntasks;
-	int			(*pipes)[2];
+	int			**pipes;
 	t_token		*tokens;
 	char		***commands;
 	int			**readfrom;
@@ -56,10 +56,10 @@ void		ambient_variable_expansion(t_session *session,
 				char **string, char flag);
 void		organize_after_expansion(char ***command);
 int			**obtain_read_documents(t_token *tokens,
-				int (*pipefd)[2], t_session *session);
+				int **pipefd, t_session *session);
 char		***obtain_commands(t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
-int			(*create_pipes(t_operator *operators))[2];
+int			**create_pipes(t_operator *operators);
 
 int			check_builtin(t_session *session, int taskn);
 void		builtin_task(t_session *session, int taskn, int builtn);

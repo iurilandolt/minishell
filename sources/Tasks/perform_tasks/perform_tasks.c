@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perform_tasks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 18:19:56 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:52:33 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	perform_task(t_session *session, int taskn)
 	int	pid;
 	int	builtn;
 
-	shell_signal = -1;
+	g_shell_signal = -1;
 	task_signals();
 	expand_commands(session, taskn);
 	builtn = check_builtin(session, taskn);

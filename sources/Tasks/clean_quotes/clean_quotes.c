@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:05:43 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 14:35:20 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:26:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	transfer_word(char *str, char *word)
 	qts = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\'' && !(qts % 2))
 			qt++;
-		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\"' && !(qt % 2))
 			qts++;
 		if ((!(str[i] == '\'' && !(qts % 2)) && !(str[i] == '\"' && !(qt % 2))
 				&& !(str[i] == '\\')) || (i != 0 && str[i - 1] == '\\'))

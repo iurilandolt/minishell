@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ignore_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:35:19 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 18:16:39 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:52:39 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	ignore_signals(void)
 	sigquit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &sigquit, NULL) == -1)
 		perror("sigaction");
-	shell_signal = 0;
+	g_shell_signal = 0;
 }

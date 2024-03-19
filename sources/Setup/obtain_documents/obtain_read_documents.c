@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_read_documents.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:45:53 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:02:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	open_here_doc(t_session *session, char *delimiter, char flag)
 	while (1)
 	{
 		line = readline("heredoc> ");
-		if (shell_signal == SIGINT)
+		if (g_shell_signal == SIGINT)
 			return (close(here_doc_pipe[0]), close(here_doc_pipe[1]), -1);
 		if (!line)
 			return (printf("heredoc ended by ^D (wanted '%s')\n", delimiter),
@@ -70,7 +70,7 @@ int	here_doc(t_session *session, char *delimiter)
 	char	quote;
 
 	i = -1;
-	shell_signal = -2;
+	g_shell_signal = -2;
 	original_stdin = dup(0);
 	if (original_stdin == -1 || signal(SIGINT, received_signal) == SIG_ERR)
 		perror("dup and/or signal");
@@ -78,20 +78,21 @@ int	here_doc(t_session *session, char *delimiter)
 		quote = delimiter[i++ + 1];
 	clean_quotes(&delimiter, 0);
 	fd = open_here_doc(session, delimiter, quote);
-	if (shell_signal == SIGINT)
+	if (g_shell_signal == SIGINT)
 	{
 		session->status = 130 << 8;
 		if (dup2(original_stdin, 0) == -1)
 			perror(0);
 	}
 	close(original_stdin);
-	shell_signal = 0;
+	g_shell_signal = 0;
 	if (signal(SIGINT, SIG_DFL) == SIG_ERR)
 		perror("signal not default");
 	return (free(delimiter), fd);
 }
 
-int	*get_read_documents(int (**pipefd)[2], t_session *session, t_token *tokens)
+static int	*get_read_documents(int ***pipefd,
+		t_session *session, t_token *tokens)
 {
 	int	i;
 	int	j;
@@ -119,8 +120,7 @@ int	*get_read_documents(int (**pipefd)[2], t_session *session, t_token *tokens)
 	return (readfds);
 }
 
-int	**obtain_read_documents(t_token *tokens, int (*pipefd)[2],
-		t_session *session)
+int	**obtain_read_documents(t_token *tokens, int **pipefd, t_session *session)
 {
 	int	i;
 	int	j;
