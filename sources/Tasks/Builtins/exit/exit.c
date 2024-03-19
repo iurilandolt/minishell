@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:46:37 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 20:05:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:08:23 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	m_exit(t_session *session, int taskn)
 		rl_clear_history();
 		free_args(session->commands[taskn]);
 		free_session(session);
+		clear(session->menvp);
 		exit(2);
 	}
 	if (split_size(session->commands[taskn]) > 2)
@@ -51,9 +52,9 @@ void	m_exit(t_session *session, int taskn)
 	}
 	if (session->commands[taskn][1])
 		value = ft_atoi(session->commands[taskn][1]);
-	value = (char)value;
 	rl_clear_history();
 	free_args(session->commands[taskn]);
 	free_session(session);
-	exit(value);
+	clear(session->menvp);
+	exit((char)value);
 }

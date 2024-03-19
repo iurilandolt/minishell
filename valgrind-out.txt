@@ -1,7 +1,186 @@
-==630580== Memcheck, a memory error detector
-==630580== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==630580== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==630580== Command: ./minishell
-==630580== Parent PID: 627383
-==630580== 
-==630580== FATAL: can't open suppressions file "readline.supp"
+==689980== Memcheck, a memory error detector
+==689980== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==689980== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==689980== Command: /usr/bin/clear
+==689980== Parent PID: 689978
+==689980===689978== 
+==689978== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==689978== Open file descriptor 3: /home/rlandolt/42/github/minishell/valgrind-out.txt
+==689978==    <inherited from parent>
+==689978== 
+==689978== 
+==689978== HEAP SUMMARY:
+==689978==     in use at exit: 208,183 bytes in 222 blocks
+==689978==   total heap usage: 791 allocs, 569 frees, 249,605 bytes allocated
+==689978== 
+==689978== LEAK SUMMARY:
+==689978==    definitely lost: 0 bytes in 0 blocks
+==689978==    indirectly lost: 0 bytes in 0 blocks
+==689978==      possibly lost: 0 bytes in 0 blocks
+==689978==    still reachable: 0 bytes in 0 blocks
+==689978==         suppressed: 208,183 bytes in 222 blocks
+==689978== 
+==689978== For lists of detected and suppressed errors, rerun with: -s
+==689978== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+  by 0x4882BF8: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 15 bytes in 1 blocks are still reachable in loss record 2 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x494B58E: strdup (strdup.c:42)
+==689980==    by 0x488C8AE: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 27 bytes in 1 blocks are still reachable in loss record 3 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x4882624: _nc_home_terminfo (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x4882BE2: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 46 bytes in 1 blocks are still reachable in loss record 4 of 17
+==689980==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x48816CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C16F: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 46 bytes in 1 blocks are still reachable in loss record 5 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x4880FDE: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C87D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 48 bytes in 1 blocks are still reachable in loss record 6 of 17
+==689980==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x4882833: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 78 bytes in 1 blocks are still reachable in loss record 7 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488104B: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C87D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 96 bytes in 1 blocks are still reachable in loss record 8 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488279A: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 156 bytes in 1 blocks are still reachable in loss record 9 of 17
+==689980==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x48816CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C197: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 608 bytes in 1 blocks are still reachable in loss record 10 of 17
+==689980==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488C37E: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 608 bytes in 1 blocks are still reachable in loss record 11 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x4881119: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C87D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 760 bytes in 1 blocks are still reachable in loss record 12 of 17
+==689980==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488C819: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 940 bytes in 1 blocks are still reachable in loss record 13 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488C287: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 1,664 bytes in 1 blocks are still reachable in loss record 14 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x488BACD: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 3,904 bytes in 1 blocks are still reachable in loss record 15 of 17
+==689980==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x48816CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C1B5: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C52A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488EC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C6BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 3,904 bytes in 1 blocks are still reachable in loss record 16 of 17
+==689980==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x4880FFF: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x488C87D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x109343: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== 7,952 bytes in 1 blocks are still reachable in loss record 17 of 17
+==689980==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==689980==    by 0x487FC97: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x48813AF: _nc_find_type_entry (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x4884431: tigetstr_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==689980==    by 0x1093EA: ??? (in /usr/bin/clear)
+==689980==    by 0x48CCD8F: (below main) (libc_start_call_main.h:58)
+==689980== 
+==689980== LEAK SUMMARY:
+==689980==    definitely lost: 0 bytes in 0 blocks
+==689980==    indirectly lost: 0 bytes in 0 blocks
+==689980==      possibly lost: 0 bytes in 0 blocks
+==689980==    still reachable: 20,867 bytes in 17 blocks
+==689980==         suppressed: 0 bytes in 0 blocks
+==689980== 
+==689980== For lists of detected and suppressed errors, rerun with: -s
+==689980== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
