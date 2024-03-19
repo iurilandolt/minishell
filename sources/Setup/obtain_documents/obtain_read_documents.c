@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:38:15 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 12:02:04 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:04:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	here_doc(t_session *session, char *delimiter)
 	return (free(delimiter), fd);
 }
 
-static int	*get_read_documents(int ***pipefd,
-		t_session *session, t_token *tokens)
+static int	*get_read_documents(int **pipefd,
+		t_session *session, t_token *tokens, int *k)
 {
 	int	i;
 	int	j;
@@ -107,7 +107,7 @@ static int	*get_read_documents(int ***pipefd,
 		readfds[i] = -1;
 	j = 0;
 	if (tokens[i + 1].type == PIPE && tokens[++i].value)
-		readfds[j++] = (*(*pipefd)++)[0];
+		readfds[j++] = pipefd[(*k)++][0];
 	while (tokens[++i].value && tokens[i].type < PIPE)
 	{
 		if (tokens[i].type == RED_IN)
@@ -124,6 +124,7 @@ int	**obtain_read_documents(t_token *tokens, int **pipefd, t_session *session)
 {
 	int	i;
 	int	j;
+	int	k;
 	int	**readfrom;
 
 	readfrom = malloc(session->ntasks * sizeof(int *));
@@ -134,11 +135,12 @@ int	**obtain_read_documents(t_token *tokens, int **pipefd, t_session *session)
 		readfrom[i] = 0;
 	i = -1;
 	j = -1;
+	k = 0;
 	while (tokens[++i].value)
 	{
 		if (i == 0 || tokens[i].type >= PIPE)
-			readfrom[++j] = get_read_documents(&pipefd, session,
-					&tokens[i + (tokens[i].type > PIPE)]);
+			readfrom[++j] = get_read_documents(pipefd, session,
+					&tokens[i + (tokens[i].type > PIPE)], &k);
 		if ((i == 0 || tokens[i].type >= PIPE) && !readfrom[j])
 			return (free(readfrom), (int **)0);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_session.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 15:26:55 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:34:56 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ void	free_table_n(void **table, int ntasks)
 	free(table);
 }
 
+void	close_readfrom(int **readfrom, int ntasks)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ntasks)
+	{
+		j = 0;
+		while(readfrom[i] && readfrom[i][j] != 0)
+		{
+			close(readfrom[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	free_session(t_session *session)
 {
 	if (session->tokens)
@@ -53,9 +71,12 @@ void	free_session(t_session *session)
 	if (session->operators)
 		free(session->operators);
 	if (session->pipes)
-		free(session->pipes);
+		free_table((char **)session->pipes);
 	if (session->readfrom)
+	{
+		close_readfrom(session->readfrom, session->ntasks);
 		free_table_n((void **)session->readfrom, session->ntasks);
+	}
 	if (session->commands)
 		free_table_n((void **)session->commands, session->ntasks);
 	if (session->writeto)
@@ -64,4 +85,5 @@ void	free_session(t_session *session)
 		free(session->line);
 	if (session->p_ids)
 		free(session->p_ids);
+
 }
