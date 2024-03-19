@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 20:09:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:20:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,21 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 	writefd = 0;
 	filename = token->value;
 	ambient_variable_expansion(session, &filename, 0);
+	clean_quotes(&filename, 1);
 	if (oldwritefd)
 		close(oldwritefd);
+	if (!filename[1 + (token->type == RED_APP)]
+		&& token->value[1 + (token->type == RED_APP)] == '$')
+	{
+		ft_putstr_fd(&token->value[1 + (token->type == RED_APP)], 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+	}
 	if (token->type == RED_OUT)
-	{
-		writefd = open(&filename[1],
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (writefd == -1)
-			perror(&token->value[1]);
-	}
+		writefd = open(&filename[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (token->type == RED_APP)
-	{
-		writefd = open(&filename[2],
-				O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (writefd == -1)
-			perror(&token->value[2]);
-	}
+		writefd = open(&filename[2], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (writefd == -1 && token->value[1 + (token->type == RED_APP)] != '$')
+			perror(&filename[1 + (token->type == RED_APP)]);
 	if (filename)
 		free(filename);
 	return (writefd);
@@ -80,6 +79,8 @@ int	open_builtin_taskfiles(t_session *session, int taskn)
 	{
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
 			writefd = open_writefd(session, &token[i], writefd);
+		if (writefd == -2)
+			return (-2);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

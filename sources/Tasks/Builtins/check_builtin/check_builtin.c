@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 15:20:05 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:44:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_builtin(t_session *session, char **cmd, int taskn, int builtin)
 		while (*cmd)
 			m_unset(&session->status, &session->menvp, *cmd++);
 	}
-	else if (builtin == 6)
+	else if (builtin == 6 && !cmd[1])
 		m_envp(&session->status, session->menvp);
 	else if (builtin == 7)
 		m_exit(session, taskn);
@@ -88,7 +88,9 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	int	writefd;
 
 	writefd = open_builtin_taskfiles(session, taskn);
-	if (writefd)
+	if (writefd == -1)
+		return (free_args(session->commands[taskn]));
+	if (writefd > 0)
 	{
 		stdout_fd = dup(1);
 		if (stdout_fd == -1)
@@ -99,7 +101,7 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	}
 	exec_builtin(session, session->commands[taskn], taskn, builtn);
 	free_args(session->commands[taskn]);
-	if (writefd)
+	if (writefd > 0)
 	{
 		if (dup2(stdout_fd, 1) == -1)
 			perror("dup2");

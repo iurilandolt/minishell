@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_taskfiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:05:16 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/15 16:24:32 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:22:29 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	open_readfd(t_session *session, int *readfd, t_token *token)
 	}
 }
 
-static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
+static int	open_writefd(t_session *session, t_token *token, int oldwritefd, int taskn)
 {
 	int		writefd;
 	char	*filename;
@@ -65,18 +65,19 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 	clean_quotes(&filename, 1);
 	if (oldwritefd)
 		close(oldwritefd);
+	if (!filename[1 + (token->type == RED_APP)]
+			&& token->value[1 + (token->type == RED_APP)] == '$')
+	{
+		ft_putstr_fd(&token->value[1 + (token->type == RED_APP)], 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+		exit_safe(session, taskn, 1);
+	}
 	if (token->type == RED_OUT)
-	{
 		writefd = open(&filename[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (writefd == -1)
-			perror(&token->value[1]);
-	}
 	if (token->type == RED_APP)
-	{
 		writefd = open(&filename[2], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (writefd == -1)
-			perror(&token->value[2]);
-	}
+	if (writefd == -1)
+		perror(&filename[1 + (token->type == RED_APP)]);
 	if (filename)
 		free(filename);
 	return (writefd);
@@ -102,7 +103,7 @@ int	open_taskfiles(t_session *session, int taskn)
 		if (token[i].type == RED_IN)
 			open_readfd(session, &session->readfrom[taskn][j], &token[i]);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
-			writefd = open_writefd(session, &token[i], writefd);
+			writefd = open_writefd(session, &token[i], writefd, taskn);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

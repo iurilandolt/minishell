@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:12:46 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:55:48 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_args(char **table)
 
 void	exit_safe(t_session *session, int taskn, int code)
 {
-	if (session->commands[taskn])
+	if (taskn >= 0 && session->commands[taskn])
 		free_args(session->commands[taskn]);
 	free_session(session);
 	clear_history();

@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:08:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/18 20:06:12 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:32:14 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*join_array(char **table)
 			*(string++) = (*table)[j];
 		*(string++) = ' ';
 	}
-	*(string - 1) = 0;
+	*(string - (*table != 0)) = 0;
 	return (string - k - i);
 }
 
