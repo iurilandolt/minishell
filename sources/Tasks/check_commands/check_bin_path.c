@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_bin_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 14:47:27 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:02:15 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,16 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 	if (cmd_is_dir(session, taskn, cmd) > 0)
 	{
 		error_message(cmd, ": Is a directory.\n");
-		free_args(session->commands[taskn]);
-		free_session(session);
-		clear_history();
-		exit(126);
+		exit_safe(session, taskn, 126);
 	}
 	if (access(cmd, F_OK) != 0)
 	{
 		error_message(cmd, ": command not found\n");
-		free_args(session->commands[taskn]);
-		free_session(session);
-		clear_history();
-		exit(127);
+		exit_safe(session, taskn, 127);
 	}
 	if (access(cmd, X_OK) != 0)
 	{
 		perror(cmd);
-		free_args(session->commands[taskn]);
-		free_session(session);
-		clear_history();
-		exit(126);
+		exit_safe(session, taskn, 126);
 	}
 }

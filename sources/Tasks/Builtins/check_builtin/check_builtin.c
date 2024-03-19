@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 20:02:16 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:20:05 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ void	forked_builtin(t_session *session, int taskn, int builtn)
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
 	exec_builtin(session, session->commands[taskn], taskn, builtn);
-	free_args(session->commands[taskn]);
-	free_session(session);
-	exit(session->status);
+	exit_safe(session, taskn, session->status);
 }
 
 void	regular_builtin(t_session *session, int taskn, int builtn)

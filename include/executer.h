@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 12:01:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:02:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			**obtain_read_documents(t_token *tokens,
 char		***obtain_commands(t_token *tokens, int ntasks);
 t_operator	*operator_rules(t_token *tokens);
 int			**create_pipes(t_operator *operators);
-
+void		exit_safe(t_session *session, int taskn, int code);
 int			check_builtin(t_session *session, int taskn);
 void		builtin_task(t_session *session, int taskn, int builtn);
 int			open_builtin_taskfiles(t_session *session, int taskn);

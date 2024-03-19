@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:58:22 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 11:52:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:03:25 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void	task(t_session *session, int taskn)
 			exit(EXIT_FAILURE);
 		}
 	}
-	free_session(session);
-	exit(0);
+	exit_safe(session, taskn, 0);
 }
 
 void	expand_commands(t_session *session, int taskn)

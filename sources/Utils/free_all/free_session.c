@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 13:34:56 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:12:46 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	free_args(char **table)
 		free(table[i]);
 }
 
-void	free_readfrom(int **readfrom, int ntasks)
+void	exit_safe(t_session *session, int taskn, int code)
 {
-	int	i;
-
-	i = -1;
-	while (++i < ntasks)
-		free(readfrom[i]);
-	free(readfrom);
+	if (session->commands[taskn])
+		free_args(session->commands[taskn]);
+	free_session(session);
+	clear_history();
+	clear(session->menvp);
+	exit(code);
 }
 
 void	free_table_n(void **table, int ntasks)
@@ -55,7 +55,7 @@ void	close_readfrom(int **readfrom, int ntasks)
 	while (i < ntasks)
 	{
 		j = 0;
-		while(readfrom[i] && readfrom[i][j] != 0)
+		while (readfrom[i] && readfrom[i][j] != 0)
 		{
 			close(readfrom[i][j]);
 			j++;
@@ -85,5 +85,4 @@ void	free_session(t_session *session)
 		free(session->line);
 	if (session->p_ids)
 		free(session->p_ids);
-
 }
