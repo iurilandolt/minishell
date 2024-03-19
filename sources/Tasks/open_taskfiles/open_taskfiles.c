@@ -33,6 +33,8 @@ static t_token	*startfrom(t_token *token, int taskn)
 		if (token[i].type >= PIPE)
 			taskn--;
 	}
+	if (token[i].type == SAND || token[i].type == OR)
+		i++;
 	return (&token[i]);
 }
 
