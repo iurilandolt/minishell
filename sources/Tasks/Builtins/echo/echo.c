@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 12:08:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:32:14 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:43:35 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*join_array(char **table)
 			*(string++) = (*table)[j];
 		*(string++) = ' ';
 	}
-	*(string - (*table != 0)) = 0;
+	*(string - (i != 0)) = 0;
 	return (string - k - i);
 }
 
