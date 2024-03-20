@@ -27,12 +27,12 @@ static int	contracted_size(char *str)
 	while (str[++i])
 	{
 		size++;
-		if (str[i] == '\'' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\'' && !(qts % 2))
 			qt++;
-		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\"' && !(qt % 2))
 			qts++;
-		if ((str[i] == '<' || str[i] == '>')
-			&& str[i + 1] == ' ' && (!i || str[i - 1] != '\\'))
+		if ((str[i] == '<' || str[i] == '>') && str[i + 1] == ' '
+			&& !(qt % 2) && !(qts % 2))
 			size--;
 		if (str[i] == ' ' && (!i || str[i - 1] == ' ')
 			&& !(qt % 2) && !(qts % 2))
@@ -54,12 +54,12 @@ static char	*string_transfer(char *con, char *str)
 	qts = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\'' && !(qts % 2))
 			qt++;
-		if (str[i] == '\"' && (i == 0 || str[i - 1] != '\\'))
+		if (str[i] == '\"' && !(qt % 2))
 			qts++;
 		if (i && str[i] == ' ' && (str[i - 1] == '<' || str[i - 1] == '>')
-			&& (i < 2 || str[i - 2] != '\\'))
+			&& !(qt % 2) && !(qts % 2))
 			continue ;
 		if (str[i] == ' ' && (!i || str[i - 1] == ' ')
 			&& !(qt % 2) && !(qts % 2))

@@ -131,7 +131,7 @@ void	ambient_variable_expansion(t_session *session, char **string, char flag)
 	}
 	new = malloc(i + j + 1);
 	if (!new)
-		return ;
+		return (perror("malloc"));
 	new[i + j] = 0;
 	*string = transfer_string(session, *string, new, flag);
 }

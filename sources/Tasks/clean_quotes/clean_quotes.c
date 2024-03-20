@@ -85,7 +85,7 @@ void	clean_quotes(char **string, char flag)
 	count_quotes(*string, &j, &qt, &bar);
 	word = allocate_for_clean_word(j, qt.qt, qt.qts, bar);
 	if (!word)
-		return (perror(0));
+		return (perror("malloc"));
 	transfer_word(*string, word);
 	if (flag)
 		free(*string);

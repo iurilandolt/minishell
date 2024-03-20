@@ -62,6 +62,24 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 	return (writefd);
 }
 
+int	open_close(t_session *session, char *filename)
+{
+	int	fd;
+	
+	ambient_variable_expansion(session, &filename, 0);
+	clean_quotes(&filename, 1);
+	fd = open(filename, O_RDONLY, 0644);
+	if (filename)
+		free(filename);
+	if (fd == -1)
+	{
+		session->status = 1;
+		return (perror(filename), 1);
+	}
+	close(fd);
+	return (0);
+}
+
 int	open_builtin_taskfiles(t_session *session, int taskn)
 {
 	int		i;
@@ -77,10 +95,12 @@ int	open_builtin_taskfiles(t_session *session, int taskn)
 		j++;
 	while (token[++i].value && token[i].type < PIPE)
 	{
+		if (token[i].type == RED_IN && open_close(session, &token[i].value[1]))
+			return (-1);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
 			writefd = open_writefd(session, &token[i], writefd);
-		if (writefd == -2)
-			return (-2);
+		if (writefd == -1)
+			return (-1);
 	}
 	if (writefd == 0 && session->writeto[taskn][0].value
 		&& session->writeto[taskn][0].type == PIPE)

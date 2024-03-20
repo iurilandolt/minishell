@@ -22,7 +22,7 @@ void	task(t_session *session, int taskn)
 	writefd = open_taskfiles(session, taskn);
 	perform_redirects(session, taskn, writefd);
 	close_opened_fds(session, writefd);
-	if (session->commands[taskn])
+	if (session->commands[taskn] && session->commands[taskn][0])
 	{
 		session->commands[taskn][0]
 			= validate_bin_path(session->menvp, session->commands[taskn][0]);

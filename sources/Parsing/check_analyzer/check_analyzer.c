@@ -15,38 +15,48 @@
 int	check_closure(char *string)
 {
 	int	i;
+	int	qt;
+	int	qts;
 	int	opener;
-	int	closer;
 
 	i = -1;
+	qt = 0;
+	qts = 0;
 	opener = 0;
-	closer = 0;
 	while (string[++i])
 	{
-		if (closer > opener)
+		if (string[i] == '\'' && !(qts % 2))
+			qt++;
+		if (string[i] == '\"' && !(qt % 2))
+			qts++;	
+		if (opener < 0)
 			return (1);
-		if (string[i] == '(')
+		if (string[i] == '(' && !(qt % 2) && !(qts % 2))
 			opener++;
-		if (string[i] == ')')
-			closer++;
+		if (string[i] == ')' && !(qt % 2) && !(qts % 2))
+			opener--;
 	}
-	if (opener != closer)
+	if (opener != 0)
 		return (1);
 	return (0);
 }
 
-int	check_openers(char *string)
+int	check_openers(char *string, int i)
 {
-	int	i;
 	int	j;
+	int	qt;
+	int	qts;
 
-	i = 0;
-	while (string[i])
-		i++;
+	qt = 0;
+	qts = 0;
 	while (--i >= 0)
 	{
+		if (string[i] == '\'' && !(qts % 2))
+			qt++;
+		if (string[i] == '\"' && !(qt % 2))
+			qts++;	
 		j = 1;
-		if (string[i] == '(')
+		if (string[i] == '(' && !(qt % 2) && !(qts % 2))
 		{
 			while (i - j > 0 && string[i - j] == ' ')
 				j++;
@@ -62,12 +72,20 @@ int	check_closers(char *string)
 {
 	int	i;
 	int	j;
+	int	qt;
+	int	qts;
 
 	i = -1;
+	qt = 0;
+	qts = 0;
 	while (string[++i])
 	{
+		if (string[i] == '\'' && !(qts % 2))
+			qt++;
+		if (string[i] == '\"' && !(qt % 2))
+			qts++;		
 		j = 1;
-		if (string[i] == ')')
+		if (string[i] == ')' && !(qt % 2) && !(qts % 2))
 		{
 			while (string[i + j] == ' ')
 				j++;
@@ -82,8 +100,8 @@ int	check_closers(char *string)
 int	check_parenthesis(char *string)
 {
 	if (check_closure(string))
-		return (1);
-	if (check_openers(string))
+		return (1);	
+	if (check_openers(string, ft_strlen(string)))
 		return (1);
 	if (check_closers(string))
 		return (1);
@@ -100,17 +118,19 @@ int	check_analyzer(char *string)
 	qt = 0;
 	qts = 0;
 	if (check_parenthesis(string))
-		return (write(2, "Syntax Error\n", 13));
+		return (write(2, "Syntax Error\n", 13), 1);
 	while (string[++i])
 	{
 		if (string[i] == '\'' && !(qts % 2))
 			qt++;
 		if (string[i] == '\"' && !(qt % 2))
 			qts++;
-		if (string[i] == '\\')
-			return (write(2, "Syntax Error\n", 13));
+		if (string[i] == '\\' && !(qt % 2) && !(qts % 2))
+			return (write(2, "Syntax Error\n", 13), 1);
+		if (string[i] == ';' && !(qt % 2) && !(qts % 2))
+			return (write(2, "Syntax Error\n", 13), 1);
 	}
 	if (qt % 2 || qts % 2)
-		return (write(2, "Syntax Error\n", 13));
+		return (write(2, "Syntax Error\n", 13), 1);
 	return (0);
 }

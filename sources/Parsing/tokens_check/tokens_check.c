@@ -13,6 +13,15 @@
 #include "../../../include/token.h"
 #include "../../../include/read.h"
 
+static int	special_char_b(char c, char flag)
+{
+	if (flag && !c)
+		return (1);
+	if (c == '&' || c == '|' || c == '<'|| c == '>' || c == '(' || c == ')')
+		return (1);
+	return (0);
+}
+
 int	redirect_value(t_token *tokens)
 {
 	int	i;
@@ -20,16 +29,14 @@ int	redirect_value(t_token *tokens)
 	i = -1;
 	while (tokens[++i].value)
 	{
-		if (tokens[i].type == RED_IN && !tokens[i].value[1])
-			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == HERE_DOC && (tokens[i].value[2] == '<'
-				|| tokens[i].value[2] == '>' || !tokens[i].value[2]))
-			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == RED_OUT && !tokens[i].value[1])
-			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == RED_APP && (tokens[i].value[2] == '>'
-				|| tokens[i].value[2] == '<' || !tokens[i].value[2]))
-			return (write(2, "Syntax Error\n", 13));
+		if (tokens[i].type == RED_IN && special_char_b(tokens[i].value[1], 1))
+			return (write(2, "Syntax Error\n", 13), 1);
+		if (tokens[i].type == HERE_DOC && special_char_b(tokens[i].value[2], 1))
+			return (write(2, "Syntax Error\n", 13), 1);
+		if (tokens[i].type == RED_OUT && special_char_b(tokens[i].value[1], 1))
+			return (write(2, "Syntax Error\n", 13), 1);
+		if (tokens[i].type == RED_APP && special_char_b(tokens[i].value[2], 1))
+			return (write(2, "Syntax Error\n", 13), 1);
 	}
 	return (0);
 }
@@ -41,12 +48,13 @@ int	operator_value(t_token *tokens)
 	i = -1;
 	while (tokens[++i].value)
 	{
-		if (tokens[i].type == SAND
-			&& ((tokens[i].value[0] != tokens[i].value[1])
-				|| (tokens[i].value[1] && tokens[i].value[2])))
-			return (write(2, "Syntax Error\n", 13));
-		if (tokens[i].type == OR && tokens[i].value[2])
-			return (write(2, "Syntax Error\n", 13));
+		if (tokens[i].type == PIPE && special_char_b(tokens[i].value[1], 0))
+			return (write(2, "Syntax Error\n", 13), 1);		
+		if (tokens[i].type == SAND && (tokens[i].value[0] != tokens[i].value[1]
+			|| special_char_b(tokens[i].value[2], 0)))
+			return (write(2, "Syntax Error\n", 13), 1);
+		if (tokens[i].type == OR && special_char_b(tokens[i].value[2], 0))
+			return (write(2, "Syntax Error\n", 13), 1);
 	}
 	return (0);
 }
@@ -57,15 +65,15 @@ int	operator_position(t_token *tokens)
 
 	i = -1;
 	if (tokens->value && tokens->type >= PIPE)
-		return (write(2, "Syntax Error\n", 13));
+		return (write(2, "Syntax Error\n", 13), 1);
 	while (tokens[++i].value)
 	{
 		if (tokens[i].type >= PIPE
 			&& (tokens[i + 1].value && tokens[i + 1].type >= PIPE))
-			return (write(2, "Syntax Error\n", 13));
+			return (write(2, "Syntax Error\n", 13), 1);
 	}
 	if (tokens[--i].type >= PIPE)
-		return (write(2, "Syntax Error\n", 13));
+		return (write(2, "Syntax Error\n", 13), 1);
 	return (0);
 }
 
