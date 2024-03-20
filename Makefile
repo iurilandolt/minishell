@@ -6,7 +6,7 @@
 #    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/18 18:21:41 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/20 16:35:47 by rlandolt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Task/ambient_variable_expansion/ambient_variable_expansion.c \
 	$(SRC_PATH)/Tasks/organize_after_expansion/organize_after_expansion.c \
 	$(SRC_PATH)/Tasks/check_commands/check_bin_path.c \
+	$(SRC_PATH)/Tasks/check_commands/checkbin_utils.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \

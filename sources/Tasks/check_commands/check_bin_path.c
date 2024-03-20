@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 15:24:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:37:33 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 	t_path_tools	tool;
 
 	i = 0;
-	if (!*cmd || (access(cmd, F_OK) == 0 && !ft_strncmp(cmd, "./", 2)))
+	if (!*cmd || (access(cmd, F_OK) == 0))
 		return (cmd);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
@@ -68,11 +68,11 @@ int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 {
 	struct stat	cmd_stat;
 
-	if (stat(cmd, &cmd_stat) == 0)
+	if (stat(cmd, &cmd_stat) == 0 && !is_simple(cmd))
 		return (S_ISDIR(cmd_stat.st_mode));
 	else if (lstat(cmd, &cmd_stat) == 0)
 		return (S_ISLNK(cmd_stat.st_mode));
-	else if (cmd[0] == '/' || (*cmd && cmd[ft_strlen(cmd) - 1] == '/'))
+	else if (!is_simple(cmd))
 	{
 		error_message(cmd, ": No such file or directory.\n");
 		free_args(session->commands[taskn]);
@@ -89,7 +89,7 @@ void	link_cmd_codes(t_session *session, int taskn, char *cmd)
 		error_message(cmd, ": Is a directory.\n");
 		exit_safe(session, taskn, 126);
 	}
-	if (access(cmd, F_OK) != 0 || (cmd[0] != '.' && cmd[0] != '/'))
+	if (access(cmd, F_OK) != 0 || is_simple(cmd))
 	{
 		error_message(cmd, ": command not found\n");
 		exit_safe(session, taskn, 127);

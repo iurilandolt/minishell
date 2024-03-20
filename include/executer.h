@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:35:56 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:02:42 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:34:27 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		builtin_task(t_session *session, int taskn, int builtn);
 int			open_builtin_taskfiles(t_session *session, int taskn);
 char		*validate_bin_path(char **envp, char *cmd);
 void		link_cmd_codes(t_session *session, int taskn, char *cmd);
+int			is_simple(char *cmd);
 
 void		free_session(t_session *session);
 void		free_args(char **table);
