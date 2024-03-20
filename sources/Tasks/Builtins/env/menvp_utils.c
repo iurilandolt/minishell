@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:58:53 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 22:04:11 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:26:19 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int	menvp_lookup(char *value, char **menvp)
 		i++;
 	}
 	return (-1);
+}
+
+void	m_export_error(int *status, char *value)
+{
+	ft_putstr_fd("export: ", 2);
+	ft_putstr_fd(value, 2);
+	ft_putendl_fd(" : not a valid identifier", 2);
+	*status = 1;
 }
 
 char	**export_to_menvp(char *add, char **menvp)

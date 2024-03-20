@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 13:04:58 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:39:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ void	print_export(char **menvp)
 	clear(dupped);
 }
 
-void	m_export_error(int *status, char *value)
-{
-	ft_putstr_fd("export: ", 2);
-	ft_putstr_fd(value, 2);
-	ft_putendl_fd(" : not a valid identifier", 2);
-	*status = 1;
-}
-
 void	m_export(int *status, char ***menvp, char *value)
 {
 	char	**parsed;
@@ -93,7 +85,8 @@ void	m_export(int *status, char ***menvp, char *value)
 			*menvp = export_to_menvp(parsed[0], *menvp);
 		return (free_table(parsed));
 	}
-	m_export_error(status, value);
+	if (!exp_is_protected(value))
+		m_export_error(status, value);
 }
 
 void	m_unset(int *status, char ***menvp, char *value)
@@ -103,9 +96,7 @@ void	m_unset(int *status, char ***menvp, char *value)
 	*status = 0;
 	if (!value || !*menvp)
 		return ;
-	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
-		|| (value[0] == '_' && value[1] == '\0')
-		|| (value[0] == '_' && value[1] == '='))
+	if (exp_is_protected(value))
 		return ;
 	parsed = parse_for_export(value);
 	if (parsed[1])
