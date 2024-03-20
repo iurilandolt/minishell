@@ -65,16 +65,26 @@ char	*join_array(char **table)
 
 void	echo(char **cmd, int *status)
 {
+	int		i;
 	char	nl;
 	char	*print;
 
 	cmd++;
 	nl = new_line_option(&cmd);
 	print = join_array(cmd);
+	if (!print)
+	{
+		*status = 2;
+		return ;
+	}
+	i = 0;
+	while (print[i])
+		i++;
 	if (nl)
-		printf("%s\n", print);
+		write(1, print, i);
+	if (nl)
+		write(1, "\n", 1);
 	else
-		printf("%s", print);
+		write(1, print, i);
 	free(print);
-	*status = 0;
 }

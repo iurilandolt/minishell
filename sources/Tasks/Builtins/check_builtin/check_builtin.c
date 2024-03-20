@@ -104,8 +104,10 @@ void	regular_builtin(t_session *session, int taskn, int builtn)
 	free_args(session->commands[taskn]);
 	if (writefd > 0)
 	{
-		if (dup2(stdout_fd, 1) == -1)
+		if (stdout_fd != -1 && dup2(stdout_fd, 1) == -1)
 			perror("dup2");
+		if (stdout_fd != -1)
+			close(stdout_fd);
 	}
 }
 
