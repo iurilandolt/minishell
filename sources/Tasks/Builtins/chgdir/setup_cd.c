@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 13:03:32 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:06:59 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ void	cd_oldpwd(t_session *session)
 		mpwd(&session->status);
 		return ;
 	}
+	cd_error(oldpwd, " : No such file or directory", &session->status);
 }
 
-void	cd_home(t_session *session)
+void	cd_home(t_session *session, int *status)
 {
 	char	*home;
 	char	*buffer;
@@ -86,6 +87,7 @@ void	cd_home(t_session *session)
 	if (!home)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
+		*status = 1;
 		return ;
 	}
 	buffer = ft_strdup(home);
