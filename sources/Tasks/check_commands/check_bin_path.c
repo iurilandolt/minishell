@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 16:37:33 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:52:40 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ int	cmd_is_dir(t_session *session, int taskn, char *cmd)
 	else if (!is_simple(cmd))
 	{
 		error_message(cmd, ": No such file or directory.\n");
-		free_args(session->commands[taskn]);
-		free_session(session);
-		exit(127);
+		exit_safe(session, taskn, 127);
 	}
 	return (-1);
 }
