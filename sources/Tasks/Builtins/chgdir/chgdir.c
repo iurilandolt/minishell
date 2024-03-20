@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 20:08:34 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:02:54 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,22 @@ void	mpwd(int *status)
 	*status = 0;
 }
 
-void	change_dir(t_session *session, char *path, int *status)
+void	change_dir(t_session *session, char **cmd, int *status)
 {
 	DIR		*dir;
 
-	*status = 0;
-	if (!path)
+	if (!cmd[1])
 		return (cd_home(session));
-	if (path[0] == '-' && path[1] == '\0')
+	if (cmd[2])
+		return (cd_error(cmd[1], " : too many arguments", status));
+	if (cmd[1][0] == '-' && cmd[1][1] == '\0')
 		return (cd_oldpwd(session));
-	dir = opendir(path);
+	dir = opendir(cmd[1]);
 	if (dir != 0)
 	{
-		cd_path(session, path);
+		cd_path(session, cmd[1]);
 		closedir(dir);
 		return ;
 	}
-	ft_putstr_fd("cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd("Not a directory.", 2);
-	*status = 1;
+	cd_error(cmd[1], " : No such file or directory", status);
 }

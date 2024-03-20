@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 22:08:50 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:04:58 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ void	print_export(char **menvp)
 	clear(dupped);
 }
 
+void	m_export_error(int *status, char *value)
+{
+	ft_putstr_fd("export: ", 2);
+	ft_putstr_fd(value, 2);
+	ft_putendl_fd(" : not a valid identifier", 2);
+	*status = 1;
+}
+
 void	m_export(int *status, char ***menvp, char *value)
 {
 	char	**parsed;
@@ -83,9 +91,9 @@ void	m_export(int *status, char ***menvp, char *value)
 			export_operation(menvp, NULL, parsed, 2);
 		else
 			*menvp = export_to_menvp(parsed[0], *menvp);
-		clear(parsed);
+		return (free_table(parsed));
 	}
-	*status = 0;
+	m_export_error(status, value);
 }
 
 void	m_unset(int *status, char ***menvp, char *value)
@@ -115,32 +123,4 @@ void	m_unset(int *status, char ***menvp, char *value)
 	}
 	clear(parsed);
 }
-/*
-void	m_unset(int *status, char ***menvp, char *value)
-{
-	int		i;
 
-	*status = 0;
-	if (!value)
-		return ;
-	if (!*menvp)
-		return ;
-	if (!ft_strncmp(value, "_=", 2) || !ft_strncmp(value, "_+=", 3)
-		|| (value[0] == '_' && value[1] == '\0')
-		|| (value[0] == '_' && value[1] == '='))
-		return ;
-	i = 0;
-	while (menvp[0][i])
-	{
-		if (ft_strncmp(value, menvp[0][i],
-		ft_strlen(value)) == 0 && value[0] != '\0')
-		{
-			*menvp = unset_from_menvp(value, *menvp);
-			if (!*menvp)
-				*status = 2;
-			return ;
-		}
-		i++;
-	}
-}
-*/

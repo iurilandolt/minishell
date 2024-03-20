@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 20:08:15 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:03:32 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,12 @@ void	cd_home(t_session *session)
 	cd_path(session, buffer);
 	free(buffer);
 	return ;
+}
+
+void	cd_error(char *cmd, char *error, int *status)
+{
+	*status = 1;
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putendl_fd(error, 2);
 }

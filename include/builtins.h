@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:23:14 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 19:50:08 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:03:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ typedef enum e_sysdir
 }	t_sysdir;
 
 char	*set_directory(t_sysdir dir, char **menvp);
-void	change_dir(t_session *session, char *path, int *status);
+void	change_dir(t_session *session, char **cmd, int *status);
 void	cd_path(t_session *session, char *path);
 void	cd_oldpwd(t_session *session);
 void	cd_home(t_session *session);
+void	cd_error(char *cmd, char *error, int *status);
 
 // ENV, EXPORT & UNSET
 char	**setup_menvp(char **envp);

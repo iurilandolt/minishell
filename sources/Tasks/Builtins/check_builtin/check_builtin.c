@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:11:15 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 16:44:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:48:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	check_builtin(t_session *session, int taskn)
 
 void	exec_builtin(t_session *session, char **cmd, int taskn, int builtin)
 {
+	session->status = 0;
 	if (builtin == 1)
 		echo(cmd, &session->status);
 	if (builtin == 2)
-		change_dir(session, *(++cmd), &session->status);
+		change_dir(session, cmd, &session->status);
 	else if (builtin == 3)
 		mpwd(&session->status);
 	else if (builtin == 4)
