@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_session.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:44:27 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/19 15:55:48 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:38:58 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	close_readfrom(int **readfrom, int ntasks)
 		j = 0;
 		while (readfrom[i] && readfrom[i][j] != 0)
 		{
-			close(readfrom[i][j]);
+			if (readfrom[i][j] > 0)
+				close(readfrom[i][j]);
 			j++;
 		}
 		i++;

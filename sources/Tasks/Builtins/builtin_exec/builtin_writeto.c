@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_writeto.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 16:20:25 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:23:42 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,16 @@ int	open_close(t_session *session, char *filename)
 	ambient_variable_expansion(session, &filename, 0);
 	clean_quotes(&filename, 1);
 	fd = open(filename, O_RDONLY, 0644);
-	if (filename)
-		free(filename);
 	if (fd == -1)
 	{
 		session->status = 1;
-		return (perror(filename), 1);
+		if (filename)
+			return (perror(filename), free(filename), 1);
+		else 
+			return (perror(filename), 1);
 	}
+	if (filename)
+		free(filename);
 	close(fd);
 	return (0);
 }
