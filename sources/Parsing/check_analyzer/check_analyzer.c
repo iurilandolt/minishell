@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:53:05 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/13 17:41:00 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:21:37 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_closure(char *string)
 		if (string[i] == '\'' && !(qts % 2))
 			qt++;
 		if (string[i] == '\"' && !(qt % 2))
-			qts++;	
+			qts++;
 		if (opener < 0)
 			return (1);
 		if (string[i] == '(' && !(qt % 2) && !(qts % 2))
@@ -54,7 +54,7 @@ int	check_openers(char *string, int i)
 		if (string[i] == '\'' && !(qts % 2))
 			qt++;
 		if (string[i] == '\"' && !(qt % 2))
-			qts++;	
+			qts++;
 		j = 1;
 		if (string[i] == '(' && !(qt % 2) && !(qts % 2))
 		{
@@ -83,7 +83,7 @@ int	check_closers(char *string)
 		if (string[i] == '\'' && !(qts % 2))
 			qt++;
 		if (string[i] == '\"' && !(qt % 2))
-			qts++;		
+			qts++;
 		j = 1;
 		if (string[i] == ')' && !(qt % 2) && !(qts % 2))
 		{
@@ -100,7 +100,7 @@ int	check_closers(char *string)
 int	check_parenthesis(char *string)
 {
 	if (check_closure(string))
-		return (1);	
+		return (1);
 	if (check_openers(string, ft_strlen(string)))
 		return (1);
 	if (check_closers(string))

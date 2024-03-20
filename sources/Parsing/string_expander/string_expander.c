@@ -6,12 +6,11 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:43:13 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/18 20:00:52 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:19:42 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/read.h"
-
 
 static int	is_parenthesis(char c)
 {
@@ -22,7 +21,7 @@ static int	is_parenthesis(char c)
 
 static int	special_char(char c)
 {
-	if (c == '&' || c == '|' || c == '<'|| c == '>' || c == '(' || c == ')')
+	if (c == '&' || c == '|' || c == '<' || c == '>' || c == '(' || c == ')')
 		return (1);
 	return (0);
 }
@@ -46,10 +45,10 @@ static int	expanded_size(char *str)
 			qts++;
 		size++;
 		if (special_char(str[i + 1]) && (is_parenthesis(str[i + 1])
-			|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
+				|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
 			size++;
 		if (special_char(str[i]) && (is_parenthesis(str[i])
-			|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
+				|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
 			size++;
 	}
 	return (size);
@@ -74,10 +73,10 @@ static char	*string_transfer(char *exp, char *str)
 			qts++;
 		exp[j++] = str[i];
 		if (special_char(str[i + 1]) && (is_parenthesis(str[i + 1])
-			|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
+				|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
 			exp[j++] = ' ';
 		if (special_char(str[i]) && (is_parenthesis(str[i])
-			|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
+				|| str[i + 1] != str[i]) && !(qt % 2) && !(qts % 2))
 			exp[j++] = ' ';
 	}
 	return (exp);

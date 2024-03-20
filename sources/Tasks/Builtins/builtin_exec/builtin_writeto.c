@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_writeto.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 18:11:52 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 17:23:42 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:24:09 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 	if (token->type == RED_APP)
 		writefd = open(&filename[2], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (writefd == -1 && token->value[1 + (token->type == RED_APP)] != '$')
-			perror(&filename[1 + (token->type == RED_APP)]);
+		perror(&filename[1 + (token->type == RED_APP)]);
 	if (filename)
 		free(filename);
 	return (writefd);
@@ -65,7 +65,7 @@ static int	open_writefd(t_session *session, t_token *token, int oldwritefd)
 int	open_close(t_session *session, char *filename)
 {
 	int	fd;
-	
+
 	ambient_variable_expansion(session, &filename, 0);
 	clean_quotes(&filename, 1);
 	fd = open(filename, O_RDONLY, 0644);
@@ -74,7 +74,7 @@ int	open_close(t_session *session, char *filename)
 		session->status = 1;
 		if (filename)
 			return (perror(filename), free(filename), 1);
-		else 
+		else
 			return (perror(filename), 1);
 	}
 	if (filename)

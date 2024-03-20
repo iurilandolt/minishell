@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:17:55 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/18 20:01:17 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:20:53 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	special_char_b(char c, char flag)
 {
 	if (flag && !c)
 		return (1);
-	if (c == '&' || c == '|' || c == '<'|| c == '>' || c == '(' || c == ')')
+	if (c == '&' || c == '|' || c == '<' || c == '>' || c == '(' || c == ')')
 		return (1);
 	return (0);
 }
@@ -49,9 +49,9 @@ int	operator_value(t_token *tokens)
 	while (tokens[++i].value)
 	{
 		if (tokens[i].type == PIPE && special_char_b(tokens[i].value[1], 0))
-			return (write(2, "Syntax Error\n", 13), 1);		
+			return (write(2, "Syntax Error\n", 13), 1);
 		if (tokens[i].type == SAND && (tokens[i].value[0] != tokens[i].value[1]
-			|| special_char_b(tokens[i].value[2], 0)))
+				|| special_char_b(tokens[i].value[2], 0)))
 			return (write(2, "Syntax Error\n", 13), 1);
 		if (tokens[i].type == OR && special_char_b(tokens[i].value[2], 0))
 			return (write(2, "Syntax Error\n", 13), 1);

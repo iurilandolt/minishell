@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:24:00 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 21:41:30 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:24:44 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ int	exp_is_protected(const char *str)
 	if (!ft_strncmp(str, "_=", 2) || !ft_strncmp(str, "_+=", 3)
 		|| (str[0] == '_' && str[1] == '\0')
 		|| (str[0] == '_' && str[1] == '=')
-		|| (str[0] == '_' && str[1] == '+')
-		)
+		|| (str[0] == '_' && str[1] == '+'))
 		return (1);
-	return(0);
+	return (0);
 }
 
 int	is_valid_env_format(const char *str)

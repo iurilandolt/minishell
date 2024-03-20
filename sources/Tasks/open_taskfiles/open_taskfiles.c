@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_taskfiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:05:16 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/20 17:33:32 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:23:04 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static t_token	*startfrom(t_token *token, int taskn)
 	return (&token[i]);
 }
 
-static void	open_readfd(t_session *session, int *readfd, t_token *token, int taskn)
+static void	open_readfd(t_session *session, int *readfd,
+	t_token *token, int taskn)
 {
 	char	*filename;
 
@@ -56,7 +57,8 @@ static void	open_readfd(t_session *session, int *readfd, t_token *token, int tas
 	}
 }
 
-static int	open_writefd(t_session *session, t_token *token, int writefd, int taskn)
+static int	open_writefd(t_session *session, t_token *token,
+	int writefd, int taskn)
 {
 	char	*filename;
 
@@ -66,7 +68,7 @@ static int	open_writefd(t_session *session, t_token *token, int writefd, int tas
 	if (writefd)
 		close(writefd);
 	if (!filename[1 + (token->type == RED_APP)]
-			&& token->value[1 + (token->type == RED_APP)] == '$')
+		&& token->value[1 + (token->type == RED_APP)] == '$')
 	{
 		ft_putstr_fd(&token->value[1 + (token->type == RED_APP)], 2);
 		ft_putendl_fd(": ambiguous redirect", 2);
@@ -103,7 +105,8 @@ int	open_taskfiles(t_session *session, int taskn)
 		if (token[i].type == HERE_DOC)
 			j++;
 		if (token[i].type == RED_IN)
-			open_readfd(session, &session->readfrom[taskn][j++], &token[i], taskn);
+			open_readfd(session, &session->readfrom[taskn][j++],
+				&token[i], taskn);
 		if (token[i].type == RED_OUT || token[i].type == RED_APP)
 			writefd = open_writefd(session, &token[i], writefd, taskn);
 	}
