@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:46:37 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 12:08:23 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:11:08 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	valid_exit_arg(char *str)
 	i = 0;
 	if (!str)
 		return (1);
+	if ((str[0] == '+' || str[0] == '-') && isdigit(str[1]))
+		i++;
 	while (str[i])
 	{
 		if (!isdigit(str[i]))
