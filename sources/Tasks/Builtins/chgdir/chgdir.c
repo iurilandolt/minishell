@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:06:57 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 15:07:54 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:46:22 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	mpwd(int *status)
 	char	*tmp;
 
 	tmp = getcwd(NULL, 0);
-	printf("%s\n", tmp);
+	ft_putendl_fd(tmp, 1);
 	free(tmp);
 	*status = 0;
 }

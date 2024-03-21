@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:40:44 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 15:06:59 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:40:40 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ void	cd_path(t_session *session, char *path)
 
 	cwd = getcwd(NULL, 0);
 	value = ft_strjoin("OLDPWD=", cwd);
-	m_export(&session->status, &session->menvp, value);
+	if (value)
+		m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
 	chdir(path);
 	cwd = getcwd(NULL, 0);
 	value = ft_strjoin("PWD=", cwd);
-	m_export(&session->status, &session->menvp, value);
+	if (value)
+		m_export(&session->status, &session->menvp, value);
 	free(cwd);
 	free(value);
 }
