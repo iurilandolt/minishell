@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/21 12:39:15 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:07:46 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		split_size(char **split);
 void	free_table(char **table);
 void	free_table_n(void **table, int ntasks);
 
-typedef struct	s_qt
+typedef struct s_qt
 {
 	int	qt;
 	int	qts;

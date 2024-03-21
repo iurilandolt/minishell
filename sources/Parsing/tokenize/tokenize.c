@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:47:46 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/21 12:34:51 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:04:20 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	handle_quotes(char *line, char ***split)
 	if (!*split)
 	{
 		perror("**handle_quotes failed.\n");
+		return (1);
+	}
+	if (!**split)
+	{
+		free_table(*split);
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:27:40 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/21 12:36:33 by rcastelo         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:07:57 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static int	count_words(char const *s)
 		if ((i == 0 || s[i - 1] == ' ' || s[i - 1] == '\t')
 			&& s[i] != ' ' && s[i] != '\t' && !(qt % 2) && !(qts % 2))
 			count++;
-		if (s[i] == '\'')
+		if (s[i] == '\'' && !(qts % 2))
 			qt++;
-		if (s[i] == '\"')
+		if (s[i] == '\"' && !(qt % 2))
 			qts++;
 		i++;
 	}
@@ -92,11 +92,11 @@ char	**shell_split(char const *s, int qt, int qts)
 		if ((!i || s[i - 1] == ' ' || s[i - 1] == '\t') && s[i] != ' ' 
 			&& s[i] != '\t' && !(qt % 2) && !(qts % 2))
 			j = i;
-		if (s[i] == '\'')
+		if (s[i] == '\'' && !(qts % 2))
 			qt++;
-		if (s[i] == '\"')
+		if (s[i] == '\"' && !(qt % 2))
 			qts++;
-		if ((((s[i + 1] == ' ' | s[i + 1] == '\t') && !(qt % 2) && !(qts % 2))
+		if ((((s[i + 1] == ' ' || s[i + 1] == '\t') && !(qt % 2) && !(qts % 2))
 				|| s[i + 1] == 0) && j != -1)
 		{
 			table[k] = ft_strndup(&s[j], i - j + 1, &table, k);
