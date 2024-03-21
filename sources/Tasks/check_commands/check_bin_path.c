@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_bin_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:50:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 16:52:40 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:16:28 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*validate_bin_path(char **envp, char *cmd)
 	t_path_tools	tool;
 
 	i = 0;
-	if (!*cmd || (access(cmd, F_OK) == 0))
+	if (!*cmd)
 		return (cmd);
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;

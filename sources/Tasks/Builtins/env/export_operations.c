@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:26:16 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/19 11:47:25 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:44:33 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	update_shlvl(t_session *session)
 		parsed[2] = ft_itoa(level);
 		new_value = ft_strjoin("SHLVL=", parsed[2]);
 		m_export(&session->status, &session->menvp, new_value);
-		m_export(&session->status, &session->menvp, "SHELL=Minishell");
 		free(new_value);
 		clear(parsed);
 	}

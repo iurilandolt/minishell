@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:51:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/18 19:52:28 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:39:15 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,15 @@ int		split_size(char **split);
 void	free_table(char **table);
 void	free_table_n(void **table, int ntasks);
 
-// quote_split.h
-typedef struct s_qt
+typedef struct	s_qt
 {
 	int	qt;
 	int	qts;
 }	t_qt;
 
-char	**quote_split(char const *s, char c);
+char	**shell_split(char const *s, int qt, int qts);
 void	clean_quotes(char **string, char flag);
 
 int		ft_isalpha(int c);
-int		has_no_quotes(char *string);
 
 #endif

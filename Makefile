@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 15:32:17 by rlandolt          #+#    #+#              #
-#    Updated: 2024/03/20 16:35:47 by rlandolt         ###   ########.fr        #
+#    Updated: 2024/03/21 12:37:47 by rcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ NAME = minishell
 SRC_PATH = ./sources
 
 SRC = $(SRC_PATH)/main.c \
-	$(SRC_PATH)/Parsing/quote_split/clean_quotes.c \
-	$(SRC_PATH)/Parsing/quote_split/quote_split.c \
+	$(SRC_PATH)/Parsing/shell_split/shell_split.c \
 	$(SRC_PATH)/Parsing/check_analyzer/check_analyzer.c \
 	$(SRC_PATH)/Parsing/string_expander/string_expander.c \
 	$(SRC_PATH)/Parsing/string_contracter/string_contracter.c \
@@ -48,6 +47,7 @@ SRC = $(SRC_PATH)/main.c \
 	$(SRC_PATH)/Tasks/perform_tasks/perform_tasks.c \
 	$(SRC_PATH)/Tasks/close_opened_fds/close_opened_fds.c \
 	$(SRC_PATH)/Tasks/open_taskfiles/open_taskfiles.c \
+	$(SRC_PATH)/Tasks/clean_quotes/clean_quotes.c \
 	$(SRC_PATH)/Tasks/perform_redirects/perform_redirects.c \
 	$(SRC_PATH)/Tasks/Builtins/check_builtin/check_builtin.c \
 	$(SRC_PATH)/Tasks/Builtins/chgdir/chgdir.c \

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_split.c                                      :+:      :+:    :+:   */
+/*   shell_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/08 18:55:43 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/02/24 16:08:23 by rlandolt         ###   ########.fr       */
+/*   Created: 2024/03/21 12:27:40 by rcastelo          #+#    #+#             */
+/*   Updated: 2024/03/21 12:36:33 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*ft_strndup(const char *str, int n, char ***table, int k)
 	return (new);
 }
 
-static int	count_words(char const *s, char c)
+static int	count_words(char const *s)
 {
 	int	i;
 	int	qt;
@@ -46,7 +46,8 @@ static int	count_words(char const *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		if ((i == 0 || s[i - 1] == c) && s[i] != c && !(qt % 2) && !(qts % 2))
+		if ((i == 0 || s[i - 1] == ' ' || s[i - 1] == '\t')
+			&& s[i] != ' ' && s[i] != '\t' && !(qt % 2) && !(qts % 2))
 			count++;
 		if (s[i] == '\'')
 			qt++;
@@ -57,12 +58,12 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	**initialize_table(char const *s, char c)
+static char	**initialize_table(char const *s)
 {
 	int		words;
 	char	**table;
 
-	words = count_words(s, c);
+	words = count_words(s);
 	table = malloc(words * 8 + 8);
 	if (!table)
 		return (0);
@@ -70,34 +71,32 @@ static char	**initialize_table(char const *s, char c)
 	return (table);
 }
 
-static void	initialize_vars(int *i, int *j, int *k, t_qt *qt)
+static void	initialize_vars(int *i, int *j, int *k)
 {
 	*i = -1;
 	*j = -1;
 	*k = 0;
-	qt->qt = 0;
-	qt->qts = 0;
 }
 
-char	**quote_split(char const *s, char c)
+char	**shell_split(char const *s, int qt, int qts)
 {
 	int		i;
 	int		j;
 	int		k;
-	t_qt	qt;
 	char	**table;
 
-	initialize_vars(&i, &j, &k, &qt);
-	table = initialize_table(s, c);
+	initialize_vars(&i, &j, &k);
+	table = initialize_table(s);
 	while (table && s[++i])
 	{
-		if ((!i || s[i - 1] == c) && s[i] != c && !(qt.qt % 2) && !(qt.qts % 2))
+		if ((!i || s[i - 1] == ' ' || s[i - 1] == '\t') && s[i] != ' ' 
+			&& s[i] != '\t' && !(qt % 2) && !(qts % 2))
 			j = i;
 		if (s[i] == '\'')
-			qt.qt++;
+			qt++;
 		if (s[i] == '\"')
-			qt.qts++;
-		if (((s[i + 1] == c && !(qt.qt % 2) && !(qt.qts % 2))
+			qts++;
+		if ((((s[i + 1] == ' ' | s[i + 1] == '\t') && !(qt % 2) && !(qts % 2))
 				|| s[i + 1] == 0) && j != -1)
 		{
 			table[k] = ft_strndup(&s[j], i - j + 1, &table, k);

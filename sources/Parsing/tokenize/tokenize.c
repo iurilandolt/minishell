@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rcastelo <rcastelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:47:46 by rcastelo          #+#    #+#             */
-/*   Updated: 2024/03/13 17:55:26 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:34:51 by rcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	expand_and_contract(char **line)
 
 int	handle_quotes(char *line, char ***split)
 {
-	*split = quote_split(line, ' ');
+	*split = shell_split(line, 0, 0);
 	free(line);
 	if (!*split)
 	{
