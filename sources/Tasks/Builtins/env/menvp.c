@@ -6,7 +6,7 @@
 /*   By: rlandolt <rlandolt@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 12:12:11 by rlandolt          #+#    #+#             */
-/*   Updated: 2024/03/20 22:40:29 by rlandolt         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:26:50 by rlandolt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ void	m_envp(int *status, char **menvp)
 	*status = 0;
 }
 
-void	print_export(char **menvp)
+void	print_export(char **dupped)
 {
 	char	**parsed;
-	char	**dupped;
 	int		i;
 
-	dupped = setup_menvp(menvp);
-	str_sort(dupped);
 	i = -1;
 	while (dupped[++i])
 	{
+		if (!ft_strncmp(dupped[i], "_=", 2))
+			continue ;
 		parsed = parse_for_export(dupped[i]);
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(parsed[0], 1);
@@ -66,7 +65,9 @@ static void	export_value(char ***menvp, char *value)
 	parsed = parse_for_export(value);
 	if (menvp_lookup(parsed[0], *menvp) != -1)
 	{
-		if (!parsed[1] || parsed[1][0] == '=')
+		if (!parsed[1])
+			return (free_table(parsed));
+		if (parsed[1] && parsed[1][0] == '=')
 			export_operation(menvp, value, parsed, 0);
 		else if (parsed[1][0] == '+')
 			concat_export(menvp, parsed);
@@ -82,10 +83,16 @@ static void	export_value(char ***menvp, char *value)
 
 void	m_export(int *status, char ***menvp, char *value)
 {
+	char	**dupped;
+
 	if (!*menvp)
 		return ;
 	if (!value)
-		return (print_export(*menvp));
+	{
+		dupped = setup_menvp(*menvp);
+		str_sort(dupped);
+		return (print_export(dupped));
+	}
 	if (is_valid_env_format(value))
 		return (export_value(menvp, value));
 	if (!exp_is_protected(value))
