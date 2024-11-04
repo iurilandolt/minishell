@@ -45,5 +45,6 @@ We create, classify and manage tokens to represent each command segment.
 - **Error Messaging:** Informative error messages are provided to the user when execution fails.
 - **Directory Detection:** Directories are validated to prevent mistaken execution as binaries, enhancing reliability.
 
-
-This project was developed by @iurilandolt and @rogerccs
+## Contributors
+- [@username1](https://github.com/iurilandolt)
+- [@username2](https://github.com/rogerccs)
