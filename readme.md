@@ -46,5 +46,5 @@ We create, classify and manage tokens to represent each command segment.
 - **Directory Detection:** Directories are validated to prevent mistaken execution as binaries, enhancing reliability.
 
 ## Contributors
-- [@username1](https://github.com/iurilandolt)
-- [@username2](https://github.com/rogerccs)
+- [@iurilandolt](https://github.com/iurilandolt)
+- [@rogerccs](https://github.com/rogerccs)
